@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
+<head>
+    <div th:replace="~{/fragments/head.html}"></div>
+    <link href="/css/login.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+                <img class="logo" src="/img/LogoHomeServices.png" alt="Img logo Home Services">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registrar" role="button" aria-expanded="false">
+                            Registrar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Contenedor para cargar el contenido de exito_error.html -->
+        <div th:replace="/fragments/exito_error.html"></div>
+
+        <div class="container-fluid p-0">
+            
+            <div class="row no-gutters main-contenedor">
+                <div class="contenedor col-12 position-relative p-0 d-flex flex-column align-items-center"> <!-- Añadir clases flexbox para centrar verticalmente -->
+                    
+                    <div class="bg-image d-none d-lg-block"></div>
+                    
+                    <img src="/img/imageIndexPage.jpg" alt="Image index page" class="img-fluid d-lg-none w-100">
+                    
+                    <div class="container-fluid m-5 form-container d-none d-lg-block">
+
+                        <form class="formulario" th:action="@{/logincheck}" method="POST">
+
+                            <div class="form-group my-2">
+                                <h3 class="card-title">Inicia Sesión!</h3>
+                            </div>
+                            
+                            <div class="form-group my-3">
+                                <!--<label class="mb-2">Usuario</label>-->
+                                <input type="text" class="form-control" name="email" placeholder="Email">
+                            </div>
+
+                            <div class="form-group my-3">
+                                <!--<label class="mb-2">Contraseña</label>-->
+                                <input type="password" class="form-control" name="password" placeholder="Contraseña">
+                            </div>
+
+                            <button type="submit" class="btn mt-3 w-100">Login</button>
+                            <a th:href="@{/}" class="btn btn-secondary my-3">Volver</a>
+
+                        </form>
+
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- ---------------------- -->
+            <div class="row no-gutters d-lg-none align-items-center">
+
+                <div class="container-fluid form-container">
+
+                    <form class="formulario p-5" th:action="@{/logincheck}" method="POST">
+                        
+                        <div class="form-group my-2">
+                            <h3 class="card-title">Inicia Sesión!</h3>
+                        </div>
+                        
+                        <div class="form-group my-3">
+                            <!--<label class="mb-2">Usuario</label>-->
+                            <input type="text" class="form-control" name="email" placeholder="EMAIL">
+                        </div>
+
+                        <div class="form-group my-3">
+                            <!--<label class="mb-2">Contraseña</label>-->
+                            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA">
+                        </div>
+
+                        <button type="submit" class="btn btn-warning mt-3 botones w-100">Log in</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Contenedor para cargar el contenido de footer.html -->
+    <!-- <div th:replace="/fragments/footer :: footer"></div> -->
+    <div th:replace="/fragments/footer.html"></div>
+
+</body>
+</html>

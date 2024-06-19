@@ -1,0 +1,76 @@
+@import url('root.css');
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.main-contenedor{
+    /* border: 3px dotted red; */
+    .contenedor{
+        height: max-content;
+        /* border: 2px solid black; */
+        
+        .bg-image {
+            background-image: url('/img/imageIndexPage.jpg');
+            background-size:cover;
+            background-position:left;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1; 
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+            padding: 2rem;
+            margin-left: auto;
+            max-width: 40%;
+            border-radius: 0.5rem;
+            text-align: left;
+            /* border: 3px dashed red; */
+        }
+    }
+}
+
+.btn{
+    background-color: var(--color-tema-secundario);
+    border-bottom: var(--color-tema-enfasis);
+    color: white;
+}
+
+.btn:hover{
+    background-color: var(--color-tema-enfasis);
+    color: white;
+}
+
+@media (max-width: 991.98px) {
+    .bg-image {
+        display: none; /* Oculta la imagen de fondo en pantallas pequeñas */
+    }
+
+    .form-container {
+        background: var(--color-tema-enfasis);
+        max-width: 100%;
+        margin: 0rem;
+        padding: 1rem;
+        border-radius: 15px;
+        /* border: 2px dashed red; */
+
+        .btn-primary{
+            background-color: var(--color-tema-primario);
+            border-bottom: var(--color-tema-enfasis);
+        }
+
+        .btn-primary:hover{
+            background-color: var(--color-tema-secundario);
+        }
+    }
+
+    .borderContainer {
+        border: 1px solid #ddd; /* Agrega un borde en pantallas pequeñas */
+        margin: 1rem; /* Margen para separar el borde */
+    }
+}

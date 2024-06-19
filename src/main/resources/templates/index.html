@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
+<head>
+    <div th:replace="~{/fragments/head.html}"></div>
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+                <img class="logo" src="/img/LogoHomeServices.png" alt="Img logo Home Services">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link ps-2" href="/login" role="button" aria-expanded="false">
+                            Ingresar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ps-2" href="/registrar" role="button" aria-expanded="false">
+                            Registrar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+<main>
+    <div class="container-fluid p-0">
+        
+        <div class="row no-gutters main-contenedor">
+            <div class="contenedor col-12 position-relative p-0 d-flex flex-column align-items-center"> <!-- Añadir clases flexbox para centrar verticalmente -->
+                
+                <div class="bg-image d-none d-lg-block"></div>
+                
+                <img src="/img/imageIndexPage.jpg" alt="Image index page" class="img-fluid d-lg-none w-100">
+                
+                <div class="text-container text-end d-none d-lg-block d-flex flex-column mt-5 mb-5 me-5">
+                    <h2>Bienvenido a <span class="fw-bold home-service">Home Services</span></h2>
+                    <p>Tu solución confiable para encontrar proveedores de servicios de mantenimiento para el hogar en tu barrio. Nuestra aplicación te conecta con plomeros, electricistas, jardineros, pintores y carpinteros locales, todos recomendados por vecinos de confianza. Con Home Services, podrás contactar fácilmente con profesionales que conocen y entienden las necesidades de tu comunidad, garantizando reparaciones rápidas y de calidad. ¡Descubre la comodidad de tener a los mejores proveedores de servicios a un clic de distancia! 
+                    </p>
+                    <a class="btn btn-primario" href="/login" role="button" aria-expanded="false">
+                        Login
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="row no-gutters d-lg-none justify-content-end align-items-center">
+            <div class="col-12 text-container p-5">
+                <h2>Bienvenido a <span class="fw-bold home-service-responsive">Home Services</span></h2>
+                <p>Tu solución confiable para encontrar proveedores de servicios de mantenimiento para el hogar en tu barrio. Nuestra aplicación te conecta con plomeros, electricistas, jardineros, pintores y carpinteros locales, todos recomendados por vecinos de confianza. Con Home Services, podrás contactar fácilmente con profesionales que conocen y entienden las necesidades de tu comunidad, garantizando reparaciones rápidas y de calidad. ¡Descubre la comodidad de tener a los mejores proveedores de servicios a un clic de distancia!
+                </p>
+                <a class="btn btn-primary" href="/login" role="button" aria-expanded="false">
+                    Iniciar sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+    <!-- Contenedor para cargar el contenido de footer.html -->
+    <!-- <div th:replace="/fragments/footer :: footer"></div> -->
+    <div th:replace="/fragments/footer.html"></div>
+
+</body>
+</html>

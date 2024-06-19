@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <div th:replace="~{/fragments/head.html}"></div>
+    <link href="/css/registro.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <!-- Contenedor para cargar el contenido de navbar.html -->
+        <div th:replace="/fragments/navbar.html"></div>
+        <!-- Contenedor para cargar el contenido de exito_error.html -->
+        <div th:replace="/fragments/exito_error.html"></div>
+    </header>
+
+    <main>
+
+        <div class="container-fluid p-5">
+
+            <form class="formulario m-5 shadow p-3 rounded" th:action="@{/admin/crearServicio}" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group my-3">
+                    <h3 class="card-title">Crear Servicio</h3>
+                </div>
+
+                <div class="form-group my-2">
+                    <input type="text" class="form-control" name="nombre" placeholder="Servicio" th:value="${nombre}" required>
+                </div>
+                
+                <div class="form-group my-2">
+                    <input type="text" class="form-control" name="descripcion" placeholder="Descripcion" th:value="${descripcion}" required>
+                </div>
+
+                <div class="form-group my-2">
+                    <input type="file" class="form-control" name="archivo" required>
+                </div>
+
+                <button type="submit" class="form-group btn btn-primario my-3 w-100">Aceptar</button>
+
+            </form>
+
+        </div>
+    </main>
+
+
+    <footer>
+        <!-- Contenedor para cargar el contenido de footer.html -->
+        <!-- <div th:replace="/fragments/footer :: footer"></div> -->
+        <div th:replace="/fragments/footer.html"></div>
+    </footer>
+
+</body>
+
+</html>

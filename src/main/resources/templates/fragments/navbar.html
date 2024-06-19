@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <!-- Logo alienado a la izquierda-->
+        <a class="navbar-brand" href="/">
+            <img class="logo" src="/img/LogoHomeServices.png" alt="Img logo egg">
+        </a>
+        <!-- Toggler responsive design -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar items centrada -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Centered items -->
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ps-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/crearServicio}">Crear Servicio</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/listarServicios}">Listar Servicios</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ps-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Usuarios
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/registrar}">Crear Usuario</a></li>
+                        <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/usuarios}">Listar Usuarios</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+
+            <!-- Informacion del Perfil a la derecha -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown perfil">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center ps-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div th:if="${session.usuariosession.imagen != null}" class="logoNav-container">
+                            <img class="logoNav" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                            <span>Perfil</span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-item" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre}"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-item" href="/logout" role="button">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
+</body>
+</html>
+
+
