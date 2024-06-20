@@ -1,5 +1,6 @@
 package com.servicios.egg.controladores;
 
+import com.servicios.egg.enums.Localidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -31,28 +32,31 @@ public class PortalControlador {
    }
 
    @GetMapping("/registrar")
-   public String registrar() {
+   public String registrar(ModelMap modelo) {
+      modelo.addAttribute("localidades", Localidad.values());
       return "registro.html";
    }
 
    @PostMapping("/registro")
    public String registro( @RequestParam String nombre, @RequestParam String email, @RequestParam String password,
-                           String password2, String phone, ModelMap modelo, MultipartFile archivo ) {
+                           String password2, String phone, MultipartFile archivo, Localidad localidad, ModelMap modelo ) {
       try {
-         usuarioServicio.registrarUsuario(archivo, nombre, email, password, password2, phone);
-         modelo.put("exito", "Usuario registrado correctamente!");
-//         return "index.html"; evaluar esto
+         usuarioServicio.registrarUsuario(archivo, nombre, email, password, password2, phone, localidad);
+         modelo.addAttribute("exito", "Usuario registrado correctamente!");
+
+         return "index.html";
 
       } catch (MyException ex) {
          modelo.put("error", ex.getMessage());
-         modelo.put("nombre", nombre); //En el caso de surgir la excepcion por password, el formulario mediante el th:value guarda los datos cargados antes del error
+
+         //En el caso de surgir la excepcion por password, el formulario mediante el th:value guarda los datos cargados antes del error
+         modelo.put("nombre", nombre);
          modelo.put("email", email);
          modelo.put("phone", phone);
+         modelo.addAttribute("localidades", Localidad.values());
 
          return "registro.html";
       }
-
-      return "index.html"; // evaluar si esto se requiere aqui
    }
 
    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
@@ -65,15 +69,16 @@ public class PortalControlador {
 
    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
    @PostMapping("/perfil/{id}")
-   public String actualizar( MultipartFile archivo, @PathVariable Long id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String password2, @RequestParam String phone, ModelMap modelo ) {
+   public String actualizar( MultipartFile archivo, @PathVariable Long id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String password2, @RequestParam String phone, Localidad localidad, ModelMap modelo ) {
       try {
-         usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone);
+         usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
          modelo.put("exito", "Usuario actualizado corectamente");
          return "inicio.html";
       } catch (MyException ex) {
          modelo.put("error", ex.getMessage());
          modelo.put("nombre", nombre);
          modelo.put("email", email);
+         modelo.put("localidad", localidad);
 
          return "usuario_modificar.html";
       }

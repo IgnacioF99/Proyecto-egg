@@ -1,5 +1,7 @@
 package com.servicios.egg.entidades;
 
+import java.util.List;
+
 import com.servicios.egg.enums.Estado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,13 +32,15 @@ public class Trabajo {
 
     private int calificacion;
 
-    @ManyToOne
-    private Comentario comentario;
+    @OneToMany(mappedBy = "trabajo",fetch = FetchType.LAZY)
+    private List<Comentario> comentarios;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")//Llave foranea
     private Usuario usuario;
 
     @OneToOne
+    @JoinColumn(name = "provedor_id")
     private Provedor provedor;
 
 }

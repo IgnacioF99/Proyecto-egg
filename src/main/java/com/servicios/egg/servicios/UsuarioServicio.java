@@ -6,12 +6,14 @@ import java.util.Optional;
 
 import com.servicios.egg.entidades.Imagen;
 import com.servicios.egg.entidades.Usuario;
+import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.enums.Rol;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.UsuarioRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -59,7 +61,7 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
-   public void registrarUsuario( MultipartFile archivo, String nombre, String email, String password, String password2, String phone ) throws MyException {
+   public void registrarUsuario( MultipartFile archivo, String nombre, String email, String password, String password2, String phone, Localidad localidad ) throws MyException {
 
       validar(nombre, email, password, password2);
 
@@ -70,6 +72,7 @@ public class UsuarioServicio implements UserDetailsService {
       usuario.setPassword(new BCryptPasswordEncoder().encode(password));
       usuario.setRol(Rol.USER);
       usuario.setPhone(phone);
+      usuario.setLocalidad(localidad);
       usuario.setAlta(true);
       Imagen imagen = imagenServicio.guardar(archivo);
       usuario.setImagen(imagen);
@@ -78,7 +81,7 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
-   public void actualizarUsuario( MultipartFile archivo, Long id, String nombre, String email, String password, String password2, String phone ) throws MyException {
+   public void actualizarUsuario( MultipartFile archivo, Long id, String nombre, String email, String password, String password2, String phone, Localidad localidad ) throws MyException {
 
       validar(nombre, email, password, password2);
 
@@ -90,6 +93,7 @@ public class UsuarioServicio implements UserDetailsService {
          usuario.setEmail(email);
          usuario.setPassword(password);
          usuario.setPhone(phone);
+         usuario.setLocalidad(localidad);
 
          String idImagen = usuario.getImagen().getIdImagen();
          if(archivo != null && !archivo.isEmpty()){
@@ -129,6 +133,12 @@ public class UsuarioServicio implements UserDetailsService {
       return usuariosList;
    }
 
+   public List<Usuario> buscarUsuariosPorLocalidad( Localidad localidad) {
+
+      List<Usuario> usuarioList = usuarioRepositorio.findAllByLocalidad(localidad);
+      return usuarioList;
+   }
+
    @Transactional
    public void cambiarRolUsuario( Long id ) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
@@ -158,13 +168,13 @@ public class UsuarioServicio implements UserDetailsService {
 
    private void validar( String nombre, String email, String password, String password2 ) throws MyException {
 
-      if ( nombre.isEmpty() || nombre == null ) {
+      if ( nombre == null || nombre.isEmpty()  ) {
          throw new MyException("el nombre no puede ser nulo o estar vacío");
       }
-      if ( email.isEmpty() || email == null ) {
+      if ( email == null || email.isEmpty()) {
          throw new MyException("el email no puede ser nulo o estar vacío");
       }
-      if ( password.isEmpty() || password == null || password.length() <= 5 ) {
+      if ( password == null || password.isEmpty() || password.length() <= 5 ) {
          throw new MyException("La contraseña no puede estar vacía, y debe tener más de 5 dígitos");
       }
       if ( !password.equals(password2) ) {
