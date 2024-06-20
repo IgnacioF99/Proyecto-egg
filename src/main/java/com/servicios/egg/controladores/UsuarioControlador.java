@@ -7,7 +7,6 @@ package com.servicios.egg.controladores;
 
 import java.util.List;
 
-import com.servicios.egg.enums.Localidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.servicios.egg.entidades.Usuario;
+import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.UsuarioServicio;
 
@@ -56,7 +56,8 @@ public class UsuarioControlador {
 
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable @RequestParam(required = false) Long id,
-            String nombre, String email, String phone, MultipartFile archivo, String password, String password2, Localidad localidad,
+            String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
+            Localidad localidad,
             ModelMap modelo) {
         try {
             usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
@@ -67,4 +68,16 @@ public class UsuarioControlador {
             return "usuario_form.html";
         }
     }
+
+    // @GetMapping("/listarProvedores")
+    // public String listarProvedores(ModelMap modelo) {
+    // List<
+    // return "trabajo_form.html";
+
+    // } // primero crear el crear proveedor
+
+    // @PostMapping("/crearTrabajo/{id}")
+    // public String crearTrabajo(@PathVariable Long id, ){
+
+    // }
 }
