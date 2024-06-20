@@ -2,6 +2,7 @@ package com.servicios.egg.controladores;
 
 import java.util.List;
 
+import com.servicios.egg.enums.Localidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -51,21 +52,27 @@ public class AdminControlador {
 
    @GetMapping("/modificar/{id}")
    public String modificar(@PathVariable Long id, ModelMap modelo) {
-      modelo.put("usuario", usuarioServicio.getOne(id));
+      modelo.addAttribute("usuario", usuarioServicio.getOne(id));
+      modelo.addAttribute("localidades", Localidad.values());
 
       return "usuario_modificar.html";
    }
 
    @PostMapping("/modificar/{id}")
-   public String modificar(@PathVariable Long id, String nombre, String email, MultipartFile archivo, String password,
-         String password2, String phone, ModelMap modelo) {
+   public String modificar( @PathVariable Long id, String nombre, String email, MultipartFile archivo, String password,
+                            String password2, String phone, Localidad localidad, ModelMap modelo) {
       try {
-         usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone);
+         usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
          modelo.put("exito", "Sus datos han sido actualizados correctamente");
          return "redirect:/admin/usuarios";
 
       } catch (MyException e) {
-         modelo.put("error", e.getMessage());
+         modelo.addAttribute("error", e.getMessage());
+         modelo.addAttribute("nombre",nombre);
+         modelo.addAttribute("email",email);
+         modelo.addAttribute("phone",phone);
+         modelo.addAttribute("localidades",Localidad.values());
+
          return "usuario_modificar.html";
       }
    }

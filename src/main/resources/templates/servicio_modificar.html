@@ -35,6 +35,10 @@
                 </div>
 
                 <div class="form-group my-3">
+                    <input hidden th:value="${servicio.imagen.idImagen}" name="idImagen">
+                </div>
+
+                <div class="form-group my-3">
                     <div class="d-flex align-items-center">
                         <a> <img th:if="${servicio.imagen != null}" class="logo rounded-circle" th:src="@{/imagen/servicio/__${servicio.id}__}"> </a>
                         <input type="file" class="form-control ms-3" name="archivo">

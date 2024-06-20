@@ -7,6 +7,7 @@ package com.servicios.egg.controladores;
 
 import java.util.List;
 
+import com.servicios.egg.enums.Localidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -55,10 +56,10 @@ public class UsuarioControlador {
 
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable @RequestParam(required = false) Long id,
-            String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
+            String nombre, String email, String phone, MultipartFile archivo, String password, String password2, Localidad localidad,
             ModelMap modelo) {
         try {
-            usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone);
+            usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
             modelo.put("exito", "Ha actualizado sin problemas el perfil");
             return "redirect:/usuario/dashboard";
         } catch (MyException e) {

@@ -36,7 +36,7 @@ public class TrabajoServicio {
       trabajo.setPresupuesto(0);
       trabajo.setUsuario(usuario);
       trabajo.setProvedor(null);
-      trabajo.setComentario(null);
+      trabajo.setComentarios(null);
       trabajo.setCalificacion(5);
    }
 

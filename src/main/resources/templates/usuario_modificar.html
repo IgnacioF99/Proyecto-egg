@@ -45,6 +45,18 @@
                 </div>
 
                 <div class="form-group my-3">
+                    <label class="mb-2 fw-light fst-italic">Seleccionar Localidad</label>
+                    <select name="localidad" class="form-control">
+                        <option disabled selected>Seleccionar Localidad</option>
+                        <option th:each="localidad : ${localidades}"
+                                th:value="${localidad}"
+                                th:text="${localidad}"
+                                th:selected="${usuario.localidad}"
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group my-3">
                     <input hidden th:value="${usuario.imagen.idImagen}" name="idImagen">
                 </div>
 
