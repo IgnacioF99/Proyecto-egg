@@ -140,6 +140,7 @@ public class UsuarioServicio implements UserDetailsService {
       return usuariosList;
    }
 
+   @Transactional
    public List<Usuario> buscarUsuariosPorLocalidad(Localidad localidad) {
 
       List<Usuario> usuarioList = usuarioRepositorio.findAllByLocalidad(localidad);
