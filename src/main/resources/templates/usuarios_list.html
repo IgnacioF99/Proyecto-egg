@@ -24,6 +24,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Rol</th>
+                        <th scope="col">Localidad</th>
                         <th scope="col" sec:authorize="hasRole('ADMIN')">Cambiar Rol</th>
                         <th scope="col" sec:authorize="hasRole('ADMIN')">Acciones</th>
                     </tr>
@@ -38,6 +39,7 @@
                         <td th:text="${usuario.email}"></td>
                         <td th:text="${usuario.phone}"></td>
                         <td th:text="${usuario.rol}"></td>
+                        <td th:text="${usuario.localidad}"></td>
                         <td sec:authorize="hasRole('ADMIN')">
                             <a th:href="@{/admin/modificarRol/__${usuario.id}__}"><i class="fas fa-feather-alt">
                                 </i>Modificar</a>
