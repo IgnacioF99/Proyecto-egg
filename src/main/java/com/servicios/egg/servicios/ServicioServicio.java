@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.servicios.egg.entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ServicioRepositorio;
 
-import javax.swing.*;
 
 @Service
 public class ServicioServicio {

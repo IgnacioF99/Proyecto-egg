@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org/extras/spring-security ">
+      xsi:schemaLocation="http://www.thymeleaf.org/extras/spring-security"
+      >
 
 <head>
     <div th:replace="~{/fragments/head.html}"></div>
@@ -9,10 +10,10 @@
 </head>
 
 <body>
-
-<!-- Contenedor para cargar el contenido de navbar.html -->
-<div th:replace="/fragments/navbar.html"></div>
-
+    <header>
+        <!-- Contenedor para cargar el contenido de navbar.html -->
+        <div th:replace="~{/fragments/navbar.html}"></div>
+    </header>
 
 <div class="container my-5">
 
@@ -55,15 +56,15 @@
 </div>
 
 <!-- Contenedor para cargar el contenido de footer.html -->
-<div th:replace="/fragments/footer.html"></div>
+<div th:replace="~{/fragments/footer.html}"></div>
 
 
 <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
