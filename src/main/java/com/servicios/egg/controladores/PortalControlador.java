@@ -1,6 +1,8 @@
 package com.servicios.egg.controladores;
 
+import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.enums.Localidad;
+import com.servicios.egg.servicios.ServicioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import com.servicios.egg.servicios.UsuarioServicio;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/")
@@ -26,8 +30,13 @@ public class PortalControlador {
    @Autowired
    UsuarioServicio usuarioServicio;
 
+   @Autowired
+   ServicioServicio servicioServicio;
+
    @GetMapping("/")
-   public String index() {
+   public String index(ModelMap modelo) {
+      List<Servicio> servicioList = servicioServicio.listarServicios();
+      modelo.addAttribute("servicios", servicioList);
       return "index.html";
    }
 

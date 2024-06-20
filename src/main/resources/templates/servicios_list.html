@@ -19,27 +19,28 @@
     <div class="container">
         <table class="table table-hover shadow p-3 rounded">
             <thead class="table-dark">
-            <tr>
-                <th scope="col">Id Servicio</th>
-                <th scope="col">Servicio</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Imagen</th>
-                <th scope="col" sec:authorize="hasRole('ADMIN')">Acciones</th>
-            </tr>
+                <tr>
+                    <th scope="col">Id Servicio</th>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col" sec:authorize="hasRole('ADMIN')">Acciones</th>
+                </tr>
             </thead>
             <tbody th:each="servicio : ${servicios}">
-            <tr>
-                <th scope="row" th:text="${servicio.id}"></th>
-                <td th:text="${servicio.nombre}"></td>
-                <td th:text="${servicio.descripcion}"></td>
-                <td>
-                    <a> <img th:if="${servicio.imagen != null}" class="logo rounded-circle" th:src="@{/imagen/servicio/__${servicio.id}__}"> </a>
-                </td>
-                <td sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/admin/modificarServicio/__${servicio.id}__}"><i class="fas fa-feather-alt">
-                        </i>Modificar</a>
-                </td>
-            </tr>
+                <tr>
+                    <th scope="row" th:text="${servicio.id}"></th>
+                    <td th:text="${servicio.nombre}"></td>
+                    <td th:text="${servicio.descripcion}"></td>
+                    <td>
+                        <a> <img th:if="${servicio.imagen != null}" class="logo rounded"
+                                th:src="@{/imagen/servicio/__${servicio.id}__}"> </a>
+                    </td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/admin/modificarServicio/__${servicio.id}__}"><i class="fas fa-feather-alt">
+                            </i>Modificar</a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

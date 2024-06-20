@@ -38,6 +38,28 @@
             /* border: 3px dashed red; */
         }
     }
+
+
+}
+
+.contenedor-servicios{
+    .cards-container{
+        display: flex;
+    }
+
+}
+
+.contenedor-cards{
+    .row{
+        background-color: rgb(201, 5, 5);
+    }
+
+}
+
+.card:hover{
+    box-shadow: 1px 1px 10px var(--color-tema-secundario);
+    scale: 1.05;
+    transition: 0.2s;
 }
 
 .btn{

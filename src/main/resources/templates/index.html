@@ -57,7 +57,28 @@
                 
             </div>
         </div>
+
+        <div class="container-fluid contenedor-servicios">
+            <div>
+                <h2 class="mt-4 mb-3">Nuestros Servicios</h2>
+                <div class="row justify-content-center contenedor-cards">
+                    <div class="col-12 col-sm-4 col-md-3 col-lg-2 mb-4 p" th:each="servicio : ${servicios}">
+                        <div class="card h-100">
+                            <img th:if="${servicio.imagen != null}" th:src="@{/imagen/servicio/__${servicio.id}__}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${servicio.nombre}"></h5>
+                                <p class="card-text" th:text="${servicio.descripcion}"></p>
+                                <a href="#" class="btn btn-primary btn-sm">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
+        
+
+        <!-- ------Vista Responsive------ -->
         <div class="row no-gutters d-lg-none justify-content-end align-items-center">
             <div class="col-12 text-container p-5">
                 <h2>Bienvenido a <span class="fw-bold home-service-responsive">Home Services</span></h2>
@@ -68,7 +89,9 @@
                 </a>
             </div>
         </div>
+
     </div>
+
 </main>
 
     <!-- Contenedor para cargar el contenido de footer.html -->
