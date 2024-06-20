@@ -40,7 +40,7 @@
 
                 <div class="form-group my-3">
                     <div class="d-flex align-items-center">
-                        <a> <img th:if="${servicio.imagen != null}" class="logo rounded-circle" th:src="@{/imagen/servicio/__${servicio.id}__}"> </a>
+                        <a> <img th:if="${servicio.imagen != null}" class="logo rounded" th:src="@{/imagen/servicio/__${servicio.id}__}"> </a>
                         <input type="file" class="form-control ms-3" name="archivo">
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                 <button type="submit" class="form-group btn btn-primario my-3 w-100">Aceptar</button>
 
                 <div class="form-group">
-                    <a th:href="@{/admin/listarServicios}" class="btn my-2 ">Volver</a>
+                    <a th:href="@{/admin/listarServicios}" class="btn my-2">Volver</a>
                 </div>
 
             </form>
