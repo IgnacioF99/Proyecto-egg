@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.servicios.egg.entidades.Provedor;
+import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.servicios.TrabajoServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
 
 @Controller
@@ -28,6 +31,9 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private TrabajoServicio trabajoServicio;
 
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
@@ -69,15 +75,31 @@ public class UsuarioControlador {
         }
     }
 
-    // @GetMapping("/listarProvedores")
-    // public String listarProvedores(ModelMap modelo) {
-    // List<
-    // return "trabajo_form.html";
+    @GetMapping("/crearTrabajo")
+    public String crearTrabajo(ModelMap modelo) {
+        return "trabajo_form.html";
+    }
 
-    // } // primero crear el crear proveedor
+    @PostMapping("/crearTrabajo/{id}")
+    public String crearTrabajo(@PathVariable Long idUsuario, Long idProvedor, String descripcion,
+            double presupuesto, ModelMap modelo) {
 
-    // @PostMapping("/crearTrabajo/{id}")
-    // public String crearTrabajo(@PathVariable Long id, ){
+        try {
+            trabajoServicio.crearTrabajo(descripcion, presupuesto, idUsuario, idProvedor);
+            return "redirect:/inicio";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "redirect:/usuario/trabajo_form.html";
+        }
+    }
 
-    // }
+    @GetMapping("/listarTrabajos/{id}")
+    public String listarTrabajos(Long id, ModelMap modelo) {
+        Usuario usuario = usuarioServicio.getOne(id);
+        List<Trabajo> trabajoList = trabajoServicio.listarTrabajoPorUsuario(usuario);
+        modelo.addAttribute("Trabajos", trabajoList);
+        return "trabajo_list.html";
+
+    }
+
 }

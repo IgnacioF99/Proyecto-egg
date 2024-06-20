@@ -1,5 +1,7 @@
 package com.servicios.egg.servicios;
 
+import java.util.List;
+
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Estado;
@@ -7,6 +9,7 @@ import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ProvedorRepositorio;
 import com.servicios.egg.repositorios.TrabajoRepositorio;
 import com.servicios.egg.repositorios.UsuarioRepositorio;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +26,8 @@ public class TrabajoServicio {
    private ProvedorRepositorio provedorRepositorio;
 
    @Transactional
-   public void crearTrabajo( String descripcion, double presupuesto, Long idUsuario, Long idProvedor ) throws MyException {
+   public void crearTrabajo(String descripcion, double presupuesto, Long idUsuario, Long idProvedor)
+         throws MyException {
 
       validar(descripcion, idUsuario);
 
@@ -41,11 +45,11 @@ public class TrabajoServicio {
    }
 
    @Transactional
-   public void modificarTrabajo( Long id, String descripcion ) throws MyException {
+   public void modificarTrabajo(Long id, String descripcion) throws MyException {
 
       Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
 
-      if ( respuestaTrabajo.isPresent() ) {
+      if (respuestaTrabajo.isPresent()) {
          Trabajo trabajo = new Trabajo();
          trabajo.setDescripcion(descripcion);
 
@@ -54,16 +58,16 @@ public class TrabajoServicio {
    }
 
    @Transactional
-   public void modificarTrabajoEstado( Long id ) throws MyException {
+   public void modificarTrabajoEstado(Long id) throws MyException {
 
       Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
 
-      if ( respuestaTrabajo.isPresent() ) {
+      if (respuestaTrabajo.isPresent()) {
          Trabajo trabajo = respuestaTrabajo.get();
 
-         if ( trabajo.getEstado().equals(Estado.SOLICITADO) ) {
+         if (trabajo.getEstado().equals(Estado.SOLICITADO)) {
             trabajo.setEstado(Estado.ACEPTADO);
-         } else if ( trabajo.getEstado().equals(Estado.ACEPTADO) ) {
+         } else if (trabajo.getEstado().equals(Estado.ACEPTADO)) {
             trabajo.setEstado(Estado.TERMINADO);
          }
 
@@ -72,14 +76,20 @@ public class TrabajoServicio {
    }
 
    @Transactional
-   public void cotizarTrabajo( Long id, double presupuesto ) throws MyException {
+   public List<Trabajo> listarTrabajoPorUsuario(Usuario usuario) {
+      List<Trabajo> trabajoList = trabajoRepositorio.findAllByUsuario(usuario);
+      return trabajoList;
+   }
+
+   @Transactional
+   public void cotizarTrabajo(Long id, double presupuesto) throws MyException {
 
       Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
 
-      if ( respuestaTrabajo.isPresent() ) {
+      if (respuestaTrabajo.isPresent()) {
          Trabajo trabajo = respuestaTrabajo.get();
 
-         if ( trabajo.getEstado().equals(Estado.ACEPTADO) ) {
+         if (trabajo.getEstado().equals(Estado.ACEPTADO)) {
             trabajo.setPresupuesto(presupuesto);
 
             trabajoRepositorio.save(trabajo);
@@ -87,12 +97,12 @@ public class TrabajoServicio {
       }
    }
 
-   private void validar( String descripcion, Long idUsuario ) throws MyException {
+   private void validar(String descripcion, Long idUsuario) throws MyException {
 
-      if ( descripcion.isEmpty() || descripcion == null ) {
+      if (descripcion.isEmpty() || descripcion == null) {
          throw new MyException("la descripcion no puede ser nulo o estar vacío");
       }
-      if ( idUsuario == null ) {
+      if (idUsuario == null) {
          throw new MyException("el ID de Usuario no puede ser nulo o estar vacío");
       }
    }
