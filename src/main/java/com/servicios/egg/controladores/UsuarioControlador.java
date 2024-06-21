@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.servicios.egg.entidades.Provedor;
+import com.servicios.egg.entidades.Comentario;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.servicios.ComentarioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
 
@@ -34,6 +35,9 @@ public class UsuarioControlador {
 
     @Autowired
     private TrabajoServicio trabajoServicio;
+
+    @Autowired
+    private ComentarioServicio comentarioServicio;
 
     @GetMapping("/dashboard")
     public String panelAdministrativo() {
@@ -119,6 +123,25 @@ public class UsuarioControlador {
         } catch (MyException ex) {
             modelo.put("error", ex.getMessage());
             return "presupuesto_form.html";
+        }
+    }
+
+    @GetMapping("/calificar/{id}")
+    public String calificar(@PathVariable Long id, ModelMap modelo) {
+        Comentario comentario = comentarioServicio.getOne(id);
+        modelo.put("comentario", comentario);
+        return "comentario_form.html";
+    }
+
+    @PostMapping("/calificar/{id}")
+    public String calificar(@PathVariable Long id, String comentario, ModelMap modelo) {
+        try {
+            comentarioServicio.crearcComentario(comentario);
+            modelo.put("exito", "Gracias por comentar");
+            return "redirect:/inicio";
+        } catch (MyException e) {
+            modelo.put("error", e.getMessage());
+            return "comentario_form.html";
         }
     }
 

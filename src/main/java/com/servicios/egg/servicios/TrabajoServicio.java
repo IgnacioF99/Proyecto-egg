@@ -1,6 +1,11 @@
 package com.servicios.egg.servicios;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
@@ -9,12 +14,6 @@ import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ProvedorRepositorio;
 import com.servicios.egg.repositorios.TrabajoRepositorio;
 import com.servicios.egg.repositorios.UsuarioRepositorio;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class TrabajoServicio {
@@ -43,7 +42,7 @@ public class TrabajoServicio {
       trabajo.setUsuario(usuario);
       trabajo.setProvedor(null);
       trabajo.setComentarios(null);
-      trabajo.setCalificacion(5);
+      trabajo.setCalificacion(0);
    }
 
    @Transactional
