@@ -91,9 +91,9 @@ public class TrabajoServicio {
       if (respuestaTrabajo.isPresent()) {
          Trabajo trabajo = respuestaTrabajo.get();
 
-         if (trabajo.getEstado().equals(Estado.ACEPTADO)) {
+         if (trabajo.getEstado().equals(Estado.SOLICITADO)) {
             trabajo.setPresupuesto(presupuesto);
-
+            trabajo.setEstado(Estado.ACEPTADO);
             trabajoRepositorio.save(trabajo);
          }
       }
@@ -107,5 +107,9 @@ public class TrabajoServicio {
       if (idUsuario == null) {
          throw new MyException("el ID de Usuario no puede ser nulo o estar vacío");
       }
+   }
+
+   public Trabajo getOne(Long id) {
+      return trabajoRepositorio.getReferenceById(id);
    }
 }

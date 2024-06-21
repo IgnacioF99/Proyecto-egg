@@ -75,8 +75,9 @@ public class UsuarioControlador {
         }
     }
 
-    @GetMapping("/crearTrabajo")
-    public String crearTrabajo(ModelMap modelo) {
+    @GetMapping("/crearTrabajo/{id}")
+    public String crearTrabajo(@PathVariable Long id, ModelMap modelo) {
+        modelo.put("trabajo", trabajoServicio.getOne(id));
         return "trabajo_form.html";
     }
 
@@ -86,10 +87,11 @@ public class UsuarioControlador {
 
         try {
             trabajoServicio.crearTrabajo(descripcion, presupuesto, idUsuario, idProvedor);
+            modelo.put("exito", "Su solicitud ha sido creada exitosamente.");
             return "redirect:/inicio";
         } catch (MyException ex) {
             modelo.put("error", ex.getMessage());
-            return "redirect:/usuario/trabajo_form.html";
+            return "trabajo_form.html";
         }
     }
 
@@ -100,6 +102,24 @@ public class UsuarioControlador {
         modelo.addAttribute("Trabajos", trabajoList);
         return "trabajo_list.html";
 
+    }
+
+    @GetMapping("/presupuesto/{id}")
+    public String aceptarPresu(@PathVariable Long id, ModelMap modelo) {
+        modelo.put("trabajo", trabajoServicio.getOne(id));
+        return "presupuesto_form.html";
+    }
+
+    @PostMapping("/presupuesto/{id}")
+    public String aceptarPresi(@PathVariable Long id, ModelMap modelo) {
+        try {
+            trabajoServicio.modificarTrabajoEstado(id);
+            modelo.put("exito", "Ha aceptado el presupuesto.");
+            return "redirect:/inicio";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "presupuesto_form.html";
+        }
     }
 
 }
