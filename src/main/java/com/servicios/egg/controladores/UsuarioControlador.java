@@ -86,7 +86,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/crearTrabajo/{id}")
-    public String crearTrabajo(@PathVariable Long idUsuario, Long idProvedor, String descripcion,
+    public String crearTrabajo(@PathVariable Long idUsuario, @RequestParam Long idProvedor, String descripcion,
             double presupuesto, ModelMap modelo) {
 
         try {
@@ -100,7 +100,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/listarTrabajos/{id}")
-    public String listarTrabajos(Long id, ModelMap modelo) {
+    public String listarTrabajos(@PathVariable Long id, ModelMap modelo) {
         Usuario usuario = usuarioServicio.getOne(id);
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajoPorUsuario(usuario);
         modelo.addAttribute("Trabajos", trabajoList);
@@ -126,17 +126,19 @@ public class UsuarioControlador {
         }
     }
 
-    @GetMapping("/calificar/{id}")
+    @GetMapping("/calificar/{id}") //
     public String calificar(@PathVariable Long id, ModelMap modelo) {
         Comentario comentario = comentarioServicio.getOne(id);
         modelo.put("comentario", comentario);
         return "comentario_form.html";
     }
 
-    @PostMapping("/calificar/{id}")
-    public String calificar(@PathVariable Long id, String comentario, ModelMap modelo) {
+    @PostMapping("/calificar/{id}") // id del trabajo, pensar como setear eso
+    public String calificar(@PathVariable Long id, @RequestParam String comentario, @RequestParam int calificacion,
+            ModelMap modelo) {
         try {
             comentarioServicio.crearcComentario(comentario);
+            trabajoServicio.modificarCalificacion(id, calificacion);
             modelo.put("exito", "Gracias por comentar");
             return "redirect:/inicio";
         } catch (MyException e) {

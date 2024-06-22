@@ -98,6 +98,18 @@ public class TrabajoServicio {
       }
    }
 
+   @Transactional
+   public void modificarCalificacion(Long id, int calificacion) throws MyException {
+      validarCalif(calificacion);
+      Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+      if (respuesta.isPresent()) {
+         Trabajo trabajo = respuesta.get();
+         trabajo.setCalificacion(calificacion);
+
+         trabajoRepositorio.save(trabajo);
+      }
+   }
+
    private void validar(String descripcion, Long idUsuario) throws MyException {
 
       if (descripcion.isEmpty() || descripcion == null) {
@@ -105,6 +117,12 @@ public class TrabajoServicio {
       }
       if (idUsuario == null) {
          throw new MyException("el ID de Usuario no puede ser nulo o estar vacío");
+      }
+   }
+
+   private void validarCalif(int califi) throws MyException {
+      if (califi < 0 || califi > 5) {
+         throw new MyException("Ha ingresado una calificacion incorrecta");
       }
    }
 
