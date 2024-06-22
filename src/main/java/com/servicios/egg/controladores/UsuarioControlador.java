@@ -81,7 +81,7 @@ public class UsuarioControlador {
 
     @GetMapping("/crearTrabajo/{id}")
     public String crearTrabajo(@PathVariable Long id, ModelMap modelo) {
-        modelo.put("trabajo", trabajoServicio.getOne(id));
+        modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "trabajo_form.html";
     }
 

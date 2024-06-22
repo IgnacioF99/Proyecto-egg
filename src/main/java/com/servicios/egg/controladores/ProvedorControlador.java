@@ -27,7 +27,7 @@ public class ProvedorControlador {
 
     @GetMapping("/presupuestar/{id}")
     public String presupuestar(@PathVariable Long id, ModelMap modelo) {
-        modelo.put("trabajo", trabajoServicio.getOne(id));
+        modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "presupuesto_form.html";
     }
 
@@ -58,7 +58,7 @@ public class ProvedorControlador {
     @GetMapping("/lista")
     public String listar(ModelMap modelo) {
         List<Provedor> provedorList = provedorServicio.listarProvedores();
-        modelo.addAttribute("provedorList", provedorList);
+        modelo.addAttribute("provedores", provedorList);
         return "provedor_list.html";
     }
 
