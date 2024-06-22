@@ -1,5 +1,7 @@
 package com.servicios.egg.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ProvedorServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
@@ -50,6 +53,13 @@ public class ProvedorControlador {
             modelo.put("error", ex.getMessage());
             return "presupuesto_form.html";
         }
+    }
+
+    @GetMapping("/lista")
+    public String listar(ModelMap modelo) {
+        List<Provedor> provedorList = provedorServicio.listarProvedores();
+        modelo.addAttribute("provedorList", provedorList);
+        return "provedor_list.html";
     }
 
 }

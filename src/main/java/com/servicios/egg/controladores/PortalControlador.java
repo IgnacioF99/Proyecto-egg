@@ -116,6 +116,9 @@ public class PortalControlador {
       if (logueado.getRol().toString().equalsIgnoreCase("USER")) {
          return "inicio.html";
       }
+      if (logueado.getRol().toString().equalsIgnoreCase("PROV")) {
+         return "inicio.html";
+      }
       return "index.html";
    }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.servicios.egg.entidades.Provedor;
@@ -15,6 +16,7 @@ import com.servicios.egg.repositorios.ProvedorRepositorio;
 import com.servicios.egg.repositorios.ServicioRepositorio;
 import com.servicios.egg.repositorios.UsuarioRepositorio;
 
+@Service
 public class ProvedorServicio {
    @Autowired
    private ProvedorRepositorio provedorRepositorio;
