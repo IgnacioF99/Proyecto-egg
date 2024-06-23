@@ -22,7 +22,7 @@
                         <p class="card-text" >Correo electronico: <span th:text="${provedor.usuario.email}"></span> </p>
                         <p class="card-text" >Telefono: <span th:text="${provedor.usuario.phone}"></span></p> 
                         <ul th:if="${provedor.servicio.size() > 0}" th:each="servicio : ${provedor.servicio}">
-                            <li class="card-text" th:each="servicio: ${provedor.servicio}" th:text="${servicio.nombre}"></li>
+                            <li class="card-text" th:text="${servicio.nombre}"></li>
                         </ul>
                         <!-- <p class="card-text" th:text="${provedor.calificacion}">calificacion promedio</p> -->
                         <!-- <p class="card-text" th:text="${usuario.servicio}"></p> -->

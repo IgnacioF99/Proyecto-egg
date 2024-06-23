@@ -110,7 +110,7 @@ public class UsuarioControlador {
 
     @GetMapping("/presupuesto/{id}")
     public String aceptarPresu(@PathVariable Long id, ModelMap modelo) {
-        modelo.put("trabajo", trabajoServicio.getOne(id));
+        modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "presupuesto_form.html";
     }
 
@@ -129,7 +129,7 @@ public class UsuarioControlador {
     @GetMapping("/calificar/{id}") //
     public String calificar(@PathVariable Long id, ModelMap modelo) {
         Comentario comentario = comentarioServicio.getOne(id);
-        modelo.put("comentario", comentario);
+        modelo.addAttribute("comentario", comentario);
         return "comentario_form.html";
     }
 
