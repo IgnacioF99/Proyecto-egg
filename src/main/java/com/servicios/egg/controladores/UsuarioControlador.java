@@ -7,8 +7,11 @@ package com.servicios.egg.controladores;
 
 import java.util.List;
 
+import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.enums.Localidad;
+import com.servicios.egg.servicios.ServicioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +32,18 @@ public class UsuarioControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @Autowired
+    private ServicioServicio servicioServicio;
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/dashboard")
-    public String panelAdministrativo() {
-        return "index"; // Aca deberia ir un "inicio.html" o modificar el index
+    public String mostrarPanelUsuario(ModelMap modelo) {
+        List<Servicio> servicioList = servicioServicio.listarServicios();
+        List<Usuario> usuarioList = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("usuarios", usuarioList);
+        modelo.addAttribute("localidades", Localidad.values());
+        modelo.addAttribute("servicios", servicioList);
+        return "panel_usuario.html";
     }
 
     @GetMapping("/lista")
@@ -48,13 +60,13 @@ public class UsuarioControlador {
         return "redirect:/admin/usuarios";
     }
 
-    @GetMapping("/modificar/{id}")
+    /*@GetMapping("/modificar/{id}")
     public String modificar(@PathVariable Long id, ModelMap modelo) {
         modelo.put("usuario", usuarioServicio.getOne(id));
         return "usuario_form.html";
-    }
+    }*/
 
-    @PostMapping("/modificar/{id}")
+    /*@PostMapping("/modificar/{id}")
     public String modificar(@PathVariable @RequestParam(required = false) Long id,
             String nombre, String email, String phone, MultipartFile archivo, String password, String password2, Localidad localidad,
             ModelMap modelo) {
@@ -65,6 +77,25 @@ public class UsuarioControlador {
         } catch (MyException e) {
             modelo.put("error", e.getMessage());
             return "usuario_form.html";
+        }
+    }*/
+
+    @PostMapping("/modificar/{id}")
+    public String modificar( @PathVariable Long id, String nombre, String email, MultipartFile archivo, String password,
+                             String password2, String phone, Localidad localidad, ModelMap modelo) {
+        try {
+            usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
+            modelo.put("exito", "Sus datos han sido actualizados correctamente");
+            return "redirect:/usuario/dashboard";
+
+        } catch (MyException e) {
+            modelo.addAttribute("error", e.getMessage());
+            modelo.addAttribute("nombre",nombre);
+            modelo.addAttribute("email",email);
+            modelo.addAttribute("phone",phone);
+            modelo.addAttribute("localidades",Localidad.values());
+
+            return "panel_usuario.html";
         }
     }
 }
