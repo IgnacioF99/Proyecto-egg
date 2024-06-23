@@ -154,6 +154,29 @@ public class UsuarioServicio implements UserDetailsService {
          usuarioRepositorio.save(usuario);
       }
    }
+   @Transactional
+   public void darDeBajaUsuario( Long id ) {
+      Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
+
+      if ( respuestaUsuario.isPresent() ) {
+         Usuario usuario = respuestaUsuario.get();
+
+         usuario.setAlta(false);
+         usuarioRepositorio.save(usuario);
+      }
+   }
+
+   @Transactional
+   public void darDeAltaUsuario( Long id ) {
+      Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
+
+      if ( respuestaUsuario.isPresent() ) {
+         Usuario usuario = respuestaUsuario.get();
+
+         usuario.setAlta(true);
+         usuarioRepositorio.save(usuario);
+      }
+   }
 
    @Transactional
    public void eliminarUsuario( Long id ) {

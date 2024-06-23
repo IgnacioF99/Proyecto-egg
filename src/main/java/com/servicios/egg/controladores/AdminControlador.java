@@ -2,7 +2,6 @@ package com.servicios.egg.controladores;
 
 import java.util.List;
 
-import com.servicios.egg.enums.Localidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Usuario;
+import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
@@ -46,6 +46,18 @@ public class AdminControlador {
    @GetMapping("/modificarRol/{id}")
    public String cambiarRol(@PathVariable Long id) {
       usuarioServicio.cambiarRolUsuario(id);
+      return "redirect:/admin/usuarios";
+   }
+   
+   @GetMapping("/bajaUsuario/{id}")
+   public String darBajaUsuario(@PathVariable Long id) {
+      usuarioServicio.darDeBajaUsuario(id);
+      return "redirect:/admin/usuarios";
+   }
+   
+   @GetMapping("/altaUsuario/{id}")
+   public String darAltaUsuario(@PathVariable Long id) {
+      usuarioServicio.darDeAltaUsuario(id);
       return "redirect:/admin/usuarios";
    }
 

@@ -39,7 +39,10 @@
         }
     }
 
+}
 
+.label-imput{
+    font-size:smaller;
 }
 
 .contenedor-servicios{
@@ -62,6 +65,12 @@
     transition: 0.2s;
 }
 
+.contenedor:hover{
+    box-shadow: 1px 1px 10px var(--color-tema-secundario);
+    /* scale: 1.01;
+    transition: 0.2s; */
+}
+
 .btn{
     background-color: var(--color-tema-secundario);
     border-bottom: var(--color-tema-enfasis);
@@ -73,6 +82,8 @@
     color: white;
 }
 
+
+/* --------------------------- RESPONSIVE-------------------- */
 @media (max-width: 991.98px) {
     .bg-image {
         display: none; /* Oculta la imagen de fondo en pantallas pequeñas */
@@ -107,4 +118,5 @@
         border: 1px solid #ddd; /* Agrega un borde en pantallas pequeñas */
         margin: 1rem; /* Margen para separar el borde */
     }
+
 }

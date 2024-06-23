@@ -1,8 +1,7 @@
 package com.servicios.egg.controladores;
 
-import com.servicios.egg.entidades.Servicio;
-import com.servicios.egg.enums.Localidad;
-import com.servicios.egg.servicios.ServicioServicio;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Usuario;
+import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
 
 import jakarta.servlet.http.HttpSession;
-
-import java.util.List;
 
 
 @Controller
@@ -103,15 +103,19 @@ public class PortalControlador {
 
    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_PROV')")
    @GetMapping("/inicio")
-   public String inicio( HttpSession session ) {
+   public String inicio( ModelMap modelo, HttpSession session ) {
       Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+      // List<Servicio> servicioList = servicioServicio.listarServicios();
+      // modelo.addAttribute("servicios", servicioList);
 
       if ( logueado.getRol().toString().equalsIgnoreCase("ADMIN") ) {
          return "redirect:/admin/dashboard";
       }
 
-      if ( logueado.getRol().toString().equalsIgnoreCase("USER") ) {
-         return "inicio.html";
+      if (logueado.getRol().toString().equalsIgnoreCase("USER")) {
+         List<Servicio> servicioList = servicioServicio.listarServicios();
+         modelo.addAttribute("servicios", servicioList);
+         return "redirect:/usuario/dashboard";
       }
       return "index.html";
    }
