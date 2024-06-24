@@ -153,7 +153,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
-                                            <th scope="col">Solicitud</th>
+                                            <th sec:authorize="hasRole('PROV')" scope="col">Solicitud</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -161,7 +161,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <td>
+                                            <td sec:authorize="hasRole('PROV')">
                                                 <a th:href="@{/provedor/presupuestar/__${trabajo.id}__}">Presupuestar</a>
                                             </td>
                                         </tr>
@@ -188,6 +188,7 @@
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -195,7 +196,11 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
+                                            <th scope="row" th:text="${trabajo.presupuesto}"></th>
+                                            <td>                
+                                                <a th:href="@{/usuario/aceptarTrabajo/__${trabajo.id}__}" data-bs-toggle="tooltip" title="Aceptar trabajo" class="btn btn-primario btn-sm">Aceptar</a>
+                                                <!-- <a th:href="@{/provedor/verTrabajo/__${trabajo.id}__}">Cancelar</a> -->
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

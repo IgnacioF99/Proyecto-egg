@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.servicios.egg.entidades.Comentario;
 import com.servicios.egg.entidades.Provedor;
@@ -54,7 +55,9 @@ public class UsuarioControlador {
     public String mostrarPanelUsuario(ModelMap modelo) {
         List<Servicio> servicioList = servicioServicio.listarServicios();
         List<Usuario> usuarioList = usuarioServicio.listarUsuarios();
+        List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
         modelo.addAttribute("usuarios", usuarioList);
+        modelo.addAttribute("trabajos", trabajoList);
         modelo.addAttribute("localidades", Localidad.values());
         modelo.addAttribute("servicios", servicioList);
         return "panel_usuario.html";
@@ -82,25 +85,21 @@ public class UsuarioControlador {
      * }
      */
 
-    /*
-     * @PostMapping("/modificar/{id}")
-     * public String modificar(@PathVariable @RequestParam(required = false) Long
-     * id,
-     * String nombre, String email, String phone, MultipartFile archivo, String
-     * password, String password2,
-     * Localidad localidad,
-     * ModelMap modelo) {
-     * try {
-     * usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password,
-     * password2, phone, localidad);
-     * modelo.put("exito", "Ha actualizado sin problemas el perfil");
-     * return "redirect:/usuario/dashboard";
-     * } catch (MyException e) {
-     * modelo.put("error", e.getMessage());
-     * return "usuario_form.html";
-     * }
-     * }
-     */
+    @PostMapping("/modificar/{id}")
+    public String modificar(@PathVariable @RequestParam(required = false) Long id,
+            String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
+            Localidad localidad,
+            ModelMap modelo) {
+        try {
+            usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password,
+                    password2, phone, localidad);
+            modelo.put("exito", "Ha actualizado sin problemas el perfil");
+            return "redirect:/usuario/dashboard";
+        } catch (MyException e) {
+            modelo.put("error", e.getMessage());
+            return "usuario_form.html";
+        }
+    }
 
     @GetMapping("/crearTrabajo/{id}")
     public String crearTrabajo(@PathVariable Long id, ModelMap modelo) {
@@ -137,16 +136,10 @@ public class UsuarioControlador {
         return "presupuesto_form.html";
     }
 
-    @PostMapping("/presupuesto/{id}")
-    public String aceptarPresi(@PathVariable Long id, ModelMap modelo) {
-        try {
-            trabajoServicio.modificarTrabajoEstado(id);
-            modelo.put("exito", "Ha aceptado el presupuesto.");
-            return "redirect:/inicio";
-        } catch (MyException ex) {
-            modelo.put("error", ex.getMessage());
-            return "presupuesto_form.html";
-        }
+    @GetMapping("/aceptarTrabajo/{id}")
+    public String aceptarTrabajo(@PathVariable Long id) {
+        trabajoServicio.aceptarTrabajo(id);
+        return "redirect:/usuario/dashboard";
     }
 
     @GetMapping("/calificar/{id}") //

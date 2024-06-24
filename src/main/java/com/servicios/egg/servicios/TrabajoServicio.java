@@ -80,6 +80,28 @@ public class TrabajoServicio {
    }
 
    @Transactional
+   public void aceptarTrabajo(Long id) {
+      Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
+
+      if (respuestaTrabajo.isPresent()) {
+         Trabajo trabajo = respuestaTrabajo.get();
+         trabajo.setEstado(Estado.ACEPTADO);
+         trabajoRepositorio.save(trabajo);
+      }
+   }
+
+   @Transactional
+   public void finalizarTrabajo(Long id) {
+      Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
+
+      if (respuestaTrabajo.isPresent()) {
+         Trabajo trabajo = respuestaTrabajo.get();
+         trabajo.setEstado(Estado.TERMINADO);
+         trabajoRepositorio.save(trabajo);
+      }
+   }
+
+   @Transactional
    public List<Trabajo> listarTrabajoPorUsuario(Long id) {
       Optional<Usuario> usuario = usuarioRepositorio.findById(id);
       List<Trabajo> trabajoList = trabajoRepositorio.findAllByUsuario(usuario);

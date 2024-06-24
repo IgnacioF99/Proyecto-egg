@@ -16,7 +16,7 @@ ALTER table trabajo modify column estado ENUM('SOLICITADO','ACEPTADO','PRESUPUES
 
 alter TABLE trabajo modify column presupuesto DOUBLE;
 
--- update trabajo set estado = 'SOLICITADO' where descripcion = 'primer trabajo';
+update trabajo set estado = 'PRESUPUESTADO' where descripcion = 'primer trabajo';
 
 alter table comentario drop foreign key FKsnw2c50yyvxqymdphrng9ee2g;
 

@@ -53,16 +53,10 @@ public class ProvedorControlador {
         }
     }
 
-    @PostMapping("/finalizado/{id}")
+    @GetMapping("/finalizar/{id}")
     public String finalizado(@PathVariable Long id, ModelMap modelo) {
-        try {
-            trabajoServicio.modificarTrabajoEstado(id);
-            modelo.put("exito", "El trabajo ya fue finalizado.");
-            return "redirect:/inicio";
-        } catch (MyException ex) {
-            modelo.put("error", ex.getMessage());
-            return "presupuesto_form.html";
-        }
+        trabajoServicio.finalizarTrabajo(id);
+        return "redirect:/provedor/dashboard";
     }
 
     @GetMapping("/lista")
