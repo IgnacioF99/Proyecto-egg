@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.servicios.egg.entidades.Comentario;
+import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ComentarioRepositorio;
+import com.servicios.egg.repositorios.TrabajoRepositorio;
 
 @Service
 public class ComentarioServicio {
@@ -18,13 +20,17 @@ public class ComentarioServicio {
    @Autowired
    private ComentarioRepositorio comentarioRepositorio;
 
+   @Autowired
+   private TrabajoRepositorio trabajoRepositorio;
+
    @Transactional
-   public void crearcComentario(String comentario) throws MyException {
+   public void crearcComentario(Long id, String comentario) throws MyException {
       validar(comentario);
+      Trabajo trabajo = trabajoRepositorio.findById(id).get();
       Comentario newComentario = new Comentario();
       newComentario.setComentario(comentario);
       newComentario.setAlta(true);
-
+      newComentario.setTrabajo(trabajo);
       comentarioRepositorio.save(newComentario);
    }
 

@@ -259,7 +259,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
-                                            <th scope="col">Solicitud</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -268,7 +268,7 @@
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <td>
-                                                <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
+                                                <a th:href="@{/usuario/comentar/__${trabajo.id}__}" class="btn btn-primario btn-sm" data-bs-toggle="tooltip" title="Comentar y calificar">Calificar</a>
                                             </td>
                                         </tr>
                                     </tbody>

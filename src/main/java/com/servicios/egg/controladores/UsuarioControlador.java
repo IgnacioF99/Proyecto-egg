@@ -142,21 +142,20 @@ public class UsuarioControlador {
         return "redirect:/usuario/dashboard";
     }
 
-    @GetMapping("/calificar/{id}") //
+    @GetMapping("/comentar/{id}") //
     public String calificar(@PathVariable Long id, ModelMap modelo) {
-        Comentario comentario = comentarioServicio.getOne(id);
-        modelo.addAttribute("comentario", comentario);
+        modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "comentario_form.html";
     }
 
-    @PostMapping("/calificar/{id}") // id del trabajo, pensar como setear eso
-    public String calificar(@PathVariable Long id, @RequestParam String comentario, @RequestParam int calificacion,
+    @PostMapping("/comentar/{id}") // id del trabajo, pensar como setear eso
+    public String calificar(@PathVariable Long id, @RequestParam String comentario,
             ModelMap modelo) {
         try {
-            comentarioServicio.crearcComentario(comentario);
-            trabajoServicio.modificarCalificacion(id, calificacion);
+            comentarioServicio.crearcComentario(id, comentario);
+            // trabajoServicio.modificarCalificacion(id, calificacion);
             modelo.put("exito", "Gracias por comentar");
-            return "redirect:/inicio";
+            return "redirect:/usuario/dashboard";
         } catch (MyException e) {
             modelo.put("error", e.getMessage());
             return "comentario_form.html";
