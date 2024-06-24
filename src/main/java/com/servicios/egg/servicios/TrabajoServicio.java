@@ -100,7 +100,7 @@ public class TrabajoServicio {
       if (respuestaTrabajo.isPresent()) {
          Trabajo trabajo = respuestaTrabajo.get();
          trabajo.setPresupuesto(presupuesto);
-         trabajo.setEstado(Estado.ACEPTADO);
+         trabajo.setEstado(Estado.PRESUPUESTADO);
          trabajoRepositorio.save(trabajo);
       }
 

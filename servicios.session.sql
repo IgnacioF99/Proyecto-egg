@@ -11,3 +11,9 @@ use dbservicios;
 INSERT into servicios_has_provedores (provedor_id,servicio_id) values (1,6);
 
 show create table trabajo;
+
+ALTER table trabajo modify column estado ENUM('SOLICITADO','ACEPTADO','PRESUPUESTADO', 'TERMINADO','CANCELADO');
+
+alter TABLE trabajo modify column presupuesto DOUBLE;
+
+update trabajo set estado = 'SOLICITADO' where descripcion = 'primer trabajo';

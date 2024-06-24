@@ -17,25 +17,22 @@
 <main>
     <div th:replace="~{/fragments/exito_error.html}"></div>
     <section>
-        <form th:action="@{/provedor/presupuestar/__${trabajo.id}__}" method="POST" class="formulario m-5 shadow p-3 rounded">
+        <form th:action="@{/provedor/presupuestar/__${trabajo.id}__}" method="POST" class="formulario m-5 shadow p-3 rounded" enctype="multipart/form-data">
 
-            <h2>Costo aproximado del servicio $:</h2>
             <div sec:authorize="hasRole('PROV')" class="input contenedor">
-                <input th:value="${trabajo.presupuesto}" type="number" name="Costo del servicio" th:readonly="${#strings.equals(trabajo.estado, 'SOLICITADO') && #strings.equals(trabajo.estado, 'PRESUPUESTADO')}"/>
+            <h2>Costo aproximado del servicio $:</h2>
+                <input th:value="${trabajo.presupuesto}" type="number" name="presupuesto" class="form-control"/>
             </div>
-            <div sec:authorize="hasRole('PROV')"class="button-container2">
-                <button type="submit" class="form-group btn btn-primario my-3 w-100">Aceptar</button>
-                <!-- <input th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')}" type="submit" value="Aceptar" onclick="estado('PRESUPUESTADO')" class="button"/>
-                <input th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')}" type="submit" value="Rechazar" onclick="estado('CANCELADO')" class="button"/>
-                <input th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')}" type="submit" value="Rechazar" onclick="estado('TERMINADO')" class="button"/> -->
-            </div>
-            <div sec:authorize="hasRole('USER')" class="input contenedor">
+            <button type="submit" class="form-group btn btn-primario my-3 w-100">Aceptar</button>
+            <!-- <div sec:authorize="hasRole('PROV')"class="button-container2">
+            </div> -->
+            <!-- <div sec:authorize="hasRole('USER')" class="input contenedor">
                 <input th:value="${trabajo.presupuesto}" type="text" name="Costo del servicio" readonly/>
             </div>
             <div sec:authorize="hasRole('USER')"class="button-container2">
                 <input th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')}" type="submit" value="Aceptar" onclick="estado('ACEPTADO')" class="button"/>
                 <input th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')}" type="submit" value="Rechazar" onclick="estado('CANCELADO')" class="button"/>
-            </div>
+            </div> -->
         </section>
     </form>
 </main>
@@ -44,7 +41,7 @@
     <div th:replace="~{/fragments/footer.html}"></div>
 </footer>
 
-<script src="/js/estado.js"></script>
+
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

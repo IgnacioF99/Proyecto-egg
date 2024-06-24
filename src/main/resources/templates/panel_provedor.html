@@ -176,7 +176,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            ACEPTADOS
+                            PRESUPUESTADO
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -188,6 +188,38 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
+                                            <th scope="col">Presupuesto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="trabajo :${trabajos}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')}">
+                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
+                                            <th th:text="${trabajo.descripcion}"></th>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            ACEPTADOS
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <section class="seccion tabla">
+                                <table class="table table-hover shadow p-3 rounded">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
+                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Presupuesto</th>
                                             <th scope="col">Solicitud</th>
                                         </tr>
                                     </thead>
@@ -196,6 +228,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
                                             <td>
                                                 <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
                                             </td>
@@ -209,11 +242,11 @@
                 
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                             TERMINADOS
                         </button>
                     </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <section class="seccion tabla">
                                 <table class="table table-hover shadow p-3 rounded">
