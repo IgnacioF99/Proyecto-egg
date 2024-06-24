@@ -39,7 +39,7 @@ public class TrabajoServicio {
       trabajo.setAlta(true);
       trabajo.setEstado(Estado.SOLICITADO);
       trabajo.setDescripcion(descripcion);
-      trabajo.setPresupuesto(0);
+      trabajo.setPresupuesto(null);
       trabajo.setUsuario(usuario);
       trabajo.setProvedor(provedor);
       trabajo.setComentarios(null);
@@ -93,19 +93,17 @@ public class TrabajoServicio {
    }
 
    @Transactional
-   public void cotizarTrabajo(Long id, double presupuesto) throws MyException {
+   public void cotizarTrabajo(Long id, Double presupuesto) throws MyException {
 
       Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
 
       if (respuestaTrabajo.isPresent()) {
          Trabajo trabajo = respuestaTrabajo.get();
-
-         if (trabajo.getEstado().equals(Estado.SOLICITADO)) {
-            trabajo.setPresupuesto(presupuesto);
-            trabajo.setEstado(Estado.ACEPTADO);
-            trabajoRepositorio.save(trabajo);
-         }
+         trabajo.setPresupuesto(presupuesto);
+         trabajo.setEstado(Estado.ACEPTADO);
+         trabajoRepositorio.save(trabajo);
       }
+
    }
 
    @Transactional

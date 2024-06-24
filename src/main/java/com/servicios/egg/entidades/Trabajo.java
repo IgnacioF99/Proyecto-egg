@@ -23,7 +23,7 @@ public class Trabajo {
 
     private String descripcion;
 
-    private double presupuesto;
+    private Double presupuesto;
 
     private boolean alta;
 
@@ -32,11 +32,11 @@ public class Trabajo {
 
     private int calificacion;
 
-    @OneToMany(mappedBy = "trabajo",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "trabajo", fetch = FetchType.LAZY)
     private List<Comentario> comentarios;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")//Llave foranea
+    @JoinColumn(name = "usuario_id") // Llave foranea
     private Usuario usuario;
 
     @OneToOne

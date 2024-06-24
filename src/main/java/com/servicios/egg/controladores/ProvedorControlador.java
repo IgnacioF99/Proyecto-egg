@@ -42,11 +42,11 @@ public class ProvedorControlador {
     }
 
     @PostMapping("/presupuestar/{id}")
-    public String presupuestar(@PathVariable Long id, ModelMap modelo, double presupuesto) {
+    public String presupuestar(@PathVariable Long id, ModelMap modelo, Double presupuesto) {
         try {
             trabajoServicio.cotizarTrabajo(id, presupuesto);
             modelo.put("exito", "Se ha presupuestado correctamente");
-            return "redirect:/inicio";
+            return "redirect:/provedor/dashboard";
         } catch (MyException ex) {
             modelo.put("error", ex.getMessage());
             return "presupuesto_form.html";
