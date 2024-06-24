@@ -39,7 +39,7 @@ public class Trabajo {
     @JoinColumn(name = "usuario_id") // Llave foranea
     private Usuario usuario;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provedor_id")
     private Provedor provedor;
 
