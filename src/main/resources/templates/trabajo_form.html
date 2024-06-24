@@ -13,34 +13,26 @@
     </header>
 
     <main>
-
         <div class="container-fluid p-5">
-
-            <form class="formulario m-5 shadow p-3 rounded" th:action="@{/admin/crearServicio}" method="POST" enctype="multipart/form-data">
-
-                <div class="form-group my-3">
-                    <h3 class="card-title">Crear Servicio</h3>
+            <form class="formulario m-5 shadow p-3 rounded" th:action="@{/usuario/crearTrabajo/__${provedor.id}__}" method="POST" enctype="multipart/form-data">
+                <input th:value=${session.usuariosession.id} name="idUsuario" type="hidden">
+                <input th:value=${provedor.id} name="idProvedor" type="hidden">
+                    <h3 class="card-title">Crear Trabajo</h3>
                 </div>
 
                 <div class="form-group my-2">
-                    <input type="text" class="form-control" name="nombre" placeholder="Servicio" th:value="${nombre}" required>
-                </div>
-                
-                <div class="form-group my-2">
-                    <input type="text" class="form-control" name="descripcion" placeholder="Descripcion" th:value="${descripcion}" required>
-                </div>
-
-                <div class="form-group my-2">
-                    <input type="file" class="form-control" name="archivo" required>
+                    <input type="text" class="form-control" name="descripcion" placeholder="Descripcion de la reparacion que necesita" th:value="${descripcion}" required>
                 </div>
 
                 <button type="submit" class="form-group btn btn-primario my-3 w-100">Aceptar</button>
-
             </form>
 
-        </div>
-    </main>
 
+        </div>
+
+
+
+    </main>
 
     <footer>
         <!-- Contenedor para cargar el contenido de footer.html -->

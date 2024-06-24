@@ -23,6 +23,7 @@ import com.servicios.egg.servicios.UsuarioServicio;
 @Controller
 @RequestMapping("/admin")
 public class AdminControlador {
+
    @Autowired
    private UsuarioServicio usuarioServicio;
 
@@ -95,16 +96,17 @@ public class AdminControlador {
    }
 
    @PostMapping("/crearServicio")
-   public String crearServicio( @RequestParam String nombre, @RequestParam String descripcion, MultipartFile archivo, ModelMap modelo) {
+   public String crearServicio(@RequestParam String nombre, @RequestParam String descripcion, MultipartFile archivo,
+         ModelMap modelo) {
 
-       try {
-           servicioServicio.crearServicio(nombre,descripcion, archivo);
-           return "redirect:/admin/listarServicios";
+      try {
+         servicioServicio.crearServicio(nombre, descripcion, archivo);
+         return "redirect:/admin/listarServicios";
 
-       } catch (MyException ex) {
+      } catch (MyException ex) {
          modelo.put("error", ex.getMessage());
          return "redirect:/admin/crearServicio";
-       }
+      }
    }
 
    @GetMapping("/listarServicios")
@@ -123,16 +125,17 @@ public class AdminControlador {
    }
 
    @PostMapping("/modificarServicio/{id}")
-   public String modificarServicio(@PathVariable Long id, String nombre, String descripcion, MultipartFile archivo, ModelMap modelo){
+   public String modificarServicio(@PathVariable Long id, String nombre, String descripcion, MultipartFile archivo,
+         ModelMap modelo) {
       try {
-         servicioServicio.actualizarServicio(id,nombre,descripcion,archivo);
+         servicioServicio.actualizarServicio(id, nombre, descripcion, archivo);
          modelo.put("exito", "El servicio ha sido actualizado correctamente");
 
          return "redirect:/admin/listarServicios";
 
       } catch (MyException e) {
          modelo.put("error", e.getMessage());
-         
+
          return "servicio_modificar.html";
       }
    }

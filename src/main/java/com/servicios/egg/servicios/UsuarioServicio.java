@@ -4,16 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.servicios.egg.entidades.Imagen;
-import com.servicios.egg.entidades.Usuario;
-import com.servicios.egg.enums.Localidad;
-import com.servicios.egg.enums.Rol;
-import com.servicios.egg.excepciones.MyException;
-import com.servicios.egg.repositorios.UsuarioRepositorio;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.cglib.core.Local;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,13 +12,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.servicios.egg.entidades.Imagen;
+import com.servicios.egg.entidades.Usuario;
+import com.servicios.egg.enums.Localidad;
+import com.servicios.egg.enums.Rol;
+import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.repositorios.UsuarioRepositorio;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -40,10 +36,10 @@ public class UsuarioServicio implements UserDetailsService {
    private ImagenServicio imagenServicio;
 
    @Override
-   public UserDetails loadUserByUsername( String email ) throws UsernameNotFoundException {
+   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
       Usuario usuario = usuarioRepositorio.buscarUsuarioPorEmail(email);
-      if ( usuario != null ) {
+      if (usuario != null) {
          List<GrantedAuthority> permisos = new ArrayList<>();
          GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
          permisos.add(p);
@@ -61,7 +57,8 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
-   public void registrarUsuario( MultipartFile archivo, String nombre, String email, String password, String password2, String phone, Localidad localidad ) throws MyException {
+   public void registrarUsuario(MultipartFile archivo, String nombre, String email, String password, String password2,
+         String phone, Localidad localidad) throws MyException {
 
       validar(nombre, email, password, password2);
 
@@ -81,13 +78,14 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
-   public void actualizarUsuario( MultipartFile archivo, Long id, String nombre, String email, String password, String password2, String phone, Localidad localidad ) throws MyException {
+   public void actualizarUsuario(MultipartFile archivo, Long id, String nombre, String email, String password,
+         String password2, String phone, Localidad localidad) throws MyException {
 
       validar(nombre, email, password, password2);
 
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
 
-      if ( respuestaUsuario.isPresent() ) {
+      if (respuestaUsuario.isPresent()) {
          Usuario usuario = respuestaUsuario.get();
          usuario.setNombre(nombre);
          usuario.setEmail(email);
@@ -96,7 +94,7 @@ public class UsuarioServicio implements UserDetailsService {
          usuario.setLocalidad(localidad);
 
          String idImagen = usuario.getImagen().getIdImagen();
-         if(archivo != null && !archivo.isEmpty()){
+         if (archivo != null && !archivo.isEmpty()) {
             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
             usuario.setImagen(imagen);
          } else {
@@ -104,12 +102,14 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setImagen(imagen);
          }
 
-         /*String idImagen = null;
-         if ( usuario.getImagen() != null ) {
-            idImagen = usuario.getImagen().getIdImagen();
-         }
-         Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-         usuario.setImagen(imagen);*/
+         /*
+          * String idImagen = null;
+          * if ( usuario.getImagen() != null ) {
+          * idImagen = usuario.getImagen().getIdImagen();
+          * }
+          * Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+          * usuario.setImagen(imagen);
+          */
 
          usuarioRepositorio.save(usuario);
       }
@@ -125,6 +125,13 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional(readOnly = true)
+   public List<Usuario> listarProvedores() {
+      List<Usuario> listaProvedores = new ArrayList<>();
+      listaProvedores = usuarioRepositorio.buscarProvedores();
+      return listaProvedores;
+   }
+
+   @Transactional(readOnly = true)
    public List<Usuario> listarUsuariosAlta() {
 
       List<Usuario> usuariosList = new ArrayList<>();
@@ -133,17 +140,18 @@ public class UsuarioServicio implements UserDetailsService {
       return usuariosList;
    }
 
-   public List<Usuario> buscarUsuariosPorLocalidad( Localidad localidad) {
+   @Transactional
+   public List<Usuario> buscarUsuariosPorLocalidad(Localidad localidad) {
 
       List<Usuario> usuarioList = usuarioRepositorio.findAllByLocalidad(localidad);
       return usuarioList;
    }
 
    @Transactional
-   public void cambiarRolUsuario( Long id ) {
+   public void cambiarRolUsuario(Long id) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
 
-      if ( respuestaUsuario.isPresent() ) {
+      if (respuestaUsuario.isPresent()) {
          Usuario usuario = respuestaUsuario.get();
 
          if (usuario.getRol().equals(Rol.USER)) {
@@ -179,34 +187,34 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
-   public void eliminarUsuario( Long id ) {
+   public void eliminarUsuario(Long id) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
 
-      if ( respuestaUsuario.isPresent() ) {
+      if (respuestaUsuario.isPresent()) {
          Usuario usuario = respuestaUsuario.get();
 
          usuarioRepositorio.delete(usuario);
       }
    }
 
-   private void validar( String nombre, String email, String password, String password2 ) throws MyException {
+   private void validar(String nombre, String email, String password, String password2) throws MyException {
 
-      if ( nombre == null || nombre.isEmpty()  ) {
+      if (nombre == null || nombre.isEmpty()) {
          throw new MyException("el nombre no puede ser nulo o estar vacío");
       }
-      if ( email == null || email.isEmpty()) {
+      if (email == null || email.isEmpty()) {
          throw new MyException("el email no puede ser nulo o estar vacío");
       }
-      if ( password == null || password.isEmpty() || password.length() <= 5 ) {
+      if (password == null || password.isEmpty() || password.length() <= 5) {
          throw new MyException("La contraseña no puede estar vacía, y debe tener más de 5 dígitos");
       }
-      if ( !password.equals(password2) ) {
+      if (!password.equals(password2)) {
          throw new MyException("Las contraseñas ingresadas deben ser iguales");
       }
 
    }
 
-   public Usuario getOne( Long id ) {
+   public Usuario getOne(Long id) {
       return usuarioRepositorio.getReferenceById(id);
    }
 }

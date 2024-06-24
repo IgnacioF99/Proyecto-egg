@@ -32,7 +32,7 @@
 
     <main>
         <!-- Contenedor para cargar el contenido de exito_error.html -->
-        <div th:replace="/fragments/exito_error.html"></div>
+        <div th:replace="~{/fragments/exito_error.html}"></div>
 
         <div class="container-fluid p-0">
             
@@ -91,7 +91,7 @@
                             <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA">
                         </div>
 
-                        <button type="submit" class="btn btn-warning mt-3 botones w-100">Log in</button>
+                        <button type="submit" class="btn btn-warning mt-3 botones w-100">Iniciar sesión</button>
                     </form>
 
                 </div>
@@ -103,7 +103,7 @@
 
     <!-- Contenedor para cargar el contenido de footer.html -->
     <!-- <div th:replace="/fragments/footer :: footer"></div> -->
-    <div th:replace="/fragments/footer.html"></div>
+    <div th:replace="~{/fragments/footer.html}"></div>
 
 </body>
 </html>

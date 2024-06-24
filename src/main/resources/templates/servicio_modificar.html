@@ -9,9 +9,9 @@
 <body>
     <header>
         <!-- Contenedor para cargar el contenido de navbar.html -->
-        <div th:replace="/fragments/navbar.html"></div>
+        <div th:replace="~{/fragments/navbar.html}"></div>
         <!-- Contenedor para cargar el contenido de exito_error.html -->
-        <div th:replace="/fragments/exito_error.html"></div>
+        <div th:replace="~{/fragments/exito_error.html}"></div>
     </header>
 
     <main>
@@ -60,7 +60,7 @@
     <footer>
         <!-- Contenedor para cargar el contenido de footer.html -->
         <!-- <div th:replace="/fragments/footer :: footer"></div> -->
-        <div th:replace="/fragments/footer.html"></div>
+        <div th:replace="~{/fragments/footer.html}"></div>
     </footer>
 
 </body>

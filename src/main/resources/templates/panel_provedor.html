@@ -9,9 +9,9 @@
 <body>
 <header>
     <!-- Contenedor para cargar el contenido de navbar.html -->
-    <div th:replace="/fragments/navbar.html"></div>
+    <div th:replace="~{/fragments/navbar.html}"></div>
     <!-- Contenedor para cargar el contenido de exito_error.html -->
-    <div th:replace="/fragments/exito_error.html"></div>
+    <div th:replace="~{/fragments/exito_error.html}"></div>
 </header>
 
 <main class="p-2">
@@ -23,7 +23,7 @@
         <div class="offcanvas offcanvas-end rounded-4 rounded-end-0" data-bs-scroll="true" tabindex="0"
              id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header bg-primary-subtle">
-                <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de usuario</h4>
+                <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de proveedor</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body ms-4 me-0">
@@ -96,8 +96,8 @@
         </div>
     </div>
 
-    <div class="container-fluid contenedor-dashboard row d-flex justify-content-between p-4 bg-light">
-        <!-- ---Contenedor de TOP de Servicios--- -->
+    <!-- <div class="container-fluid contenedor-dashboard row d-flex justify-content-between p-4 bg-light">
+        ---Contenedor de TOP de Servicios---
         <div class="container contenedor contenedor-servicios-top col-12 col-sm-3 col-md-4 mb-4 mx-3 p-4 shadow bg-white rounded-4">
 
             <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Top 5 de Servicios</h3>
@@ -128,7 +128,7 @@
             </div>
 
 
-        </div>
+        </div> -->
 
         <!-- ---Contenedor de Info-Trabajos--- -->
         <div class="container contenedor contenedor-trabajos col mb-4 mx-3 p-4 shadow bg-white rounded-4">
@@ -146,6 +146,7 @@
                     <div id="collapseOne" class="accordion-collapse collapse show"
                          data-bs-parent="#accordionExample">
                         <div class="accordion-body">
+                            <!-- Aca va la respectiva lista -->
                             <section class="seccion tabla">
                                 <table class="table table-hover shadow p-3 rounded">
                                     <thead class="table-dark">
@@ -153,7 +154,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
-                                            <th sec:authorize="hasRole('PROV')" scope="col">Solicitud</th>
+                                            <th scope="col">Solicitud</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -161,7 +162,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <td sec:authorize="hasRole('PROV')">
+                                            <td>
                                                 <a th:href="@{/provedor/presupuestar/__${trabajo.id}__}">Presupuestar</a>
                                             </td>
                                         </tr>
@@ -171,7 +172,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -188,7 +189,6 @@
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
-                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -196,11 +196,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <th scope="row" th:text="${trabajo.presupuesto}"></th>
-                                            <td>                
-                                                <a th:href="@{/usuario/aceptarTrabajo/__${trabajo.id}__}" data-bs-toggle="tooltip" title="Aceptar trabajo" class="btn btn-primario btn-sm">Aceptar</a>
-                                                <!-- <a th:href="@{/provedor/verTrabajo/__${trabajo.id}__}">Cancelar</a> -->
-                                            </td>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -208,7 +204,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -225,7 +220,7 @@
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
-                                            <th scope="col">Solicitud</th>
+                                            <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -235,7 +230,7 @@
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
                                             <td>
-                                                <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
+                                                <a th:href="@{/provedor/finalizar/__${trabajo.id}__}" class="btn btn-primario btn-sm" data-bs-toggle="tooltip" title="Marcar trabajo como finalizado">Finalizar</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -244,6 +239,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
@@ -259,7 +255,8 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
-                                            <th scope="col">Acciones</th>
+                                            <th scope="col">Comentario</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -267,9 +264,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <td>
-                                                <a th:href="@{/usuario/comentar/__${trabajo.id}__}" class="btn btn-primario btn-sm" data-bs-toggle="tooltip" title="Comentar y calificar">Calificar</a>
-                                            </td>
+                                            <!-- <th th:text="${trabajo.comentario.comentario}"></th> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -286,7 +281,7 @@
 
 <footer>
     <!-- <div th:replace="/fragments/footer :: footer"></div> -->
-    <div th:replace="/fragments/footer.html"></div>
+    <div th:replace="~{/fragments/footer.html}"></div>
 </footer>
 
 </body>

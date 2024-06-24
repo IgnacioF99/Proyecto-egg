@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TrabajoRepositorio extends JpaRepository<Trabajo,Long>{
+public interface TrabajoRepositorio extends JpaRepository<Trabajo, Long> {
 
    // Buscar todos los trabajos con alta = true
    List<Trabajo> findAllByAltaTrue();
 
    // Buscar todos los trabajos con usuario = idUsuario
-   List<Trabajo> findAllByUsuario( Optional<Usuario> usuario );
+   List<Trabajo> findAllByUsuario(Optional<Usuario> usuario);
 
    // Buscar todos los trabajos con proveedor = idProvedor
-   List<Trabajo> findAllByProvedor( Optional<Provedor> provedor );
+   List<Trabajo> findAllByProvedor(Optional<Provedor> provedor);
 }
