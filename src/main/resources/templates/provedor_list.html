@@ -15,7 +15,7 @@
         <h1>Listado de Proveedores</h1>
         <div class="row">
             <div class="col-md-4">
-                <div class="card" style="width: 18rem;" th:each="provedor : ${provedores}"> <!-- aca debo traerme solo a los usuarios con el rol proveedor -->
+                <div class="card" style="width: 15rem;" th:each="provedor : ${provedores}"> <!-- aca debo traerme solo a los usuarios con el rol proveedor -->
                     <img th:if="${provedor.usuario.imagen != null}" th:src="@{/imagen/provedor/__${provedor.usuario.id}__}" class="card-img-top" alt="Proveedor 1">
                     <div class="card-body">
                         <h5 class="card-title">Nombre: <span th:text="${provedor.usuario.nombre}"></span></h5>
@@ -24,8 +24,9 @@
                         <ul th:if="${provedor.servicio.size() > 0}" th:each="servicio : ${provedor.servicio}">
                             <li class="card-text" th:text="${servicio.nombre}"></li>
                         </ul>
+                        <a th:href="@{/usuario/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
                         <!-- <p class="card-text" th:text="${provedor.calificacion}">calificacion promedio</p> -->
-                        <!-- <p class="card-text" th:text="${usuario.servicio}"></p> -->
+                        <!-- <p class="card-text" th:text="${usuario.servicio}"></p> --> <!-- falta esto por mejorar--> 
                     </div>
                 </div>
             </div>

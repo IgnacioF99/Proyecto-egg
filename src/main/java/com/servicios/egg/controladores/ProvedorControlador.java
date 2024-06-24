@@ -3,6 +3,7 @@ package com.servicios.egg.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.servicios.egg.entidades.Provedor;
+import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ProvedorServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
@@ -24,6 +26,14 @@ public class ProvedorControlador {
 
     @Autowired
     private TrabajoServicio trabajoServicio;
+
+    @PreAuthorize("hasRole('ROLE_PROV')")
+    @GetMapping("/dashboard")
+    public String mostrarPanelProvedor(ModelMap modelo) {
+        List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
+        modelo.addAttribute("trabajos", trabajoList);
+        return "panel_provedor.html";
+    }
 
     @GetMapping("/presupuestar/{id}")
     public String presupuestar(@PathVariable Long id, ModelMap modelo) {

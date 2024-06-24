@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <div th:replace="~{/fragments/head.html}"></div>
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+
+<body>
+<header>
+    <!-- Contenedor para cargar el contenido de navbar.html -->
+    <div th:replace="~{/fragments/navbar.html}"></div>
+    <!-- Contenedor para cargar el contenido de exito_error.html -->
+    <div th:replace="~{/fragments/exito_error.html}"></div>
+</header>
+
+<main class="p-2">
+
+    <!-- ---- lienzo layteral ---- -->
+    <div>
+        <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">User</button> -->
+
+        <div class="offcanvas offcanvas-end rounded-4 rounded-end-0" data-bs-scroll="true" tabindex="0"
+             id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header bg-primary-subtle">
+                <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de proveedor</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body ms-4 me-0">
+
+                <!-- ---------------------- -->
+                <form class="formulario" th:action="@{/usuario/modificar/__${session.usuariosession.id}__}" method="POST"
+                enctype="multipart/form-data" >
+
+                    <input hidden th:value="${session.usuariosession.id}" name="id">
+
+                    <div class="form-group my-3">
+                        <div class="d-flex align-items-center">
+                            <a class="d-flex justify-content-center"> <img
+                                    th:if="${session.usuariosession.imagen != null}"
+                                    class="rounded-circle border shadow" style="width: 35%;"
+                                    th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                            </a>
+                            <input type="file" class="form-control ms-3" name="archivo" th:value="${session.usuariosession.getImagen.getNombreImagen}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fst-italic fw-lighter my-0" for="phone">Nombre:</label>
+                        <input type="text" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="nombre" placeholder="Nombre" th:value="${session.usuariosession.nombre}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fst-italic my-0" for="phone">Email:</label>
+                        <input type="email" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="email" placeholder="Email" th:value="${session.usuariosession.email}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fst-italic my-0" for="phone">Telefono:</label>
+                        <input type="phone" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="phone" placeholder="Phone" th:value="${session.usuariosession.phone}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fw-light fst-italic my-0">Localidad:</label>
+                        <select name="localidad" class="form-control rounded-5 rounded-end-0 border shadow">
+                            <option disabled selected>Seleccionar Localidad</option>
+                            <option th:each="localidad : ${localidades}" th:value="${localidad}"
+                                    th:text="${localidad}" th:selected="${session.usuariosession.phone}"
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fw-light fst-italic my-0">Contraseña:</label>
+                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="password" placeholder="Contraseña" th:value="${session.usuariosession.password}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fw-light fst-italic my-0">Confirmar contraseña:</label>
+                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="password2" placeholder="Repetir contraseña"
+                               th:value="${session.usuariosession.password}">
+                    </div>
+
+
+                    <button type="submit" class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar</button>
+
+                </form>
+                <!-- ---------------------- -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="container-fluid contenedor-dashboard row d-flex justify-content-between p-4 bg-light">
+        ---Contenedor de TOP de Servicios---
+        <div class="container contenedor contenedor-servicios-top col-12 col-sm-3 col-md-4 mb-4 mx-3 p-4 shadow bg-white rounded-4">
+
+            <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Top 5 de Servicios</h3>
+            <div class="accordion my-2" id="accordionExample">
+                <div th:each="servicio, iter : ${servicios}" th:if="${iter.index < 5}">
+                    <div class="accordion-item border-0 bg-light">
+                        <h2 class="accordion-header rounded-5 rounded-end-0 border-0 shadow my-2 d-flex justify-content-start"
+                            th:id="'heading' + ${iter.index}">
+                            <img th:if="${servicio.imagen != null}" th:src="@{/imagen/servicio/__${servicio.id}__}"
+                                 class="card-img-top w-25 rounded-5 rounded-end-0 shadow" alt="...">
+                            <button
+                                    th:class="'accordion-button bg-light rounded-start-0 shadow ' + (${iter.index} == 0 ? '' : 'collapsed')"
+                                    type="button" data-bs-toggle="collapse"
+                                    th:data-bs-target="'#collapse' + ${iter.index}"
+                                    th:aria-expanded="${iter.index} == 0 ? 'true' : 'false'"
+                                    th:aria-controls="'collapse' + ${iter.index}" th:text="${servicio.nombre}">
+                            </button>
+                        </h2>
+                        <div th:id="'collapse' + ${iter.index}"
+                             th:class="'accordion-collapse collapse ' + (${iter.index} == 0 ? 'show' : '')"
+                             th:aria-labelledby="'heading' + ${iter.index}" data-bs-parent="#accordionExample">
+                            <div class="accordion-body rounded-3 rounded-end-0 border-0">
+                                <p th:text="${servicio.descripcion}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div> -->
+
+        <!-- ---Contenedor de Info-Trabajos--- -->
+        <div class="container contenedor contenedor-trabajos col mb-4 mx-3 p-4 shadow bg-white rounded-4">
+            <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Mis trabajos</h3>
+
+            <div class="accordion" id="accordionExample">
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            SOLICITADOS
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show"
+                         data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <!-- Aca va la respectiva lista -->
+                            <section class="seccion tabla">
+                                <table class="table table-hover shadow p-3 rounded">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
+                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Solicitud</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="trabajo :${trabajos}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')}">
+                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
+                                            <th th:text="${trabajo.descripcion}"></th>
+                                            <td>
+                                                <a th:href="@{/provedor/presupuestar/__${trabajo.id}__}">Presupuestar</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            ACEPTADOS
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <section class="seccion tabla">
+                                <table class="table table-hover shadow p-3 rounded">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
+                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Solicitud</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="trabajo :${trabajos}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')}">
+                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
+                                            <th th:text="${trabajo.descripcion}"></th>
+                                            <td>
+                                                <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            TERMINADOS
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <section class="seccion tabla">
+                                <table class="table table-hover shadow p-3 rounded">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
+                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Solicitud</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="trabajo :${trabajos}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')}">
+                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
+                                            <th th:text="${trabajo.descripcion}"></th>
+                                            <td>
+                                                <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<footer>
+    <!-- <div th:replace="/fragments/footer :: footer"></div> -->
+    <div th:replace="/fragments/footer.html"></div>
+</footer>
+
+</body>
+
+</html>

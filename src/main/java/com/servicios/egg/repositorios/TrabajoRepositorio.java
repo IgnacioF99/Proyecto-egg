@@ -17,7 +17,7 @@ public interface TrabajoRepositorio extends JpaRepository<Trabajo, Long> {
    List<Trabajo> findAllByAltaTrue();
 
    // Buscar todos los trabajos con usuario = idUsuario
-   List<Trabajo> findAllByUsuario(Usuario usuario);
+   List<Trabajo> findAllByUsuario(Optional<Usuario> usuario);
 
    // Buscar todos los trabajos con proveedor = idProvedor
    List<Trabajo> findAllByProvedor(Optional<Provedor> provedor);

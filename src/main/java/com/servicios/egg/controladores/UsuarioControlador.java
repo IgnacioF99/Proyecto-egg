@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.servicios.egg.entidades.Comentario;
+import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ComentarioServicio;
+import com.servicios.egg.servicios.ProvedorServicio;
 import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
@@ -43,6 +45,9 @@ public class UsuarioControlador {
 
     @Autowired
     private ServicioServicio servicioServicio;
+
+    @Autowired
+    private ProvedorServicio provedorServicio;
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/dashboard")
@@ -99,18 +104,20 @@ public class UsuarioControlador {
 
     @GetMapping("/crearTrabajo/{id}")
     public String crearTrabajo(@PathVariable Long id, ModelMap modelo) {
-        modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
+        Provedor provedor = provedorServicio.getOne(id);
+        modelo.put("provedor", provedor);
         return "trabajo_form.html";
     }
 
-    @PostMapping("/crearTrabajo/{id}")
-    public String crearTrabajo(@PathVariable Long idUsuario, @RequestParam Long idProvedor, String descripcion,
-            double presupuesto, ModelMap modelo) {
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PostMapping("/crearTrabajo/{idProvedor}")
+    public String crearTrabajo(@RequestParam Long idUsuario, @PathVariable Long idProvedor, String descripcion,
+            ModelMap modelo) {
 
         try {
-            trabajoServicio.crearTrabajo(descripcion, presupuesto, idUsuario, idProvedor);
-            modelo.put("exito", "Su solicitud ha sido creada exitosamente.");
-            return "redirect:/inicio";
+            trabajoServicio.crearTrabajo(descripcion, idUsuario, idProvedor);
+            modelo.put("exito", "Su solicitud ha sido creada exitosamente!");
+            return "redirect:/usuario/dashboard";
         } catch (MyException ex) {
             modelo.put("error", ex.getMessage());
             return "trabajo_form.html";
@@ -119,11 +126,9 @@ public class UsuarioControlador {
 
     @GetMapping("/listarTrabajos/{id}")
     public String listarTrabajos(@PathVariable Long id, ModelMap modelo) {
-        Usuario usuario = usuarioServicio.getOne(id);
-        List<Trabajo> trabajoList = trabajoServicio.listarTrabajoPorUsuario(usuario);
-        modelo.addAttribute("Trabajos", trabajoList);
+        List<Trabajo> trabajoList = trabajoServicio.listarTrabajoPorUsuario(id);
+        modelo.addAttribute("trabajos", trabajoList);
         return "trabajo_list.html";
-
     }
 
     @GetMapping("/presupuesto/{id}")

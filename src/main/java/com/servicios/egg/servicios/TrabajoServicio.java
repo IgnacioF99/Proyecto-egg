@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Estado;
@@ -27,22 +28,24 @@ public class TrabajoServicio {
    private ProvedorRepositorio provedorRepositorio;
 
    @Transactional
-   public void crearTrabajo(String descripcion, double presupuesto, Long idUsuario, Long idProvedor)
+   public void crearTrabajo(String descripcion, Long idUsuario, Long idProvedor)
          throws MyException {
 
       validar(descripcion, idUsuario);
 
       Trabajo trabajo = new Trabajo();
       Usuario usuario = usuarioRepositorio.findById(idUsuario).get();
-
+      Provedor provedor = provedorRepositorio.findById(idProvedor).get();
       trabajo.setAlta(true);
       trabajo.setEstado(Estado.SOLICITADO);
       trabajo.setDescripcion(descripcion);
       trabajo.setPresupuesto(0);
       trabajo.setUsuario(usuario);
-      trabajo.setProvedor(null);
+      trabajo.setProvedor(provedor);
       trabajo.setComentarios(null);
       trabajo.setCalificacion(0);
+
+      trabajoRepositorio.save(trabajo);
    }
 
    @Transactional
@@ -77,8 +80,15 @@ public class TrabajoServicio {
    }
 
    @Transactional
-   public List<Trabajo> listarTrabajoPorUsuario(Usuario usuario) {
+   public List<Trabajo> listarTrabajoPorUsuario(Long id) {
+      Optional<Usuario> usuario = usuarioRepositorio.findById(id);
       List<Trabajo> trabajoList = trabajoRepositorio.findAllByUsuario(usuario);
+      return trabajoList;
+   }
+
+   @Transactional
+   public List<Trabajo> listarTrabajos() {
+      List<Trabajo> trabajoList = trabajoRepositorio.findAll();
       return trabajoList;
    }
 
