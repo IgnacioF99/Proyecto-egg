@@ -43,7 +43,7 @@ public class ServicioServicio {
    public void actualizarServicio(Long id, String nombre, String descripcion, MultipartFile archivo)
          throws MyException {
 
-      validar(nombre, archivo);
+      // validar(nombre, archivo);
 
       Optional<Servicio> respuestaServicio = servicioRepositorio.findById(id);
 
