@@ -4,7 +4,7 @@ use dbservicios;
 
 -- update usuario set rol = 'ADMIN' where nombre = 'Abrahan';
 
--- update usuario set rol = 'PROV' where nombre = 'David';
+update usuario set rol = 'USER' where nombre = 'Auxiliadora';
 
 -- INSERT INTO provedor (alta, calificacion_promedio, numero_de_trabajos, usuario_id) values (true, 4.3,2,3);
 
