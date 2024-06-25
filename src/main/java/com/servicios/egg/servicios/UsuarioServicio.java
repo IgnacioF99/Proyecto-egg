@@ -89,7 +89,7 @@ public class UsuarioServicio implements UserDetailsService {
          Usuario usuario = respuestaUsuario.get();
          usuario.setNombre(nombre);
          usuario.setEmail(email);
-         usuario.setPassword(password);
+         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
          usuario.setPhone(phone);
          usuario.setLocalidad(localidad);
 
@@ -162,11 +162,12 @@ public class UsuarioServicio implements UserDetailsService {
          usuarioRepositorio.save(usuario);
       }
    }
+
    @Transactional
-   public void darDeBajaUsuario( Long id ) {
+   public void darDeBajaUsuario(Long id) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
 
-      if ( respuestaUsuario.isPresent() ) {
+      if (respuestaUsuario.isPresent()) {
          Usuario usuario = respuestaUsuario.get();
 
          usuario.setAlta(false);
@@ -175,10 +176,10 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
-   public void darDeAltaUsuario( Long id ) {
+   public void darDeAltaUsuario(Long id) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
 
-      if ( respuestaUsuario.isPresent() ) {
+      if (respuestaUsuario.isPresent()) {
          Usuario usuario = respuestaUsuario.get();
 
          usuario.setAlta(true);

@@ -20,4 +20,6 @@ update trabajo set estado = 'PRESUPUESTADO' where descripcion = 'primer trabajo'
 
 alter table comentario drop foreign key FKsnw2c50yyvxqymdphrng9ee2g;
 
+delete from servicio where descripcion = 'prueba';
+
 drop table comentario;
