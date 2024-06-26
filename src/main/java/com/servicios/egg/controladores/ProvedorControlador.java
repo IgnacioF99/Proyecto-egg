@@ -46,6 +46,7 @@ public class ProvedorControlador {
         return "presupuesto_form.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/crear/{id}")
     public String crearProvedor(@PathVariable Long id, ModelMap modelo) {
         List<Servicio> servicioList = servicioServicio.listarServicios();
