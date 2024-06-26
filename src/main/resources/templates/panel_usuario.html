@@ -92,8 +92,8 @@
 
                 </form>
                 <!-- ---------------------- -->
-                <a href="provedor_form.html" class="btn btn-light mt-3 w-100 rounded-5 rounded-end-0" data-bs-dismiss="offcanvas">Volverse Proveedor</a>
             </div>
+            <a th:href="@{/provedor/crear/__${session.usuariosession.id}__}" class="btn btn-light mt-3 w-100 rounded-5 rounded-end-0" data-bs-dismiss="offcanvas">Volverse Proveedor</a>
         </div>
     </div>
 
@@ -152,19 +152,13 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
-                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
-                                            <th sec:authorize="hasRole('PROV')" scope="col">Solicitud</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
-                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
-                                            <th th:text="${trabajo.descripcion}"></th>
-                                            <td sec:authorize="hasRole('PROV')">
-                                                <a th:href="@{/provedor/presupuestar/__${trabajo.id}__}">Presupuestar</a>
-                                            </td>
+                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.descripcion}"></th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -186,16 +180,14 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
-                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
-                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th scope="row" th:text="${trabajo.presupuesto}"></th>
                                             <td>                
@@ -223,21 +215,18 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
-                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
-                                            <th scope="col">Solicitud</th>
+                                            <!-- <th scope="col">Solicitud</th> -->
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')}">
-                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
-                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')}  AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                            <th scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
-                                            <td>
+                                            <!-- <td>
                                                 <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                 </table>
@@ -258,15 +247,13 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
-                                            <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
-                                            <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <td>
                                                 <a th:href="@{/usuario/comentar/__${trabajo.id}__}" class="btn btn-primario btn-sm" data-bs-toggle="tooltip" title="Comentar y calificar">Calificar</a>

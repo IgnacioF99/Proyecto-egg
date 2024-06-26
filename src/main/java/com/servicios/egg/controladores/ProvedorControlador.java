@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.servicios.egg.entidades.Provedor;
+import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ProvedorServicio;
+import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
 
 @Controller
@@ -26,6 +28,9 @@ public class ProvedorControlador {
 
     @Autowired
     private TrabajoServicio trabajoServicio;
+
+    @Autowired
+    private ServicioServicio servicioServicio;
 
     @PreAuthorize("hasRole('ROLE_PROV')")
     @GetMapping("/dashboard")
@@ -40,6 +45,16 @@ public class ProvedorControlador {
         modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "presupuesto_form.html";
     }
+
+    @GetMapping("/crear/{id}")
+    public String crearProvedor(@PathVariable Long id, ModelMap modelo) {
+        List<Servicio> servicioList = servicioServicio.listarServicios();
+        modelo.addAttribute("servicio", servicioList);
+        return "provedor_form.html";
+    }
+
+    // @PostMapping("crear/{id}")
+    // public String
 
     @PostMapping("/presupuestar/{id}")
     public String presupuestar(@PathVariable Long id, ModelMap modelo, Double presupuesto) {
