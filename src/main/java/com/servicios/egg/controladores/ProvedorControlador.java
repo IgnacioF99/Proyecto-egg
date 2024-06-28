@@ -48,14 +48,17 @@ public class ProvedorControlador {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/crear/{id}")
-    public String crearProvedor(@PathVariable Long id, ModelMap modelo) {
-        List<Servicio> servicioList = servicioServicio.listarServicios();
-        modelo.addAttribute("servicio", servicioList);
+    public String crearProvedor(ModelMap modelo) {
+        // List<Servicio> servicioList = servicioServicio.listarServicios();
+        modelo.addAttribute("servicios", servicioServicio.listarServicios());
         return "provedor_form.html";
     }
 
     // @PostMapping("crear/{id}")
-    // public String
+    // public String crearProvedor(@PathVariable Long id, Servicio servicio,
+    // ModelMap modelo) {
+
+    // }
 
     @PostMapping("/presupuestar/{id}")
     public String presupuestar(@PathVariable Long id, ModelMap modelo, Double presupuesto) {

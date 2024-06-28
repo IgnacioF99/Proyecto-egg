@@ -84,12 +84,9 @@ public class ServicioServicio {
       }
    }
 
-   @Transactional(readOnly = true)
+   // @Transactional(readOnly = true)
    public List<Servicio> listarServicios() {
-      List<Servicio> servicioList = new ArrayList<>();
-      servicioList = servicioRepositorio.findAll();
-
-      return servicioList;
+      return servicioRepositorio.findAll();
    }
 
    @Transactional(readOnly = true)
