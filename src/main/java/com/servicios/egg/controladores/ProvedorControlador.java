@@ -18,6 +18,7 @@ import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ProvedorServicio;
 import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
+import com.servicios.egg.servicios.UsuarioServicio;
 
 @Controller
 @RequestMapping("/provedor")
@@ -49,16 +50,24 @@ public class ProvedorControlador {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/crear/{id}")
     public String crearProvedor(ModelMap modelo) {
-        // List<Servicio> servicioList = servicioServicio.listarServicios();
         modelo.addAttribute("servicios", servicioServicio.listarServicios());
         return "provedor_form.html";
     }
 
-    // @PostMapping("crear/{id}")
-    // public String crearProvedor(@PathVariable Long id, Servicio servicio,
-    // ModelMap modelo) {
-
-    // }
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("crear/{id}")
+    public String crearProvedor(@PathVariable Long id, List<Servicio> servicios,
+            ModelMap modelo) {
+        try {
+            List<Servicios> servicios = servicioServicio.findById(servicios); // Solucionar este peo
+            provedorServicio.crearProvedor(id, servicios);
+            modelo.put("exito", "Se ha registrado como proveedor correctamente");
+            return "redirect:/provedor/dashboard";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "presupuesto_form.html";
+        }
+    }
 
     @PostMapping("/presupuestar/{id}")
     public String presupuestar(@PathVariable Long id, ModelMap modelo, Double presupuesto) {

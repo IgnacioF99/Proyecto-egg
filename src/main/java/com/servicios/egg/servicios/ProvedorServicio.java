@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Usuario;
+import com.servicios.egg.enums.Rol;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ProvedorRepositorio;
 import com.servicios.egg.repositorios.ServicioRepositorio;
@@ -28,7 +29,7 @@ public class ProvedorServicio {
    private ServicioRepositorio servicioRepositorio;
 
    @Transactional
-   public void crearProvedor(Long idUsuario, int numeroDeTrabajos, List<Servicio> servicios) throws MyException {
+   public void crearProvedor(Long idUsuario, List<Servicio> servicios) throws MyException {
 
       validar(servicios);
 
@@ -38,6 +39,7 @@ public class ProvedorServicio {
       provedor.setAlta(true);
       provedor.setNumeroDeTrabajos(0);
       provedor.setCalificacionPromedio(0);
+      usuario.setRol(Rol.PROV);
       provedor.setUsuario(usuario);
       provedor.setServicio(servicios);
 
