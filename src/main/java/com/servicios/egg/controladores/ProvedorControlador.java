@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Servicio;
@@ -33,7 +34,10 @@ public class ProvedorControlador {
     @Autowired
     private ServicioServicio servicioServicio;
 
-    @PreAuthorize("hasRole('ROLE_PROV')")
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
+    @PreAuthorize("hasAnyRole('ROLE_PROV','ROLE_USER')")
     @GetMapping("/dashboard")
     public String mostrarPanelProvedor(ModelMap modelo) {
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
@@ -49,18 +53,19 @@ public class ProvedorControlador {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/crear/{id}")
-    public String crearProvedor(ModelMap modelo) {
-        modelo.addAttribute("servicios", servicioServicio.listarServicios());
+    public String crearProvedor(@PathVariable Long id, ModelMap modelo) {
+        modelo.addAttribute("servicios", servicioServicio.listarServicio());
+        modelo.addAttribute("usuario", usuarioServicio.getOne(id));
         return "provedor_form.html";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("crear/{id}")
-    public String crearProvedor(@PathVariable Long id, List<Servicio> servicios,
+    public String crearProvedor(@PathVariable Long id, @RequestParam List<Long> servicios,
             ModelMap modelo) {
         try {
-            List<Servicios> servicios = servicioServicio.findById(servicios); // Solucionar este peo
-            provedorServicio.crearProvedor(id, servicios);
+            List<Servicio> serviciosList = servicioServicio.listarServicios(servicios); // Solucionar este peo
+            usuarioServicio.cambiarRol(id);
+            provedorServicio.crearProvedor(id, serviciosList);
             modelo.put("exito", "Se ha registrado como proveedor correctamente");
             return "redirect:/provedor/dashboard";
         } catch (MyException ex) {

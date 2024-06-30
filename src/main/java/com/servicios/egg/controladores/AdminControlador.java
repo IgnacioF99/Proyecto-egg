@@ -49,13 +49,13 @@ public class AdminControlador {
       usuarioServicio.cambiarRolUsuario(id);
       return "redirect:/admin/usuarios";
    }
-   
+
    @GetMapping("/bajaUsuario/{id}")
    public String darBajaUsuario(@PathVariable Long id) {
       usuarioServicio.darDeBajaUsuario(id);
       return "redirect:/admin/usuarios";
    }
-   
+
    @GetMapping("/altaUsuario/{id}")
    public String darAltaUsuario(@PathVariable Long id) {
       usuarioServicio.darDeAltaUsuario(id);
@@ -71,8 +71,8 @@ public class AdminControlador {
    }
 
    @PostMapping("/modificar/{id}")
-   public String modificar( @PathVariable Long id, String nombre, String email, MultipartFile archivo, String password,
-                            String password2, String phone, Localidad localidad, ModelMap modelo) {
+   public String modificar(@PathVariable Long id, String nombre, String email, MultipartFile archivo, String password,
+         String password2, String phone, Localidad localidad, ModelMap modelo) {
       try {
          usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
          modelo.put("exito", "Sus datos han sido actualizados correctamente");
@@ -80,10 +80,10 @@ public class AdminControlador {
 
       } catch (MyException e) {
          modelo.addAttribute("error", e.getMessage());
-         modelo.addAttribute("nombre",nombre);
-         modelo.addAttribute("email",email);
-         modelo.addAttribute("phone",phone);
-         modelo.addAttribute("localidades",Localidad.values());
+         modelo.addAttribute("nombre", nombre);
+         modelo.addAttribute("email", email);
+         modelo.addAttribute("phone", phone);
+         modelo.addAttribute("localidades", Localidad.values());
 
          return "usuario_modificar.html";
       }
@@ -111,7 +111,7 @@ public class AdminControlador {
 
    @GetMapping("/listarServicios")
    public String listarServicios(ModelMap modelo) {
-      List<Servicio> servicioList = servicioServicio.listarServicios();
+      List<Servicio> servicioList = servicioServicio.listarServicio();
       modelo.addAttribute("servicios", servicioList);
 
       return "servicios_list.html";

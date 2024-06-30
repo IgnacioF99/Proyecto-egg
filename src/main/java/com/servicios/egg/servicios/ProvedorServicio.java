@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Usuario;
-import com.servicios.egg.enums.Rol;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ProvedorRepositorio;
 import com.servicios.egg.repositorios.ServicioRepositorio;
@@ -34,16 +33,18 @@ public class ProvedorServicio {
       validar(servicios);
 
       Provedor provedor = new Provedor();
-      Usuario usuario = usuarioRepositorio.findById(idUsuario).get();
+      Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(idUsuario);
+      if (respuestaUsuario.isPresent()) {
+         Usuario usuario = respuestaUsuario.get();
+         provedor.setAlta(true);
+         provedor.setNumeroDeTrabajos(0);
+         provedor.setCalificacionPromedio(0);
+         // usuario.setRol(Rol.PROV);
+         provedor.setUsuario(usuario);
+         provedor.setServicio(servicios);
 
-      provedor.setAlta(true);
-      provedor.setNumeroDeTrabajos(0);
-      provedor.setCalificacionPromedio(0);
-      usuario.setRol(Rol.PROV);
-      provedor.setUsuario(usuario);
-      provedor.setServicio(servicios);
-
-      provedorRepositorio.save(provedor);
+         provedorRepositorio.save(provedor);
+      }
 
    }
 

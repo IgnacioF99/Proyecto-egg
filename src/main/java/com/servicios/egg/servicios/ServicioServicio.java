@@ -85,8 +85,13 @@ public class ServicioServicio {
    }
 
    // @Transactional(readOnly = true)
-   public List<Servicio> listarServicios() {
+   public List<Servicio> listarServicio() {
       return servicioRepositorio.findAll();
+   }
+
+   // @Transactional
+   public List<Servicio> listarServicios(List<Long> servicios) {
+      return servicioRepositorio.listarServicios(servicios);
    }
 
    @Transactional(readOnly = true)

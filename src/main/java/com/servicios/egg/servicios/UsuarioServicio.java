@@ -164,6 +164,19 @@ public class UsuarioServicio implements UserDetailsService {
    }
 
    @Transactional
+   public void cambiarRol(Long id) {
+      Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
+
+      if (respuestaUsuario.isPresent()) {
+         Usuario usuario = respuestaUsuario.get();
+         if (usuario.getRol().equals(Rol.USER)) {
+            usuario.setRol(Rol.PROV);
+         }
+         usuarioRepositorio.save(usuario);
+      }
+   }
+
+   @Transactional
    public void darDeBajaUsuario(Long id) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
 
