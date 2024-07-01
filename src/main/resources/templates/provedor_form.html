@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.thymeleaf.org/extras/spring-security ">
+
+<head>
+    <!-- <div th:replace="~{/fragments/head.html}"></div> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- <link href="/css/index.css" rel="stylesheet"> -->
+</head>
+
+<body>
+    <header>
+        <!-- Contenedor para cargar el contenido de navbar.html -->
+        <div th:replace="~{/fragments/navbar.html}"></div>
+    </header>
+
+<main>
+    <!-- <div th:replace="~{/fragments/exito_error.html}"></div> -->
+    <section>
+        <h2 class="mb-4">Servicios ofrecidos</h2>
+        <form th:action="@{/provedor/crear/__${session.usuariosession.id}__}" class="formulario m-5 shadow p-3 rounded" method="POST" enctype="multipart/form-data">
+            <!-- aca pueden ir los demas formulario, por ejemplo el del nombre por si el lo quiere cambiar -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Seleccione los servicios que ofrece:</label>
+                    <div th:each="servicio : ${servicios}" class="form-check">
+                        <input th:id="${servicio.id}" class="form-check-input" type="checkbox" name="servicios" th:value="${servicio.id}"/>
+                        <label th:for="${servicio.id}" th:text="${servicio.nombre}" class="form-check-label"></label>
+                    </div>
+            </div>
+            <button class="btn btn-warning mt-3 w-100" type="submit">Enviar</button>
+        </form>
+
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</main>
+<footer>
+    <!-- Contenedor para cargar el contenido de footer.html -->
+    <div th:replace="~{/fragments/footer.html}"></div>
+</footer>
+    
+</body>
+
+</html>

@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.servicios.egg.entidades.Provedor;
+import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ProvedorServicio;
+import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
+import com.servicios.egg.servicios.UsuarioServicio;
 
 @Controller
 @RequestMapping("/provedor")
@@ -26,6 +30,12 @@ public class ProvedorControlador {
 
     @Autowired
     private TrabajoServicio trabajoServicio;
+
+    @Autowired
+    private ServicioServicio servicioServicio;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     @PreAuthorize("hasRole('ROLE_PROV')")
     @GetMapping("/dashboard")
@@ -39,6 +49,29 @@ public class ProvedorControlador {
     public String presupuestar(@PathVariable Long id, ModelMap modelo) {
         modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "presupuesto_form.html";
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/crear/{id}")
+    public String crearProvedor(@PathVariable Long id, ModelMap modelo) {
+        modelo.addAttribute("servicios", servicioServicio.listarServicio());
+        modelo.addAttribute("usuario", usuarioServicio.getOne(id));
+        return "provedor_form.html";
+    }
+
+    @PostMapping("crear/{id}")
+    public String crearProvedor(@PathVariable Long id, @RequestParam List<Long> servicios,
+            ModelMap modelo) {
+        try {
+            List<Servicio> serviciosList = servicioServicio.listarServicios(servicios); // Solucionar este peo
+            usuarioServicio.cambiarRol(id);
+            provedorServicio.crearProvedor(id, serviciosList);
+            modelo.put("exito", "Se ha registrado como proveedor correctamente");
+            return "redirect:/provedor/dashboard";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "presupuesto_form.html";
+        }
     }
 
     @PostMapping("/presupuestar/{id}")
