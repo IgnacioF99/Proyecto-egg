@@ -20,7 +20,7 @@
     <!-- <div th:replace="~{/fragments/exito_error.html}"></div> -->
     <section>
         <h2 class="mb-4">Servicios ofrecidos</h2>
-        <form th:action="@{/provedor/presupuestar/__${session.usuariosession.id}__}" class="formulario m-5 shadow p-3 rounded" method="POST" enctype="multipart/form-data">
+        <form th:action="@{/provedor/crear/__${session.usuariosession.id}__}" class="formulario m-5 shadow p-3 rounded" method="POST" enctype="multipart/form-data">
             <!-- aca pueden ir los demas formulario, por ejemplo el del nombre por si el lo quiere cambiar -->
             <div class="mb-3">
                 <label for="name" class="form-label">Seleccione los servicios que ofrece:</label>

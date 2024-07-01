@@ -37,7 +37,7 @@ public class ProvedorControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @PreAuthorize("hasAnyRole('ROLE_PROV','ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_PROV')")
     @GetMapping("/dashboard")
     public String mostrarPanelProvedor(ModelMap modelo) {
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
