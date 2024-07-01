@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.servicios.egg.entidades.Comentario;
 import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.servicios.ComentarioServicio;
 import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
 
@@ -29,6 +31,9 @@ public class AdminControlador {
 
    @Autowired
    private ServicioServicio servicioServicio;
+
+   @Autowired
+   private ComentarioServicio comentarioServicio;
 
    @PreAuthorize("hasRole('ROLE_ADMIN')")
    @GetMapping("/dashboard")
@@ -139,4 +144,12 @@ public class AdminControlador {
          return "servicio_modificar.html";
       }
    }
+
+   @GetMapping("/listarComentarios")
+   public String listarComentarios(ModelMap modelo) {
+      List<Comentario> comentarios = comentarioServicio.listarComentario();
+      modelo.addAttribute("comentarios", comentarios);
+      return "comentario_list.html";
+   }
+
 }
