@@ -38,12 +38,12 @@
 .btn{
     background-color: var(--color-tema-secundario);
     border-bottom: var(--color-tema-enfasis);
-    color: white;
+    color: rgb(239, 245, 241);
 }
 
 .btn:hover{
     background-color: var(--color-tema-enfasis);
-    color: white;
+    color: rgb(159, 235, 171);
 }
 
 @media (max-width: 991.98px) {

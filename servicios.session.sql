@@ -21,3 +21,7 @@ update trabajo set estado = 'PRESUPUESTADO' where descripcion = 'primer trabajo'
 alter table comentario drop foreign key FKsnw2c50yyvxqymdphrng9ee2g;
 
 drop table comentario;
+
+INSERT INTO provedor (alta, calificacion_promedio, numero_de_trabajos, usuario_id) values (true, 4.3,2,4);
+
+INSERT INTO provedor (alta, calificacion_promedio, numero_de_trabajos, usuario_id) values (true, 4.3,2,4);

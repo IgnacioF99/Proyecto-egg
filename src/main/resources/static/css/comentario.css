@@ -28,3 +28,21 @@ body {
 .star.checked {
     color: gold;
 }
+/* creacion css para las 5 estrellas de comentario */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: lightgray;
+}
+
+.star:hover,
+.star:hover ~ .star,
+.star.selected {
+    color: gold;
+}

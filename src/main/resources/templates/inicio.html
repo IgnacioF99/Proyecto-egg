@@ -18,7 +18,13 @@
     <main class="p-2">
         <!-- textos para prueba -->
             <h1 sec:authorize="hasRole('USER')">Este es el INICIO USER</h1>
-            <h1 sec:authorize="hasRole('ADMIN')">Este es el INICIO ADMIN</h1>
+            <div class="bienvenido">
+                <h1 sec:authorize="hasRole('ADMIN')">¡BIENVENIDO!</h1>
+                <h4>Aqui podras crear tu profesiòn para ofrecer aquellos que necesiten de tì. </h4>
+                <p>solo ve  la parte de  "servicios". y crea tu profesion. </p>
+            </div>
+            <!-- <h1 sec:authorize="hasRole('ADMIN')">¡BIENVENIDO!</h1> -->
+
             <h1 sec:authorize="hasRole('PROV')">Este es el INICIO PROV</h1>
     </main>
 

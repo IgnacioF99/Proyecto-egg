@@ -24,7 +24,7 @@
         }
         
         .form-container {
-            background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+            background: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
             padding: 2rem;
             margin-left: auto;
             max-width: 40%;
@@ -38,12 +38,12 @@
 .btn{
     background-color: var(--color-tema-secundario);
     border-bottom: var(--color-tema-enfasis);
-    color: white;
+    color: rgb(248, 244, 244);
 }
 
 .btn:hover{
     background-color: var(--color-tema-enfasis);
-    color: white;
+    color: rgb(245, 236, 236);
 }
 
 @media (max-width: 991.98px) {

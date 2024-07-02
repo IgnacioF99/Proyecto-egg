@@ -89,7 +89,7 @@ public class UsuarioServicio implements UserDetailsService {
          Usuario usuario = respuestaUsuario.get();
          usuario.setNombre(nombre);
          usuario.setEmail(email);
-         usuario.setPassword(password);
+         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
          usuario.setPhone(phone);
          usuario.setLocalidad(localidad);
 
