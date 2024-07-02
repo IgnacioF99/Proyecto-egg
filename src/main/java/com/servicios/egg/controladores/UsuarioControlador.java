@@ -52,7 +52,7 @@ public class UsuarioControlador {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/dashboard")
     public String mostrarPanelUsuario(ModelMap modelo) {
-        List<Servicio> servicioList = servicioServicio.listarServicios();
+        List<Servicio> servicioList = servicioServicio.listarServicio();
         List<Usuario> usuarioList = usuarioServicio.listarUsuarios();
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
         modelo.addAttribute("usuarios", usuarioList);

@@ -78,7 +78,7 @@
 .btn{
     background-color: var(--color-tema-secundario);
     border-bottom: var(--color-tema-enfasis);
-    color: rgb(97, 149, 226);
+    color: rgb(240, 245, 252);
 }
 
 .btn:hover{

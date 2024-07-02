@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es">
+<head>
+    <div th:replace="~{/fragments/head.html}"></div>
+    <title>Listado de Proveedores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <div th:replace="~{/fragments/navbar.html}"></div>
+    </header>
+    <div class="container">
+        <h2>Comentarios</h2>
+        <table class="table table-hover shadow p-3 rounded">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID </th>
+                    <th scope="col">Comentarios</th>
+                    <th scope="col">Id trabajo</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Proveedor</th>
+                </tr>
+            </thead>    
+            <tbody th:each="comentario : ${comentarios}">
+                <tr>
+                    <th scope="row" th:text="${comentario.id}"></th>
+                    <td th:text="${comentario.comentario}"></td>
+                    <td th:text="${comentario.trabajo.id}"></td>
+                    <td th:text="${comentario.trabajo.usuario.nombre}"></td>
+                    <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <div th:replace="~{/fragments/footer.html}"></div>
+    </footer>
+</body>
+</html>

@@ -34,7 +34,7 @@ public class PortalControlador {
 
    @GetMapping("/")
    public String index(ModelMap modelo) {
-      List<Servicio> servicioList = servicioServicio.listarServicios();
+      List<Servicio> servicioList = servicioServicio.listarServicio();
       modelo.addAttribute("servicios", servicioList);
       return "index.html";
    }
@@ -115,7 +115,7 @@ public class PortalControlador {
       }
 
       if (logueado.getRol().toString().equalsIgnoreCase("USER")) {
-         List<Servicio> servicioList = servicioServicio.listarServicios();
+         List<Servicio> servicioList = servicioServicio.listarServicio();
          modelo.addAttribute("servicios", servicioList);
          return "redirect:/usuario/dashboard";
       }

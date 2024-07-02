@@ -35,11 +35,6 @@
                     <div class="mb-3">
                         <label for="comentario" class="form-label">Comentario</label>
                         <textarea class="form-control" name="comentario" rows="3" required></textarea>
-                    </div>
-                    <!-- creacion de las 5 estrellas para comentario -->
-                    <h1>Lista de Comentarios</h1>
-                    <div th:each="comentario : ${comentarios}">
-                        <p th:text="${comentario.texto}"></p>
                         <div class="rating" data-id-th="${comentario.id}">
                             <span class="star" data-value="5">&#9733;</span>
                             <span class="star" data-value="4">&#9733;</span>
@@ -47,6 +42,12 @@
                             <span class="star" data-value="2">&#9733;</span>
                             <span class="star" data-value="1">&#9733;</span>
                         </div>
+                    </div>
+                    <!-- creacion de las 5 estrellas para comentario -->
+                    <h1>Lista de Comentarios</h1>
+                    <div th:each="comentario : ${comentarios}">
+                        <p th:text="${comentario.texto}"></p>
+                        
                     </div>
                     <!-- <div class="mb-3">
                         <label for="rating" class="form-label">Calificación</label>

@@ -28,20 +28,23 @@ public class ProvedorServicio {
    private ServicioRepositorio servicioRepositorio;
 
    @Transactional
-   public void crearProvedor(Long idUsuario, int numeroDeTrabajos, List<Servicio> servicios) throws MyException {
+   public void crearProvedor(Long idUsuario, List<Servicio> servicios) throws MyException {
 
       validar(servicios);
 
       Provedor provedor = new Provedor();
-      Usuario usuario = usuarioRepositorio.findById(idUsuario).get();
+      Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(idUsuario);
+      if (respuestaUsuario.isPresent()) {
+         Usuario usuario = respuestaUsuario.get();
+         provedor.setAlta(true);
+         provedor.setNumeroDeTrabajos(0);
+         provedor.setCalificacionPromedio(0);
+         // usuario.setRol(Rol.PROV);
+         provedor.setUsuario(usuario);
+         provedor.setServicio(servicios);
 
-      provedor.setAlta(true);
-      provedor.setNumeroDeTrabajos(0);
-      provedor.setCalificacionPromedio(0);
-      provedor.setUsuario(usuario);
-      provedor.setServicio(servicios);
-
-      provedorRepositorio.save(provedor);
+         provedorRepositorio.save(provedor);
+      }
 
    }
 
