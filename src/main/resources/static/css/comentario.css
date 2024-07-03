@@ -18,8 +18,8 @@ body {
     justify-content: space-between;
 }
 .star {
-    font-size: 32px;
-    color: #bbb;
+    font-size: 42px;
+    color: #c7b8b8;
     transition: color 0.3s;
     cursor: pointer;
 }

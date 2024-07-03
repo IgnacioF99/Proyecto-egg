@@ -43,7 +43,7 @@
 
 .btn:hover{
     background-color: var(--color-tema-enfasis);
-    color: rgb(245, 236, 236);
+    color: rgb(182, 175, 175);
 }
 
 @media (max-width: 991.98px) {

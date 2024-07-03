@@ -264,7 +264,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <!-- <th th:text="${trabajo.comentario.comentario}"></th> -->
+                                            <th th:text="${trabajo.comentarios.comentario}"></th>
                                         </tr>
                                     </tbody>
                                 </table>
