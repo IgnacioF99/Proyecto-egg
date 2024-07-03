@@ -151,15 +151,13 @@
                                 <table class="table table-hover shadow p-3 rounded">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Solicitud</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')}">
-                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <td>
@@ -185,15 +183,13 @@
                                 <table class="table table-hover shadow p-3 rounded">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')}">
-                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
@@ -216,7 +212,6 @@
                                 <table class="table table-hover shadow p-3 rounded">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Presupuesto</th>
@@ -224,8 +219,7 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')}">
-                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
@@ -252,7 +246,6 @@
                                 <table class="table table-hover shadow p-3 rounded">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Comentario</th>
@@ -260,11 +253,11 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <th th:text="${trabajo.comentarios.comentario}"></th>
+                                            <th th:if="${trabajo.comentario != null}" th:text="${trabajo.comentario.comentario}"></th>
                                         </tr>
                                     </tbody>
                                 </table>

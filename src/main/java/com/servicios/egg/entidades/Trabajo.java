@@ -32,8 +32,9 @@ public class Trabajo {
 
     private int calificacion;
 
-    @OneToMany(mappedBy = "trabajo", fetch = FetchType.LAZY)
-    private List<Comentario> comentarios;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comentario_id")
+    private Comentario comentario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id") // Llave foranea

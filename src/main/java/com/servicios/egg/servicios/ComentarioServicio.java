@@ -27,10 +27,12 @@ public class ComentarioServicio {
    public void crearcComentario(Long id, String comentario) throws MyException {
       validar(comentario);
       Trabajo trabajo = trabajoRepositorio.findById(id).get();
+
       Comentario newComentario = new Comentario();
       newComentario.setComentario(comentario);
       newComentario.setAlta(true);
       newComentario.setTrabajo(trabajo);
+      trabajo.setComentario(newComentario);
       comentarioRepositorio.save(newComentario);
    }
 
