@@ -17,7 +17,7 @@ public class Provedor {
 
     private int calificacionPromedio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 

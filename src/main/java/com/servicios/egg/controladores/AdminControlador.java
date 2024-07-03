@@ -152,4 +152,21 @@ public class AdminControlador {
       return "comentario_list.html";
    }
 
+   @PostMapping("/modificar/{id}")
+   public String modificar(@PathVariable @RequestParam(required = false) Long id,
+         String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
+         Localidad localidad,
+         ModelMap modelo) {
+      try {
+         usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password,
+               password2, phone, localidad);
+         modelo.put("exito", "Ha actualizado sin problemas el perfil");
+
+         return "redirect:/admin/dashboard";
+      } catch (MyException e) {
+         modelo.put("error", e.getMessage());
+         return "usuario_form.html";
+      }
+   }
+
 }

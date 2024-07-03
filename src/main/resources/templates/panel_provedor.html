@@ -29,7 +29,7 @@
             <div class="offcanvas-body ms-4 me-0">
 
                 <!-- ---------------------- -->
-                <form class="formulario" th:action="@{/usuario/modificar/__${session.usuariosession.id}__}" method="POST"
+                <form class="formulario" th:action="@{/provedor/modificar/__${session.usuariosession.id}__}" method="POST"
                 enctype="multipart/form-data" >
 
                     <input hidden th:value="${session.usuariosession.id}" name="id">

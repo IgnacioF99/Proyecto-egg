@@ -13,6 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -51,8 +52,9 @@ public class Usuario {
 
     private boolean alta;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    private List<Provedor> provedores;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provedor_id")
+    private Provedor provedores;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Trabajo> trabajos;
