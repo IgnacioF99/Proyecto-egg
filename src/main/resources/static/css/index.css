@@ -40,6 +40,10 @@
     }
 
 }
+.bienvenido{
+    justify-content: center;
+    align-items: center;
+}
 
 .label-imput{
     font-size:smaller;
@@ -74,12 +78,12 @@
 .btn{
     background-color: var(--color-tema-secundario);
     border-bottom: var(--color-tema-enfasis);
-    color: white;
+    color: rgb(240, 245, 252);
 }
 
 .btn:hover{
     background-color: var(--color-tema-enfasis);
-    color: white;
+    color: rgb(120, 138, 238);
 }
 
 

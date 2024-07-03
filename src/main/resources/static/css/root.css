@@ -1,9 +1,9 @@
 :root{
     --color-tema-primario:#141d26;
     --color-tema-primario-trasnparent:#141d268c;
-    --color-tema-secundario: #2980B9;
-    --color-tema-secundario-trasnparent: #297fb98c;
-    --color-tema-enfasis: #E74C3C;
+    --color-tema-secundario: #1595eb;
+    --color-tema-secundario-trasnparent: #1664998c;
+    --color-tema-enfasis: #2357f3;
     --color-tema-enfasis-trasnparent: #e74d3c88;
     --color-shadow: 1px 1px 5px rgb(200, 200, 200);
     --color-shadow-hover: 1px 1px 10px var(--color-tema-enfasis);

@@ -18,13 +18,31 @@ body {
     justify-content: space-between;
 }
 .star {
-    font-size: 32px;
-    color: #bbb;
+    font-size: 42px;
+    color: #c7b8b8;
     transition: color 0.3s;
     cursor: pointer;
 }
 
 .star:hover,
 .star.checked {
+    color: gold;
+}
+/* creacion css para las 5 estrellas de comentario */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: lightgray;
+}
+
+.star:hover,
+.star:hover ~ .star,
+.star.selected {
     color: gold;
 }
