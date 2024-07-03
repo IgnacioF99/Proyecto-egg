@@ -20,6 +20,7 @@ public class SeguridadWeb {
                                     .requestMatchers("/user/").hasRole("USER")
                                     .requestMatchers("/user/").hasRole("PROV")
                                     .requestMatchers("/css/", "/js/", "/img/", "/**").permitAll())
+                                    /* .requestMatchers("/comentario/eliminar/**").permitAll() */ // Permitir eliminar comentario
                         .formLogin((form) -> form
                                     .loginPage("/login")
                                     .loginProcessingUrl("/logincheck")

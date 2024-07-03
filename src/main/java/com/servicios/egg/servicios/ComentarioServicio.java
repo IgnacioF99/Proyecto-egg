@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ public class ComentarioServicio {
 
    @Autowired
    private TrabajoRepositorio trabajoRepositorio;
+
+   private CrudRepository<Comentario, Long> comentarioRepository;
 
    @Transactional
    public void crearcComentario(Long id, String comentario) throws MyException {
@@ -96,7 +99,10 @@ public class ComentarioServicio {
          throw new MyException("El comentario no puede quedar vacio");
       }
    }
- 
+
+   public void eliminarComentario(Long id) {
+        comentarioRepository.deleteById(id);
+    }
 
    
 }

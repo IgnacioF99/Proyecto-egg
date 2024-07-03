@@ -20,6 +20,7 @@
                     <th scope="col">Id trabajo</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Proveedor</th>
+                    <th scope="col">Eliminar</th>
                 </tr>
             </thead>    
             <tbody th:each="comentario : ${comentarios}">
@@ -29,6 +30,13 @@
                     <td th:text="${comentario.trabajo.id}"></td>
                     <td th:text="${comentario.trabajo.usuario.nombre}"></td>
                     <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
+                    <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
+                    <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
+                    <td>
+                        <form th:action="@{/comentario/eliminar/{id}(id=${comentario.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
