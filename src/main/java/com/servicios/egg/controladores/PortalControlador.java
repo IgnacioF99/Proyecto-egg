@@ -17,6 +17,7 @@ import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.servicios.ProvedorServicio;
 import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
 
@@ -31,6 +32,9 @@ public class PortalControlador {
 
    @Autowired
    ServicioServicio servicioServicio;
+
+   @Autowired
+   ProvedorServicio provedorServicio;
 
    @GetMapping("/")
    public String index(ModelMap modelo) {
