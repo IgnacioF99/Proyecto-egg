@@ -93,6 +93,7 @@ public class UsuarioControlador {
             usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password,
                     password2, phone, localidad);
             modelo.put("exito", "Ha actualizado sin problemas el perfil");
+
             return "redirect:/usuario/dashboard";
         } catch (MyException e) {
             modelo.put("error", e.getMessage());

@@ -10,7 +10,7 @@ update usuario set rol = 'USER' where nombre = 'Auxiliadora';
 
 -- INSERT into servicios_has_provedores (provedor_id,servicio_id) values (1,6);
 
-show create table comentario;
+show create table provedor;
 
 ALTER table trabajo modify column estado ENUM('SOLICITADO','ACEPTADO','PRESUPUESTADO', 'TERMINADO','CANCELADO');
 

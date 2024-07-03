@@ -16,16 +16,97 @@
     </cabecera>
     
     <main class="p-2">
+        <!-- ---- lienzo layteral ---- -->
+    <div>
+        <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">User</button> -->
+
+        <div class="offcanvas offcanvas-end rounded-4 rounded-end-0" data-bs-scroll="true" tabindex="0"
+             id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header bg-primary-subtle">
+                <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de proveedor</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body ms-4 me-0">
+
+                <!-- ---------------------- -->
+                <form class="formulario" th:action="@{/admin/modificar/__${session.usuariosession.id}__}" method="POST"
+                enctype="multipart/form-data" >
+
+                    <input hidden th:value="${session.usuariosession.id}" name="id">
+
+                    <div class="form-group my-3">
+                        <div class="d-flex align-items-center">
+                            <a class="d-flex justify-content-center"> <img
+                                    th:if="${session.usuariosession.imagen != null}"
+                                    class="rounded-circle border shadow" style="width: 35%;"
+                                    th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                            </a>
+                            <input type="file" class="form-control ms-3" name="archivo" th:value="${session.usuariosession.getImagen.getNombreImagen}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fst-italic fw-lighter my-0" for="phone">Nombre:</label>
+                        <input type="text" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="nombre" placeholder="Nombre" th:value="${session.usuariosession.nombre}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fst-italic my-0" for="phone">Email:</label>
+                        <input type="email" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="email" placeholder="Email" th:value="${session.usuariosession.email}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fst-italic my-0" for="phone">Telefono:</label>
+                        <input type="phone" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="phone" placeholder="Phone" th:value="${session.usuariosession.phone}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fw-light fst-italic my-0">Localidad:</label>
+                        <select name="localidad" class="form-control rounded-5 rounded-end-0 border shadow">
+                            <option disabled selected>Seleccionar Localidad</option>
+                            <option th:each="localidad : ${localidades}" th:value="${localidad}"
+                                    th:text="${localidad}" th:selected="${session.usuariosession.phone}"
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fw-light fst-italic my-0">Contraseña:</label>
+                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="password" placeholder="Contraseña" th:value="${session.usuariosession.password}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label-imput fw-light fst-italic my-0">Confirmar contraseña:</label>
+                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
+                               name="password2" placeholder="Repetir contraseña"
+                               th:value="${session.usuariosession.password}">
+                    </div>
+
+
+                    <button type="submit" class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar</button>
+
+                </form>
+                <!-- ---------------------- -->
+
+            </div>
+        </div>
+    </div>
+
+
         <!-- textos para prueba -->
-            <h1 sec:authorize="hasRole('USER')">Este es el INICIO USER</h1>
+            
             <div class="bienvenido">
                 <h1 sec:authorize="hasRole('ADMIN')">¡BIENVENIDO!</h1>
                 <h4>Aqui podras crear tu profesiòn para ofrecer aquellos que necesiten de tì. </h4>
                 <p>solo ve  la parte de  "servicios". y crea tu profesion. </p>
             </div>
-            <!-- <h1 sec:authorize="hasRole('ADMIN')">¡BIENVENIDO!</h1> -->
+            
 
-            <h1 sec:authorize="hasRole('PROV')">Este es el INICIO PROV</h1>
+            
     </main>
 
     <footer>

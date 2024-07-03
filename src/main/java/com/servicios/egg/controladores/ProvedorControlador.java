@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.servicios.egg.entidades.Comentario;
 import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Trabajo;
+import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ComentarioServicio;
 import com.servicios.egg.servicios.ProvedorServicio;
@@ -42,7 +44,7 @@ public class ProvedorControlador {
     @Autowired
     private ComentarioServicio comentarioServicio;
 
-    @PreAuthorize("hasRole('ROLE_PROV')")
+    @PreAuthorize("hasAnyRole('ROLE_PROV','ROLE_USER')")
     @GetMapping("/dashboard")
     public String mostrarPanelProvedor(ModelMap modelo) {
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
@@ -56,6 +58,23 @@ public class ProvedorControlador {
     public String presupuestar(@PathVariable Long id, ModelMap modelo) {
         modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "presupuesto_form.html";
+    }
+
+    @PostMapping("/modificar/{id}")
+    public String modificar(@PathVariable @RequestParam(required = false) Long id,
+            String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
+            Localidad localidad,
+            ModelMap modelo) {
+        try {
+            usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password,
+                    password2, phone, localidad);
+            modelo.put("exito", "Ha actualizado sin problemas el perfil");
+
+            return "redirect:/provedor/dashboard";
+        } catch (MyException e) {
+            modelo.put("error", e.getMessage());
+            return "usuario_form.html";
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
