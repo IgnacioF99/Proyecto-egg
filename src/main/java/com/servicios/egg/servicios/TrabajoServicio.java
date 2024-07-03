@@ -42,7 +42,7 @@ public class TrabajoServicio {
       trabajo.setPresupuesto(null);
       trabajo.setUsuario(usuario);
       trabajo.setProvedor(provedor);
-      trabajo.setComentarios(null);
+      trabajo.setComentario(null);
       trabajo.setCalificacion(0);
 
       trabajoRepositorio.save(trabajo);

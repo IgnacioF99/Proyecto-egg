@@ -157,7 +157,7 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'SOLICITADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <td>
@@ -189,7 +189,7 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'PRESUPUESTADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
@@ -219,7 +219,7 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
@@ -253,11 +253,11 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')} AND ${trabajo.provedor.usuario.id == session.usuariosession.id}">
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
-                                            <th th:if="${trabajo.id == comentario.trabajo.id}" th:text="${trabajo.comentarios.comentario}"></th>
+                                            <th th:if="${trabajo.comentario != null}" th:text="${trabajo.comentario.comentario}"></th>
                                         </tr>
                                     </tbody>
                                 </table>
