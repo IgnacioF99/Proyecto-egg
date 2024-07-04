@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.servicios.egg.entidades.Provedor;
 import com.servicios.egg.entidades.Servicio;
+import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.repositorios.ProvedorRepositorio;
@@ -38,7 +39,7 @@ public class ProvedorServicio {
          Usuario usuario = respuestaUsuario.get();
          provedor.setAlta(true);
          provedor.setNumeroDeTrabajos(0);
-         provedor.setCalificacionPromedio(0);
+         provedor.setCalificacionPromedio(null);
          // usuario.setRol(Rol.PROV);
          provedor.setUsuario(usuario);
          provedor.setServicio(servicios);
@@ -64,8 +65,14 @@ public class ProvedorServicio {
       }
    }
 
+   // @Transactional
+   // private void calcularProm(Provedor provedor, Trabajo trabajo) {
+   // Double promedio = provedor.getCalificacionPromedio();
+
+   // }
+
    @Transactional
-   private void actualizarCalificacionProvedor(Long id, int calificacionPromedio) throws MyException {
+   private void actualizarCalificacionProvedor(Long id, Double calificacionPromedio) throws MyException {
 
       Optional<Provedor> respuestaProvedor = provedorRepositorio.findById(id);
       Provedor provedor = new Provedor();
