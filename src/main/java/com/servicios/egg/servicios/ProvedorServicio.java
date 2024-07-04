@@ -43,7 +43,7 @@ public class ProvedorServicio {
          Usuario usuario = respuestaUsuario.get();
          provedor.setAlta(true);
          provedor.setNumeroDeTrabajos(0);
-         provedor.setCalificacionPromedio(null);
+         provedor.setCalificacionPromedio(0.0);
          // usuario.setRol(Rol.PROV);
          provedor.setUsuario(usuario);
          provedor.setServicio(servicios);

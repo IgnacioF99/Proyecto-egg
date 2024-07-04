@@ -51,6 +51,7 @@
                     <ul class="dropdown-menu">
                         <li><a sec:authorize="hasRole('USER')" class="dropdown-item" th:href="@{/usuario/listaProveedores}">Listar Proveedores</a></li>
                         <li><a sec:authorize="hasRole('PROV')" class="dropdown-item" th:href="@{/provedor/lista}">Listar Proveedores</a></li>
+                        <li><a sec:authorize="hasRole('ADMIN')" class="dropdown-item" th:href="@{/provedor/lista}">Listar Proveedores</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">

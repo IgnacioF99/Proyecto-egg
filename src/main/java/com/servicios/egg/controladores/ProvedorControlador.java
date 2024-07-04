@@ -108,11 +108,14 @@ public class ProvedorControlador {
         }
     }
 
+    // @PostMapping("/modificarServicios/{id}")
+    // public String modificarServicio(@RequestParam Long )
+
     @PostMapping("crear/{id}")
     public String crearProvedor(@PathVariable Long id, @RequestParam List<Long> servicios,
             ModelMap modelo) {
         try {
-            List<Servicio> serviciosList = servicioServicio.listarServicios(servicios); // Solucionar este peo
+            List<Servicio> serviciosList = servicioServicio.listarServicios(servicios);
             usuarioServicio.cambiarRol(id);
             provedorServicio.crearProvedor(id, serviciosList);
             modelo.put("exito", "Se ha registrado como proveedor correctamente");
