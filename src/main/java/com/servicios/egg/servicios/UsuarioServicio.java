@@ -23,6 +23,7 @@ import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
 import com.servicios.egg.enums.Rol;
 import com.servicios.egg.excepciones.MyException;
+import com.servicios.egg.repositorios.ImagenRepositorio;
 import com.servicios.egg.repositorios.UsuarioRepositorio;
 
 import jakarta.servlet.http.HttpSession;
@@ -33,13 +34,22 @@ public class UsuarioServicio implements UserDetailsService {
    private UsuarioRepositorio usuarioRepositorio;
 
    @Autowired
+   private ImagenRepositorio imagenRepositorio;
+   
+   @Autowired
    private ImagenServicio imagenServicio;
 
+
    @Override
-   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
 
       Usuario usuario = usuarioRepositorio.buscarUsuarioPorEmail(email);
       if (usuario != null) {
+
+         if (!usuario.isAlta()) {
+            throw new UsernameNotFoundException("Usuario dado de baja");
+        }
+
          List<GrantedAuthority> permisos = new ArrayList<>();
          GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
          permisos.add(p);
@@ -71,8 +81,25 @@ public class UsuarioServicio implements UserDetailsService {
       usuario.setPhone(phone);
       usuario.setLocalidad(localidad);
       usuario.setAlta(true);
-      Imagen imagen = imagenServicio.guardar(archivo);
+
+      Imagen imagen = null;
+      if ( archivo != null && !archivo.isEmpty() ) {
+         imagen = imagenServicio.guardar(archivo);
+      }
+      
+
+      // -------------
+      // Imagen imagen;
+      // if (archivo != null && !archivo.isEmpty()) {
+      //    imagen = imagenServicio.guardar(archivo);
+      // } else {
+      //    imagen = imagenRepositorio.findById("904c83c2-a22c-4337-999c-0b2814b9b9f9").orElseThrow(() -> 
+      //    new MyException("Imagen genérica no encontrada"));
+      //    System.out.println("Imagen generica");
+      // }
       usuario.setImagen(imagen);
+
+      // -------------
 
       usuarioRepositorio.save(usuario);
    }
@@ -162,6 +189,23 @@ public class UsuarioServicio implements UserDetailsService {
          usuarioRepositorio.save(usuario);
       }
    }
+   
+   @Transactional
+   public void cambiarRolUsuarioProveedor(Long id) {
+      Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);
+
+      if (respuestaUsuario.isPresent()) {
+         Usuario usuario = respuestaUsuario.get();
+
+         if (usuario.getRol().equals(Rol.USER)) {
+            usuario.setRol(Rol.PROV);
+         } else if (usuario.getRol().equals(Rol.PROV)) {
+            usuario.setRol(Rol.USER);
+         }
+         usuarioRepositorio.save(usuario);
+      }
+   }
+
    @Transactional
    public void darDeBajaUsuario( Long id ) {
       Optional<Usuario> respuestaUsuario = usuarioRepositorio.findById(id);

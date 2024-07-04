@@ -42,12 +42,14 @@ public class PortalControlador {
    @GetMapping("/registrar")
    public String registrar(ModelMap modelo) {
       modelo.addAttribute("localidades", Localidad.values());
+      // Ruta de la imagen genérica para pre-cargar en el formulario
+      modelo.addAttribute("imagenPerfil", "/img/avatar.png");
       return "registro.html";
    }
 
    @PostMapping("/registro")
    public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password,
-         String password2, String phone, MultipartFile archivo, Localidad localidad, ModelMap modelo) {
+         String password2, String phone, @RequestParam(required = false) MultipartFile archivo, Localidad localidad, ModelMap modelo) {
       try {
          usuarioServicio.registrarUsuario(archivo, nombre, email, password, password2, phone, localidad);
          modelo.addAttribute("exito", "Usuario registrado correctamente!");
@@ -57,8 +59,7 @@ public class PortalControlador {
       } catch (MyException ex) {
          modelo.put("error", ex.getMessage());
 
-         // En el caso de surgir la excepcion por password, el formulario mediante el
-         // th:value guarda los datos cargados antes del error
+         // En el caso de surgir la excepcion por password, el formulario mediante el th:value guarda los datos cargados antes del error
          modelo.put("nombre", nombre);
          modelo.put("email", email);
          modelo.put("phone", phone);
@@ -107,8 +108,6 @@ public class PortalControlador {
    @GetMapping("/inicio")
    public String inicio(ModelMap modelo, HttpSession session) {
       Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-      // List<Servicio> servicioList = servicioServicio.listarServicios();
-      // modelo.addAttribute("servicios", servicioList);
 
       if (logueado.getRol().toString().equalsIgnoreCase("ADMIN")) {
          return "redirect:/admin/dashboard";
@@ -126,8 +125,4 @@ public class PortalControlador {
       return "index.html";
    }
 
-   // @GetMapping("/listarServicio")
-   // public String listarServicio (){
-   // return "servicios_list.html";
-   // }
 }

@@ -26,71 +26,165 @@
                 <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de proveedor</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body ms-4 me-0">
+            <div class="offcanvas-body ms-4 me-0 d-flex flex-column align-items-center">
 
-                <!-- ---------------------- -->
-                <form class="formulario" th:action="@{/usuario/modificar/__${session.usuariosession.id}__}" method="POST"
-                enctype="multipart/form-data" >
+                <!-- ------ Informacion de Usuario------- -->
 
-                    <input hidden th:value="${session.usuariosession.id}" name="id">
+                    <!-- Imagen -->
+                    <div class="d-flex align-items-center">
+                        <a class="d-flex justify-content-center">
+                            <img th:if="${session.usuariosession.imagen != null}"
+                                class="rounded-circle border shadow" style="width: 35%;"
+                                th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                        </a>
+                    </div>
 
-                    <div class="form-group my-3">
-                        <div class="d-flex align-items-center">
-                            <a class="d-flex justify-content-center"> <img
-                                    th:if="${session.usuariosession.imagen != null}"
-                                    class="rounded-circle border shadow" style="width: 35%;"
-                                    th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
-                            </a>
-                            <input type="file" class="form-control ms-3" name="archivo" th:value="${session.usuariosession.getImagen.getNombreImagen}">
+                    <!-- Nombre -->
+                    <div class="d-flex justify-content-center">
+                        <label th:text="'¡Hola ' + ${session.usuariosession.nombre} +'!'"
+                            class="fs-5 fw-bold mt-3"></label>
+                    </div>
+
+
+                    <!-- -------Acordeon con form para actualizar datos de usuario------- -->
+                    <div class="accordion w-100" id="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button rounded" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseDatosUser" aria-expanded="false"
+                                    aria-controls="collapseDatosUser">
+                                    Actualizar informacion del usuario
+                                </button>
+                            </h2>
+                            <div id="collapseDatosUser" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                                <div class="accordion-body">
+
+                                    <!-- ---------Form ---------- -->
+                                    <form class="formulario"
+                                        th:action="@{/usuario/modificar/__${session.usuariosession.id}__}" method="POST"
+                                        enctype="multipart/form-data">
+
+                                        <input hidden th:value="${session.usuariosession.id}" name="id">
+
+                                        <div class="form-group my-3">
+                                            <!-- <div class="d-flex align-items-center"> -->
+                                            <label class="label-imput fst-italic fw-lighter my-0" for="file">Imagne de
+                                                perfil:</label>
+                                            <input type="file"
+                                                class="form-control rounded-5 rounded-end-0 border shadow"
+                                                name="archivo"
+                                                th:value="${session.usuariosession.getImagen.getNombreImagen}">
+                                            <!-- </div> -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fst-italic fw-lighter my-0"
+                                                for="nombre">Nombre:</label>
+                                            <input type="text"
+                                                class="form-control rounded-5 rounded-end-0 border shadow" name="nombre"
+                                                placeholder="Nombre" th:value="${session.usuariosession.nombre}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fst-italic my-0" for="email">Email:</label>
+                                            <input type="email"
+                                                class="form-control rounded-5 rounded-end-0 border shadow" name="email"
+                                                placeholder="Email" th:value="${session.usuariosession.email}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fst-italic my-0" for="phone">Telefono:</label>
+                                            <input type="phone"
+                                                class="form-control rounded-5 rounded-end-0 border shadow" name="phone"
+                                                placeholder="Phone" th:value="${session.usuariosession.phone}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fw-light fst-italic my-0">Localidad:</label>
+                                            <select name="localidad"
+                                                class="form-control rounded-5 rounded-end-0 border shadow">
+                                                <option disabled selected>Seleccionar Localidad</option>
+                                                <option th:each="localidad : ${localidades}" th:value="${localidad}"
+                                                    th:text="${localidad}" th:selected="${session.usuariosession.phone}"
+                                                    </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fw-light fst-italic my-0">Contraseña:</label>
+                                            <input type="password"
+                                                class="form-control rounded-5 rounded-end-0 border shadow"
+                                                name="password" placeholder="Contraseña"
+                                                th:value="${session.usuariosession.password}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fw-light fst-italic my-0">Confirmar
+                                                contraseña:</label>
+                                            <input type="password"
+                                                class="form-control rounded-5 rounded-end-0 border shadow"
+                                                name="password2" placeholder="Repetir contraseña"
+                                                th:value="${session.usuariosession.password}">
+                                        </div>
+
+                                        <button type="submit"
+                                            class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar</button>
+
+                                    </form>
+                                    <!-- ---------------------- -->
+
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- ---------------------- -->
 
-                    <div class="form-group">
-                        <label class="label-imput fst-italic fw-lighter my-0" for="phone">Nombre:</label>
-                        <input type="text" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="nombre" placeholder="Nombre" th:value="${session.usuariosession.nombre}">
+                    <!-- -------Acordeon con form para seleccionar servicios del proveedor------- -->
+                    <div th:if="${session.usuariosession.rol.name == 'PROV'}" class="accordion my-4 w-100" id="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button rounded" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseServiciosProv" aria-expanded="false"
+                                    aria-controls="collapseServiciosProv">
+                                    Servicios ofrecidos por el Proveedor
+                                </button>
+                            </h2>
+                            <div id="collapseServiciosProv" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                                <div class="accordion-body">
+
+                                    <!-- ---------Form ---------- -->
+                                    <form class="formulario"
+                                        th:action="@{/provedor/modificarServicios/__${session.usuariosession.id}__}" method="POST"
+                                        enctype="multipart/form-data">
+
+                                        <input hidden th:value="${session.usuariosession.id}" name="id">
+
+                                        <div th:each="servicio : ${servicios}" class="container">
+                                            <div class="form-check">
+                                                <!-- <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> -->
+                                                <!-- <label th:text="${servicio.nombre}" class="form-check-label" for="flexCheckDefault"></label> -->
+                                                <input class="form-check-input" type="checkbox" th:value="${servicio.id}" name="servisios" id="servicio-checkbox-${servicio.id}">
+                                                <label th:for="'servicio-checkbox-' + ${servicio.id}" th:text="${servicio.nombre}" class="form-check-label"></label>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar Servicios</button>
+                                    </form>
+                                    <!-- ---------------------- -->
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <!-- ---------------------- -->
 
-                    <div class="form-group">
-                        <label class="label-imput fst-italic my-0" for="phone">Email:</label>
-                        <input type="email" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="email" placeholder="Email" th:value="${session.usuariosession.email}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fst-italic my-0" for="phone">Telefono:</label>
-                        <input type="phone" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="phone" placeholder="Phone" th:value="${session.usuariosession.phone}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fw-light fst-italic my-0">Localidad:</label>
-                        <select name="localidad" class="form-control rounded-5 rounded-end-0 border shadow">
-                            <option disabled selected>Seleccionar Localidad</option>
-                            <option th:each="localidad : ${localidades}" th:value="${localidad}"
-                                    th:text="${localidad}" th:selected="${session.usuariosession.phone}"
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fw-light fst-italic my-0">Contraseña:</label>
-                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="password" placeholder="Contraseña" th:value="${session.usuariosession.password}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fw-light fst-italic my-0">Confirmar contraseña:</label>
-                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="password2" placeholder="Repetir contraseña"
-                               th:value="${session.usuariosession.password}">
-                    </div>
-
-
-                    <button type="submit" class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar</button>
-
-                </form>
-                <!-- ---------------------- -->
+                    <!-- ----Boton para cambio de Rol USER / PROV---- -->
+                    <a th:href="@{/usuario/modificarRol/{id}(id=${session.usuariosession.id})}"
+                        class="btn btn-outline-primary mt-5 w-75 rounded-5 justify-content-center shadow" data-bs-toggle="tooltip" title="Cambiar de rol"
+                        th:text="'Cambiar a ' + (${session.usuariosession.rol.name} == 'USER' ? 'Proveedor' : 'Usuario')">
+                        <i class="bi bi-arrow-repeat fs-4"></i>
+                    </a>
+                    <!-- ---------- -->
 
             </div>
         </div>

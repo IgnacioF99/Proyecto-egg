@@ -23,12 +23,15 @@ import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.entidades.Usuario;
 import com.servicios.egg.enums.Localidad;
+import com.servicios.egg.enums.Rol;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ComentarioServicio;
 import com.servicios.egg.servicios.ProvedorServicio;
 import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
 import com.servicios.egg.servicios.UsuarioServicio;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/usuario")
@@ -49,7 +52,7 @@ public class UsuarioControlador {
     @Autowired
     private ProvedorServicio provedorServicio;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_PROV')")
     @GetMapping("/dashboard")
     public String mostrarPanelUsuario(ModelMap modelo) {
         List<Servicio> servicioList = servicioServicio.listarServicios();
@@ -71,29 +74,36 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/modificarRol/{id}")
-    public String cambiarRol(@PathVariable Long id) {
-        usuarioServicio.cambiarRolUsuario(id);
-        return "redirect:/admin/usuarios";
-    }
+    public String cambiarRol(@PathVariable Long id, HttpSession session) {
+        usuarioServicio.cambiarRolUsuarioProveedor(id);
+        Usuario usuarioActualizado = usuarioServicio.getOne(id);
+        session.setAttribute("usuariosession", usuarioActualizado);
 
-    /*
-     * @GetMapping("/modificar/{id}")
-     * public String modificar(@PathVariable Long id, ModelMap modelo) {
-     * modelo.put("usuario", usuarioServicio.getOne(id));
-     * return "usuario_form.html";
-     * }
-     */
+        if (usuarioActualizado.getRol().equals(Rol.USER)) {
+            return "redirect:/usuario/dashboard";
+        } else {
+            return "redirect:/provedor/dashboard";
+        }
+    }
 
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable @RequestParam(required = false) Long id,
             String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
             Localidad localidad,
-            ModelMap modelo) {
+            ModelMap modelo, HttpSession session) {
         try {
             usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password,
                     password2, phone, localidad);
             modelo.put("exito", "Ha actualizado sin problemas el perfil");
-            return "redirect:/usuario/dashboard";
+
+            Usuario usuarioActualizado = usuarioServicio.getOne(id);
+            session.setAttribute("usuariosession", usuarioActualizado);
+
+            if (usuarioActualizado.getRol().equals(Rol.USER)) {
+                return "redirect:/usuario/dashboard";
+            } else {
+                return "redirect:/provedor/dashboard";
+            }
         } catch (MyException e) {
             modelo.put("error", e.getMessage());
             return "usuario_form.html";

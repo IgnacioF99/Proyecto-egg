@@ -56,7 +56,12 @@
     .row{
         background-color: rgb(201, 5, 5);
     }
+}
 
+img-card{
+    height: 50%;
+    object-fit:fill;
+    border: 1px solid blue;
 }
 
 .card:hover{

@@ -25,5 +25,4 @@ public class Comentario {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trabajo_id") // Llave foranea
     private Trabajo trabajo;
-
 }

@@ -15,7 +15,8 @@
             <a href="/" class="navbar-brand">
                 <img class="logo" src="/img/LogoHomeServices.png" alt="Img logo Home Services">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -36,67 +37,82 @@
     </nav>
 
 
-<main>
-    <div class="container-fluid p-0">
-        
-        <div class="row no-gutters main-contenedor">
-            <div class="contenedor col-12 position-relative p-0 d-flex flex-column align-items-center"> <!-- Añadir clases flexbox para centrar verticalmente -->
-                
-                <div class="bg-image d-none d-lg-block"></div>
-                
-                <img src="/img/imageIndexPage.jpg" alt="Image index page" class="img-fluid d-lg-none w-100">
-                
-                <div class="text-container text-end d-none d-lg-block d-flex flex-column mt-5 mb-5 me-5">
-                    <h2>Bienvenido a <span class="fw-bold home-service">Home Services</span></h2>
-                    <p>Tu solución confiable para encontrar proveedores de servicios de mantenimiento para el hogar en tu barrio. Nuestra aplicación te conecta con plomeros, electricistas, jardineros, pintores y carpinteros locales, todos recomendados por vecinos de confianza. Con Home Services, podrás contactar fácilmente con profesionales que conocen y entienden las necesidades de tu comunidad, garantizando reparaciones rápidas y de calidad. ¡Descubre la comodidad de tener a los mejores proveedores de servicios a un clic de distancia! 
-                    </p>
-                    <a class="btn btn-primario" href="/login" role="button" aria-expanded="false">
-                        Iniciar sesión
-                    </a>
-                </div>
-                
-            </div>
-        </div>
+    <main>
+        <div class="container-fluid p-0">
 
-        <div class="container-fluid contenedor-servicios">
-            <div>
-                <h2 class="mt-4 mb-3">Nuestros Servicios</h2>
-                <div class="row justify-content-center contenedor-cards">
-                    <div class="col-12 col-sm-4 col-md-3 col-lg-2 mb-4" th:each="servicio : ${servicios}">
-                        <div class="card h-100">
-                            <img th:if="${servicio.imagen != null}" th:src="@{/imagen/servicio/__${servicio.id}__}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${servicio.nombre}"></h5>
-                                <p class="card-text" th:text="${servicio.descripcion}"></p>
-                                <a href="#" class="btn btn-primary btn-sm">Ver más</a>
+            <div class="row no-gutters main-contenedor">
+                <div class="contenedor col-12 position-relative p-0 d-flex flex-column align-items-center">
+                    <!-- Añadir clases flexbox para centrar verticalmente -->
+
+                    <div class="bg-image d-none d-lg-block"></div>
+
+                    <img src="/img/imageIndexPage.jpg" alt="Image index page" class="img-fluid d-lg-none w-100">
+
+                    <div class="text-container text-end d-none d-lg-block d-flex flex-column mt-5 mb-5 me-5">
+                        <h2>Bienvenido a <span class="fw-bold home-service">Home Services</span></h2>
+                        <p>Tu solución confiable para encontrar proveedores de servicios de mantenimiento para el hogar
+                            en tu barrio. Nuestra aplicación te conecta con plomeros, electricistas, jardineros,
+                            pintores y carpinteros locales, todos recomendados por vecinos de confianza. Con Home
+                            Services, podrás contactar fácilmente con profesionales que conocen y entienden las
+                            necesidades de tu comunidad, garantizando reparaciones rápidas y de calidad. ¡Descubre la
+                            comodidad de tener a los mejores proveedores de servicios a un clic de distancia!
+                        </p>
+                        <a class="btn btn-primario" href="/login" role="button" aria-expanded="false">
+                            Iniciar sesión
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container-fluid contenedor-servicios">
+                <div>
+                    <h2 class="mt-4 mb-3">Nuestros Servicios</h2>
+                    <div class="row justify-content-center contenedor-cards">
+                        <div class="col-12 col-sm-4 col-md-3 col-lg-2 mb-4" th:each="servicio : ${servicios}">
+                            <div class="card h-100">
+                                <div class="ratio ratio-4x3">
+                                    <img th:if="${servicio.imagen != null}"
+                                        th:src="@{/imagen/servicio/__${servicio.id}__}" class="card-img-top" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${servicio.nombre}"></h5>
+                                    <p class="card-text" th:text="${servicio.descripcion}"></p>
+                                    <a href="#" class="btn btn-primary btn-sm">Ver más</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        
 
-        <!-- ------Vista Responsive------ -->
-        <div class="row no-gutters d-lg-none justify-content-end align-items-center">
-            <div class="col-12 text-container p-5">
-                <h2>Bienvenido a <span class="fw-bold home-service-responsive">Home Services</span></h2>
-                <p>Tu solución confiable para encontrar proveedores de servicios de mantenimiento para el hogar en tu barrio. Nuestra aplicación te conecta con plomeros, electricistas, jardineros, pintores y carpinteros locales, todos recomendados por vecinos de confianza. Con Home Services, podrás contactar fácilmente con profesionales que conocen y entienden las necesidades de tu comunidad, garantizando reparaciones rápidas y de calidad. ¡Descubre la comodidad de tener a los mejores proveedores de servicios a un clic de distancia!
-                </p>
-                <a class="btn btn-primary" href="/login" role="button" aria-expanded="false">
-                    Iniciar sesión
-                </a>
+
+
+            <!-- ------Vista Responsive------ -->
+            <div class="row no-gutters d-lg-none justify-content-end align-items-center">
+                <div class="col-12 text-container p-5">
+                    <h2>Bienvenido a <span class="fw-bold home-service-responsive">Home Services</span></h2>
+                    <p>Tu solución confiable para encontrar proveedores de servicios de mantenimiento para el hogar en
+                        tu barrio. Nuestra aplicación te conecta con plomeros, electricistas, jardineros, pintores y
+                        carpinteros locales, todos recomendados por vecinos de confianza. Con Home Services, podrás
+                        contactar fácilmente con profesionales que conocen y entienden las necesidades de tu comunidad,
+                        garantizando reparaciones rápidas y de calidad. ¡Descubre la comodidad de tener a los mejores
+                        proveedores de servicios a un clic de distancia!
+                    </p>
+                    <a class="btn btn-primary" href="/login" role="button" aria-expanded="false">
+                        Iniciar sesión
+                    </a>
+                </div>
             </div>
+
         </div>
 
-    </div>
-
-</main>
+    </main>
 
     <!-- Contenedor para cargar el contenido de footer.html -->
     <!-- <div th:replace="/fragments/footer :: footer"></div> -->
     <div th:replace="~{/fragments/footer.html}"></div>
 
 </body>
+
 </html>

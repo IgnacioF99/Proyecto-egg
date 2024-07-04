@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.servicios.egg.entidades.Provedor;
+import com.servicios.egg.entidades.Servicio;
 import com.servicios.egg.entidades.Trabajo;
 import com.servicios.egg.excepciones.MyException;
 import com.servicios.egg.servicios.ProvedorServicio;
+import com.servicios.egg.servicios.ServicioServicio;
 import com.servicios.egg.servicios.TrabajoServicio;
 
 @Controller
@@ -25,12 +27,17 @@ public class ProvedorControlador {
     private ProvedorServicio provedorServicio;
 
     @Autowired
+    private ServicioServicio servicioServicio;
+
+    @Autowired
     private TrabajoServicio trabajoServicio;
 
-    @PreAuthorize("hasRole('ROLE_PROV')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_PROV')")
     @GetMapping("/dashboard")
     public String mostrarPanelProvedor(ModelMap modelo) {
+        List<Servicio> servicioList = servicioServicio.listarServicios();
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
+        modelo.addAttribute("servicios", servicioList);
         modelo.addAttribute("trabajos", trabajoList);
         return "panel_provedor.html";
     }
