@@ -7,7 +7,7 @@
     <link href="/css/index.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-primary-subtle">
     <cabecera>
         <!-- Contenedor para cargar el contenido de navbar.html -->
         <div th:replace="~{/fragments/navbar.html}"></div>
@@ -97,13 +97,20 @@
     </div>
 
 
-        <!-- textos para prueba -->
-            
-            <div class="bienvenido">
-                <h1 sec:authorize="hasRole('ADMIN')">¡BIENVENIDO!</h1>
-                <h4>Aqui podras crear tu profesiòn para ofrecer aquellos que necesiten de tì. </h4>
-                <p>solo ve  la parte de  "servicios". y crea tu profesion. </p>
-            </div>
+    <!-- textos para prueba -->
+
+    <div class="bienvenido bg-light m-5 rounded-5 p-5 shadow">
+        <h1 sec:authorize="hasRole('ADMIN')" class="fw-bold">¡Bienvenido, Administrador!</h1>
+        <h4>Nos complace darte la bienvenida al equipo de <span class="fw-bold text-danger home-services">Home
+                Services</span>.</h4>
+        <p>Como nuevo administrador, tendrás un papel crucial en la gestión y el crecimiento de nuestra comunidad.
+            Tu experiencia y liderazgo serán fundamentales para asegurar que todos nuestros usuarios tengan una
+            experiencia excelente.</p>
+        <p>Estamos emocionados de ver todo lo que lograrás. Si tienes alguna pregunta o necesitas asistencia, no
+            dudes en contactarnos.</p>
+        <p>¡Gracias por unirte a nosotros y por tu compromiso con el éxito de <span
+                class="fw-bold text-danger home-services">Home Services</span>!</p>
+    </div>
             
 
             

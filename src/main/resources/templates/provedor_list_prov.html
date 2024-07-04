@@ -17,7 +17,7 @@
     <div class="container-fluid contenedor-servicios">
         <h1 class="fs-3">Nuestros Proveedores</h1>
         <div class="row justify-content-center contenedor-cards">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="provedor : ${provedores}">
+            <div th:if="${provedor.usuario.imagen != null} AND ${provedor.usuario.id != session.usuariosession.id}" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="provedor : ${provedores}">
                 <div class="card h-100 bg-primary-subtle rounded-3 " style="min-width: 250px;"> <!-- Removed d-flex and align-items-center from here -->
                     <div class="d-flex justify-content-start align-items-center ">
                         <img th:if="${provedor.usuario.imagen != null} AND ${provedor.usuario.id != session.usuariosession.id}"
