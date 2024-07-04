@@ -84,6 +84,13 @@ public class UsuarioControlador {
      * }
      */
 
+    @GetMapping("/listaProveedores")
+    public String listarProv(ModelMap modelo) {
+        List<Provedor> provedorList = provedorServicio.listarProvedores();
+        modelo.addAttribute("provedores", provedorList);
+        return "provedor_list.html";
+    }
+
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable @RequestParam(required = false) Long id,
             String nombre, String email, String phone, MultipartFile archivo, String password, String password2,
@@ -108,7 +115,7 @@ public class UsuarioControlador {
         return "trabajo_form.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_PROV')")
     @PostMapping("/crearTrabajo/{idProvedor}")
     public String crearTrabajo(@RequestParam Long idUsuario, @PathVariable Long idProvedor, String descripcion,
             ModelMap modelo) {

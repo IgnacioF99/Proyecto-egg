@@ -45,11 +45,12 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a sec:authorize="hasRole('USER')" class="nav-link dropdown-toggle ps-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle ps-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Proveedores
                     </a>
-                    <ul sec:authorize="hasRole('USER')" class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/provedor/lista}">Listar Proveedores</a></li>
+                    <ul class="dropdown-menu">
+                        <li><a sec:authorize="hasRole('USER')" class="dropdown-item" th:href="@{/usuario/listaProveedores}">Listar Proveedores</a></li>
+                        <li><a sec:authorize="hasRole('PROV')" class="dropdown-item" th:href="@{/provedor/lista}">Listar Proveedores</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
