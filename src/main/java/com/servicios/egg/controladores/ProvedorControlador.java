@@ -146,4 +146,30 @@ public class ProvedorControlador {
         return "provedor_list_prov.html";
     }
 
+    @GetMapping("/aceptarTrabajo/{id}")
+    public String aceptarTrabajo(@PathVariable Long id) {
+        trabajoServicio.aceptarTrabajo(id);
+        return "redirect:/provedor/dashboard";
+    }
+
+    @GetMapping("/comentar/{id}") //
+    public String calificar(@PathVariable Long id, ModelMap modelo) {
+        modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
+        return "comentario_form_prov.html";
+    }
+
+    @PostMapping("/comentar/{id}") // id del trabajo, pensar como setear eso
+    public String calificar(@PathVariable Long id, @RequestParam String comentario,
+            int calificacion, ModelMap modelo) {
+        try {
+            comentarioServicio.crearcComentario(id, comentario);
+            trabajoServicio.modificarCalificacion(id, calificacion);
+            modelo.put("exito", "Gracias por comentar");
+            return "redirect:/provedor/dashboard";
+        } catch (MyException e) {
+            modelo.put("error", e.getMessage());
+            return "comentario_form.html";
+        }
+    }
+
 }

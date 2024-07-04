@@ -280,6 +280,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Comentario</th>
+                                            <th scope="col">Calificación</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -287,6 +288,33 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th th:if="${trabajo.comentario != null}" th:text="${trabajo.comentario.comentario}"></th>
+                                            <td th:switch="${trabajo.calificacion}">
+                                                <div th:case="1">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="2">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="3">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="4">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="5">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

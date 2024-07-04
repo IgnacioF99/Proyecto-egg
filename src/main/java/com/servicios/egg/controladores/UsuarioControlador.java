@@ -157,10 +157,10 @@ public class UsuarioControlador {
 
     @PostMapping("/comentar/{id}") // id del trabajo, pensar como setear eso
     public String calificar(@PathVariable Long id, @RequestParam String comentario,
-            ModelMap modelo) {
+            int calificacion, ModelMap modelo) {
         try {
             comentarioServicio.crearcComentario(id, comentario);
-            // trabajoServicio.modificarCalificacion(id, calificacion);
+            trabajoServicio.modificarCalificacion(id, calificacion);
             modelo.put("exito", "Gracias por comentar");
             return "redirect:/usuario/dashboard";
         } catch (MyException e) {

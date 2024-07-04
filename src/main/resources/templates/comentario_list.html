@@ -17,6 +17,7 @@
                 <tr>
                     <th scope="col">ID </th>
                     <th scope="col">Comentarios</th>
+                    <th scope="col">Calificación</th>
                     <th scope="col">Id trabajo</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Proveedor</th>
@@ -26,11 +27,38 @@
             <tbody th:each="comentario : ${comentarios}">
                 <tr>
                     <th scope="row" th:text="${comentario.id}"></th>
-                    <td th:if="${comentario.alta == true}" th:text="${comentario.comentario}"></td>
-                    <td th:if="${comentario.alta != true}">Este comentario ha sido eliminado por violacion de politicas</td>
-                    <td th:text="${comentario.trabajo.id}"></td>
-                    <td th:text="${comentario.trabajo.usuario.nombre}"></td>
-                    <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
+                    <th th:if="${comentario.alta == true}" th:text="${comentario.comentario}"></th>
+                    <th th:if="${comentario.alta != true}">Este comentario ha sido eliminado por violacion de politicas</th>
+                    <td th:switch="${comentario.trabajo.calificacion}">
+                        <div th:case="1">
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="2">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="3">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="4">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="5">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                    </td>
+                    <th th:text="${comentario.trabajo.id}"></th>
+                    <th th:text="${comentario.trabajo.usuario.nombre}"></th>
+                    <th th:text="${comentario.trabajo.provedor.usuario.nombre}"></th>
                     <td>
                         <a th:href="@{/comentario/eliminar/__${comentario.id}__}" class="btn btn-danger">Eliminar</a>
                         <!-- <form th:action="@{/comentario/eliminar/__${comentario.id}__}" method="post">
