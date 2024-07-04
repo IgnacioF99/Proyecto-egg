@@ -14,132 +14,187 @@
     <div th:replace="~{/fragments/exito_error.html}"></div>
 </header>
 
-<main class="p-2">
+    <main class="p-2">
 
-    <!-- ---- lienzo layteral ---- -->
-    <div>
-        <!-- <button class="btn btn-primary" type="button" data-bs-dismiss="offcanvas" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">User</button> -->
+        <!-- ---- lienzo layteral ---- -->
+        <div>
+            <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">User</button> -->
 
-        <div class="offcanvas offcanvas-end rounded-4 rounded-end-0" data-bs-scroll="true" tabindex="0"
-             id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-            <div class="offcanvas-header bg-primary-subtle">
-                <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de usuario</h4>
-                <button type="button" class="btn-close" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body ms-4 me-0">
+            <div class="offcanvas offcanvas-end rounded-4 rounded-end-0" data-bs-scroll="true" tabindex="0"
+                id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header bg-primary-subtle">
+                    <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Datos de usuario</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body ms-4 me-0 d-flex flex-column align-items-center ">
 
-                <!-- ---------------------- -->
-                <form class="formulario" th:action="@{/usuario/modificar/__${session.usuariosession.id}__}" method="POST"
-                enctype="multipart/form-data" >
+                    <!-- ------ Informacion de Usuario------- -->
 
-                    <input hidden th:value="${session.usuariosession.id}" name="id">
+                    <!-- Imagen -->
+                    <div class="d-flex align-items-center">
+                        <a class="d-flex justify-content-center"> <img th:if="${session.usuariosession.imagen != null}"
+                                class="rounded-circle border shadow" style="width: 35%;"
+                                th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                        </a>
+                    </div>
 
-                    <div class="form-group my-3">
-                        <div class="d-flex align-items-center">
-                            <a class="d-flex justify-content-center"> <img
-                                    th:if="${session.usuariosession.imagen != null}"
-                                    class="rounded-circle border shadow" style="width: 35%;"
-                                    th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
-                            </a>
-                            <input type="file" class="form-control ms-3" name="archivo" th:value="${session.usuariosession.getImagen.getNombreImagen}">
+                    <!-- Nombre -->
+                    <div class="d-flex justify-content-center">
+                        <label th:text="'¡Hola ' + ${session.usuariosession.nombre} +'!'"
+                            class="fs-5 fw-bold mt-3"></label>
+                    </div>
+
+
+                    <!-- -------Acordeon con form para actualizar datos de usuario------- -->
+                    <div class="accordion" id="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button rounded" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseDatosUser" aria-expanded="false"
+                                    aria-controls="collapseDatosUser">
+                                    Actualizar informacion del usuario
+                                </button>
+                            </h2>
+                            <div id="collapseDatosUser" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                                <div class="accordion-body">
+
+                                    <!-- ---------Form ---------- -->
+                                    <form class="formulario"
+                                        th:action="@{/usuario/modificar/__${session.usuariosession.id}__}" method="POST"
+                                        enctype="multipart/form-data">
+
+                                        <input hidden th:value="${session.usuariosession.id}" name="id">
+
+                                        <div class="form-group my-3">
+                                            <!-- <div class="d-flex align-items-center"> -->
+                                            <label class="label-imput fst-italic fw-lighter my-0" for="file">Imagne de
+                                                perfil:</label>
+                                            <input type="file"
+                                                class="form-control rounded-5 rounded-end-0 border shadow"
+                                                name="archivo"
+                                                th:value="${session.usuariosession.getImagen.getNombreImagen}">
+                                            <!-- </div> -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fst-italic fw-lighter my-0"
+                                                for="nombre">Nombre:</label>
+                                            <input type="text"
+                                                class="form-control rounded-5 rounded-end-0 border shadow" name="nombre"
+                                                placeholder="Nombre" th:value="${session.usuariosession.nombre}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fst-italic my-0" for="email">Email:</label>
+                                            <input type="email"
+                                                class="form-control rounded-5 rounded-end-0 border shadow" name="email"
+                                                placeholder="Email" th:value="${session.usuariosession.email}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fst-italic my-0" for="phone">Telefono:</label>
+                                            <input type="phone"
+                                                class="form-control rounded-5 rounded-end-0 border shadow" name="phone"
+                                                placeholder="Phone" th:value="${session.usuariosession.phone}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fw-light fst-italic my-0">Localidad:</label>
+                                            <select name="localidad"
+                                                class="form-control rounded-5 rounded-end-0 border shadow">
+                                                <option disabled selected>Seleccionar Localidad</option>
+                                                <option th:each="localidad : ${localidades}" th:value="${localidad}"
+                                                    th:text="${localidad}" th:selected="${session.usuariosession.phone}"
+                                                    </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fw-light fst-italic my-0">Contraseña:</label>
+                                            <input type="password"
+                                                class="form-control rounded-5 rounded-end-0 border shadow"
+                                                name="password" placeholder="Contraseña"
+                                                th:value="${session.usuariosession.password}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="label-imput fw-light fst-italic my-0">Confirmar
+                                                contraseña:</label>
+                                            <input type="password"
+                                                class="form-control rounded-5 rounded-end-0 border shadow"
+                                                name="password2" placeholder="Repetir contraseña"
+                                                th:value="${session.usuariosession.password}">
+                                        </div>
+
+                                        <button type="submit"
+                                            class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar</button>
+
+                                    </form>
+                                    <!-- ---------------------- -->
+
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- ---------------------- -->
 
-                    <div class="form-group">
-                        <label class="label-imput fst-italic fw-lighter my-0" for="phone">Nombre:</label>
-                        <input type="text" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="nombre" placeholder="Nombre" th:value="${session.usuariosession.nombre}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fst-italic my-0" for="phone">Email:</label>
-                        <input type="email" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="email" placeholder="Email" th:value="${session.usuariosession.email}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fst-italic my-0" for="phone">Telefono:</label>
-                        <input type="phone" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="phone" placeholder="Phone" th:value="${session.usuariosession.phone}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fw-light fst-italic my-0">Localidad:</label>
-                        <select name="localidad" class="form-control rounded-5 rounded-end-0 border shadow">
-                            <option disabled selected>Seleccionar Localidad</option>
-                            <option th:each="localidad : ${localidades}" th:value="${localidad}"
-                                    th:text="${localidad}" th:selected="${session.usuariosession.phone}"
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fw-light fst-italic my-0">Contraseña:</label>
-                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="password" placeholder="Contraseña" th:value="${session.usuariosession.password}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="label-imput fw-light fst-italic my-0">Confirmar contraseña:</label>
-                        <input type="password" class="form-control rounded-5 rounded-end-0 border shadow"
-                               name="password2" placeholder="Repetir contraseña"
-                               th:value="${session.usuariosession.password}">
-                    </div>
-
-
-                    <button type="submit" class="btn btn-warning mt-3 w-100 rounded-5 rounded-end-0">Actualizar</button>
-
-
-                </form>
-                <!-- ---------------------- -->
+                    <!-- ----Boton para cambio de Rol USER / PROV---- -->
+                    <a th:href="@{/usuario/modificarRol/{id}(id=${session.usuariosession.id})}"
+                        class="btn btn-outline-primary mt-5 w-75 rounded-5 justify-content-center"
+                        data-bs-toggle="tooltip" title="Cambiar de rol"
+                        th:text="'Cambiar a ' + (${session.usuariosession.rol.name} == 'USER' ? 'Proveedor' : 'Usuario')">
+                        <i class="bi bi-arrow-repeat fs-4"></i>
+                    </a>
+                    <!-- ---------- -->
+                </div>
             </div>
-            
         </div>
-    </div>
 
-    <div class="container-fluid contenedor-dashboard row d-flex justify-content-between p-4 bg-light">
-        <!-- ---Contenedor de TOP de Servicios--- -->
-        <div class="container contenedor contenedor-servicios-top col-12 col-sm-3 col-md-4 mb-4 mx-3 p-4 shadow bg-white rounded-4">
+        <div class="container-fluid contenedor-dashboard row d-flex justify-content-between p-4 bg-light">
+            <!-- ---Contenedor de TOP de Servicios--- -->
+            <div
+                class="container contenedor contenedor-servicios-top col-12 col-sm-3 col-md-4 mb-4 mx-3 p-4 shadow bg-white rounded-4">
 
-            <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Top 5 de Servicios</h3>
-            <div class="accordion my-2" id="accordionExample">
-                <div th:each="servicio, iter : ${servicios}" th:if="${iter.index < 5}">
-                    <div class="accordion-item border-0 bg-light">
-                        <h2 class="accordion-header rounded-5 rounded-end-0 border-0 shadow my-2 d-flex justify-content-start"
-                            th:id="'heading' + ${iter.index}">
-                            <img th:if="${servicio.imagen != null}" th:src="@{/imagen/servicio/__${servicio.id}__}"
-                                 class="card-img-top w-25 rounded-5 rounded-end-0 shadow" alt="...">
-                            <button
+                <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Top 5 de Servicios</h3>
+                <div class="accordion my-2" id="accordionExample">
+                    <div th:each="servicio, iter : ${servicios}" th:if="${iter.index < 5}">
+                        <div class="accordion-item border-0 bg-light">
+                            <h2 class="accordion-header rounded-5 rounded-end-0 border-0 shadow my-2 d-flex justify-content-start"
+                                th:id="'heading' + ${iter.index}">
+                                <img th:if="${servicio.imagen != null}" th:src="@{/imagen/servicio/__${servicio.id}__}"
+                                    class="card-img-top w-25 rounded-5 rounded-end-0 shadow" alt="...">
+                                <button
                                     th:class="'accordion-button bg-light rounded-start-0 shadow ' + (${iter.index} == 0 ? '' : 'collapsed')"
                                     type="button" data-bs-toggle="collapse"
                                     th:data-bs-target="'#collapse' + ${iter.index}"
                                     th:aria-expanded="${iter.index} == 0 ? 'true' : 'false'"
                                     th:aria-controls="'collapse' + ${iter.index}" th:text="${servicio.nombre}">
-                            </button>
-                        </h2>
-                        <div th:id="'collapse' + ${iter.index}"
-                             th:class="'accordion-collapse collapse ' + (${iter.index} == 0 ? 'show' : '')"
-                             th:aria-labelledby="'heading' + ${iter.index}" data-bs-parent="#accordionExample">
-                            <div class="accordion-body rounded-3 rounded-end-0 border-0">
-                                <p th:text="${servicio.descripcion}"></p>
+                                </button>
+                            </h2>
+                            <div th:id="'collapse' + ${iter.index}"
+                                th:class="'accordion-collapse collapse ' + (${iter.index} == 0 ? 'show' : '')"
+                                th:aria-labelledby="'heading' + ${iter.index}" data-bs-parent="#accordionExample">
+                                <div class="accordion-body rounded-3 rounded-end-0 border-0">
+                                    <p th:text="${servicio.descripcion}"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
 
-        </div>
+            <!-- ---Contenedor de Info-Trabajos--- -->
+            <div class="container contenedor contenedor-trabajos col mb-4 mx-3 p-4 shadow bg-white rounded-4">
+                <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Mis trabajos</h3>
 
-        <!-- ---Contenedor de Info-Trabajos--- -->
-        <div class="container contenedor contenedor-trabajos col mb-4 mx-3 p-4 shadow bg-white rounded-4">
-            <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Mis trabajos</h3>
+                <div class="accordion" id="accordionExample">
 
-            <div class="accordion" id="accordionExample">
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             SOLICITADOS
                         </button>

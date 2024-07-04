@@ -47,8 +47,10 @@ public class ProvedorControlador {
     @PreAuthorize("hasAnyRole('ROLE_PROV','ROLE_USER')")
     @GetMapping("/dashboard")
     public String mostrarPanelProvedor(ModelMap modelo) {
+        List<Servicio> servicioList = servicioServicio.listarServicio();
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
         List<Comentario> comentarioList = comentarioServicio.listarComentario();
+        modelo.addAttribute("servicios", servicioList);
         modelo.addAttribute("trabajos", trabajoList);
         modelo.addAttribute("comentarios", comentarioList);
         return "panel_provedor.html";

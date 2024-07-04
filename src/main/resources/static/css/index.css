@@ -50,17 +50,48 @@
 }
 
 .contenedor-servicios{
+    position: relative;
+    background-image: url('/img/imageIndexPage2.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+
     .cards-container{
         display: flex;
     }
 
 }
 
-.contenedor-cards{
-    .row{
-        background-color: rgb(201, 5, 5);
-    }
+.contenedor-servicios::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Oscurece la imagen */
+    backdrop-filter: blur(5px); /* Desenfoque */
+    z-index: 1;
+}
 
+.contenedor-cards{
+    position: relative;
+    z-index: 2;
+
+    /* .row{
+        background-color: rgb(201, 5, 5);
+    } */
+}
+
+img-card{
+    height: 50%;
+    object-fit:fill;
+    border: 1px solid blue;
 }
 
 .card:hover{

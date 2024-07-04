@@ -26,5 +26,4 @@ public class Comentario {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trabajo_id") // Llave foranea
     private Trabajo trabajo;
-
 }
