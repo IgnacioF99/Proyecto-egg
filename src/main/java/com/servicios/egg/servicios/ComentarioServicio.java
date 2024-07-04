@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ public class ComentarioServicio {
 
    @Autowired
    private TrabajoRepositorio trabajoRepositorio;
+
+   private CrudRepository<Comentario, Long> comentarioRepository;
 
    @Transactional
    public void crearcComentario(Long id, String comentario) throws MyException {
@@ -42,14 +45,16 @@ public class ComentarioServicio {
       comentarios = comentarioRepositorio.findAll();
       return comentarios;
    }
-   /* public List<Comentario> listarComentario() {
-      // Aquí debes implementar la lógica para obtener los comentarios
-      // Este es solo un ejemplo con datos simulados
-      List<Comentario> comentarios = new ArrayList<>();
-      comentarios.add(new Comentario(1L, "Comentario 1"));
-      comentarios.add(new Comentario(2L, "Comentario 2"));
-      return comentarios;
-  } */
+   /*
+    * public List<Comentario> listarComentario() {
+    * // Aquí debes implementar la lógica para obtener los comentarios
+    * // Este es solo un ejemplo con datos simulados
+    * List<Comentario> comentarios = new ArrayList<>();
+    * comentarios.add(new Comentario(1L, "Comentario 1"));
+    * comentarios.add(new Comentario(2L, "Comentario 2"));
+    * return comentarios;
+    * }
+    */
 
    @Transactional(readOnly = true)
    public List<Comentario> listarComentarioAlta() {
@@ -96,8 +101,9 @@ public class ComentarioServicio {
          throw new MyException("El comentario no puede quedar vacio");
       }
    }
- 
 
-   
+   public void eliminarComentario(Long id) {
+      comentarioRepository.deleteById(id);
+   }
+
 }
-
