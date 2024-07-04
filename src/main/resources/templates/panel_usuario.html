@@ -279,6 +279,7 @@
                                         <tr th:if="${#strings.equals(trabajo.estado, 'ACEPTADO')}  AND ${trabajo.usuario.id == session.usuariosession.id}">
                                             <th scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
+                                            <th th:text="${trabajo.presupuesto}"></th>
                                             <!-- <td>
                                                 <a th:href="@{/trabajo/ver/__${trabajo.id}__}">Ver</a>
                                             </td> -->
