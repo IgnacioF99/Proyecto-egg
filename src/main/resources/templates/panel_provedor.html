@@ -98,7 +98,7 @@
 
     <div class="container-fluid contenedor-dashboard row d-flex justify-content-between p-4 bg-light">
         <!-- ---Contenedor de TOP de Servicios--- -->
-        <div class="container contenedor contenedor-servicios-top col-12 col-sm-3 col-md-4 mb-4 mx-3 p-4 shadow bg-white rounded-4">
+        <div class="container contenedor contenedor-servicios-top col-12 col-sm-3 col-md-5 mb-4 mx-3 p-4 shadow bg-white rounded-4">
             <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Trabajos que he solicitado</h3>
 
             <div class="accordion" id="accordionExample">
@@ -161,6 +161,10 @@
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.presupuesto}"></th>
+                                            <td>                
+                                                <a th:href="@{/provedor/aceptarTrabajo/__${trabajo.id}__}" data-bs-toggle="tooltip" title="Aceptar trabajo" class="btn btn-primario btn-sm">Aceptar</a>
+                                                <!-- <a th:href="@{/provedor/verTrabajo/__${trabajo.id}__}">Cancelar</a> -->
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -221,11 +225,11 @@
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
-                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'TERMINADO')} AND ${trabajo.usuario.id == session.usuariosession.id} AND ${trabajo.comentario == null}">
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <td>
-                                                <a th:href="@{/usuario/comentar/__${trabajo.id}__}" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Comentar y calificar">Calificar</a>
+                                                <a th:href="@{/provedor/comentar/__${trabajo.id}__}" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Comentar y calificar">Calificar</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -250,6 +254,7 @@
                                             <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Comentario</th>
+                                            <th scope="col">Calificación</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -257,6 +262,33 @@
                                             <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th th:if="${trabajo.comentario != null}" th:text="${trabajo.comentario.comentario}"></th>
+                                            <td th:switch="${trabajo.calificacion}">
+                                                <div th:case="1">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="2">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="3">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="4">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="5">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -388,7 +420,7 @@
                                             <th sec:authorize="hasRole('PROV')" scope="col">Cliente</th>
                                             <th scope="col">Descripcion</th>
                                             <th scope="col">Comentario</th>
-                                            
+                                            <th scope="col">calificación</th>                                            
                                         </tr>
                                     </thead>
                                     <tbody th:each="trabajo :${trabajos}">
@@ -397,6 +429,33 @@
                                             <th sec:authorize="hasRole('PROV')" scope="row" th:text="${trabajo.usuario.nombre}"></th>
                                             <th th:text="${trabajo.descripcion}"></th>
                                             <th th:if="${trabajo.comentario != null}" th:text="${trabajo.comentario.comentario}"></th>
+                                            <td th:switch="${trabajo.calificacion}">
+                                                <div th:case="1">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="2">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="3">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="4">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                                <div th:case="5">
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                    <i class="bi bi-star-fill star"></i>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

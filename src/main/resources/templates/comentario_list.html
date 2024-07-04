@@ -17,6 +17,7 @@
                 <tr>
                     <th scope="col">ID </th>
                     <th scope="col">Comentarios</th>
+                    <th scope="col">Calificación</th>
                     <th scope="col">Id trabajo</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Proveedor</th>
@@ -28,6 +29,33 @@
                     <th scope="row" th:text="${comentario.id}"></th>
                     <th th:if="${comentario.alta == true}" th:text="${comentario.comentario}"></th>
                     <th th:if="${comentario.alta != true}">Este comentario ha sido eliminado por violacion de politicas</th>
+                    <td th:switch="${comentario.trabajo.calificacion}">
+                        <div th:case="1">
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="2">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="3">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="4">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                        <div th:case="5">
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                            <i class="bi bi-star-fill star"></i>
+                        </div>
+                    </td>
                     <th th:text="${comentario.trabajo.id}"></th>
                     <th th:text="${comentario.trabajo.usuario.nombre}"></th>
                     <th th:text="${comentario.trabajo.provedor.usuario.nombre}"></th>
