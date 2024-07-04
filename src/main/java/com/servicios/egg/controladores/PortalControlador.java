@@ -22,7 +22,6 @@ import com.servicios.egg.servicios.UsuarioServicio;
 
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
@@ -43,12 +42,14 @@ public class PortalControlador {
    @GetMapping("/registrar")
    public String registrar(ModelMap modelo) {
       modelo.addAttribute("localidades", Localidad.values());
+      // Ruta de la imagen genérica para pre-cargar en el formulario
+      modelo.addAttribute("imagenPerfil", "/img/avatar.png");
       return "registro.html";
    }
 
    @PostMapping("/registro")
-   public String registro( @RequestParam String nombre, @RequestParam String email, @RequestParam String password,
-                           String password2, String phone, MultipartFile archivo, Localidad localidad, ModelMap modelo ) {
+   public String registro(@RequestParam String nombre, @RequestParam String email, @RequestParam String password,
+         String password2, String phone, @RequestParam(required = false) MultipartFile archivo, Localidad localidad, ModelMap modelo) {
       try {
          usuarioServicio.registrarUsuario(archivo, nombre, email, password, password2, phone, localidad);
          modelo.addAttribute("exito", "Usuario registrado correctamente!");
@@ -58,7 +59,7 @@ public class PortalControlador {
       } catch (MyException ex) {
          modelo.put("error", ex.getMessage());
 
-         //En el caso de surgir la excepcion por password, el formulario mediante el th:value guarda los datos cargados antes del error
+         // En el caso de surgir la excepcion por password, el formulario mediante el th:value guarda los datos cargados antes del error
          modelo.put("nombre", nombre);
          modelo.put("email", email);
          modelo.put("phone", phone);
@@ -70,7 +71,7 @@ public class PortalControlador {
 
    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
    @GetMapping("/perfil")
-   public String perfil( ModelMap modelo, HttpSession session ) {
+   public String perfil(ModelMap modelo, HttpSession session) {
       Usuario usuario = (Usuario) session.getAttribute("usuariosession");
       modelo.put("usuario", usuario);
       return "usuario_modificar.html";
@@ -78,7 +79,9 @@ public class PortalControlador {
 
    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
    @PostMapping("/perfil/{id}")
-   public String actualizar( MultipartFile archivo, @PathVariable Long id, @RequestParam String nombre, @RequestParam String email, @RequestParam String password, @RequestParam String password2, @RequestParam String phone, Localidad localidad, ModelMap modelo ) {
+   public String actualizar(MultipartFile archivo, @PathVariable Long id, @RequestParam String nombre,
+         @RequestParam String email, @RequestParam String password, @RequestParam String password2,
+         @RequestParam String phone, Localidad localidad, ModelMap modelo) {
       try {
          usuarioServicio.actualizarUsuario(archivo, id, nombre, email, password, password2, phone, localidad);
          modelo.put("exito", "Usuario actualizado corectamente");
@@ -94,8 +97,8 @@ public class PortalControlador {
    }
 
    @GetMapping("/login")
-   public String login( @RequestParam(required = false) String error, ModelMap modelo ) {
-      if ( error != null ) {
+   public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+      if (error != null) {
          modelo.put("error", "Usuario o Contraseña inválidos!");
       }
       return "login.html";
@@ -103,12 +106,10 @@ public class PortalControlador {
 
    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_PROV')")
    @GetMapping("/inicio")
-   public String inicio( ModelMap modelo, HttpSession session ) {
+   public String inicio(ModelMap modelo, HttpSession session) {
       Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-      // List<Servicio> servicioList = servicioServicio.listarServicios();
-      // modelo.addAttribute("servicios", servicioList);
 
-      if ( logueado.getRol().toString().equalsIgnoreCase("ADMIN") ) {
+      if (logueado.getRol().toString().equalsIgnoreCase("ADMIN")) {
          return "redirect:/admin/dashboard";
       }
 
@@ -117,11 +118,11 @@ public class PortalControlador {
          modelo.addAttribute("servicios", servicioList);
          return "redirect:/usuario/dashboard";
       }
+
+      if (logueado.getRol().toString().equalsIgnoreCase("PROV")) {
+         return "redirect:/provedor/dashboard";
+      }
       return "index.html";
    }
 
-   @GetMapping("/listarServicio")
-   public String listarServicio (){
-      return "servicios_list.html";
-   }
 }

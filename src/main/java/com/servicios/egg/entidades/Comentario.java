@@ -1,17 +1,18 @@
 package com.servicios.egg.entidades;
 
-import java.util.List;
-
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 @Data
+@Table(name = "comentario")
 public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,6 @@ public class Comentario {
     private boolean alta;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trabajo_id")//Llave foranea
+    @JoinColumn(name = "trabajo_id") // Llave foranea
     private Trabajo trabajo;
-
 }

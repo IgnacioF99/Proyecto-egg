@@ -10,10 +10,11 @@
 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">
+            <a href="/inicio" class="navbar-brand">
                 <img class="logo" src="/img/LogoHomeServices.png" alt="Img logo Home Services">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -29,139 +30,146 @@
     </nav>
 
 
-<main>
-    <!-- Contenedor para cargar el contenido de exito_error.html -->
-    <div th:replace="/fragments/exito_error.html"></div>
+    <main>
+        <!-- Contenedor para cargar el contenido de exito_error.html -->
+        <div th:replace="/fragments/exito_error.html"></div>
 
-    <div class="container-fluid p-0">
-        
-        <div class="row no-gutters main-contenedor">
-            <div class="contenedor col-12 position-relative p-0 d-flex flex-column align-items-center"> <!-- Añadir clases flexbox para centrar verticalmente -->
-                
-                <div class="bg-image d-none d-lg-block"></div>
-                
-                <img src="/img/imageIndexPage2.jpg" alt="Image index page" class="img-fluid d-lg-none w-100">
-                
-                <div class="container-fluid m-5 form-container d-none d-lg-block">
+        <div class="container-fluid p-0">
 
-                    <form class="formulario" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
-                
-                        <div class="form-group my-3">
+            <div class="row no-gutters main-contenedor">
+                <div class="contenedor col-12 position-relative p-0 d-flex flex-column align-items-center">
+
+                    <div class="bg-image d-none d-lg-block"></div>
+
+                    <img src="/img/imageIndexPage2.jpg" alt="Image index page" class="img-fluid d-lg-none w-100">
+
+                    <div class="container-fluid m-5 form-container d-none d-lg-block">
+
+                        <!-- Formulario para la carga de informacion de registro de usuario  -->
+                        <form class="formulario" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
+
+                            <div class="form-group my-3">
+                                <h3 class="card-title">Registrate!</h3>
+                            </div>
+                            <div class="form-group my-3">
+                                <input type="text" class="form-control" name="nombre" placeholder="Nombre"
+                                    th:value="${nombre}">
+                            </div>
+
+                            <div class="form-group my-3">
+                                <input type="email" class="form-control" name="email" placeholder="Email"
+                                    th:value="${email}">
+                            </div>
+
+                            <div class="form-group my-3">
+                                <input type="phone" class="form-control" name="phone" placeholder="Telefono"
+                                    th:value="${phone}">
+                            </div>
+
+                            <!-- Traer el listado de localidades para seleccionarlo en un dropdown -->
+                            <div class="form-group my-3">
+                                <select name="localidad" class="form-control">
+                                    <option disabled selected>Localidad</option>
+                                    <option th:each="localidad : ${localidades}" th:value="${localidad}"
+                                        th:text="${localidad}"></option>
+                                </select>
+                            </div>
+
+                            <!-- Manejo de la carga de una imagen por defecto si el usuario no selecciona un archivo -->
+                            <div class="form-group my-3">
+                                <img th:src="${imagenPerfil}" alt="" class="logo rounded-circle">
+
+                                <!-- Input oculto para enviar el archivo por defecto -->
+                                <input type="hidden" name="archivo" value="${imagenPerfil}">
+
+                                <!-- Input visible para que el usuario pueda seleccionar otro archivo -->
+                                <input type="file" class="form-control" name="archivo">
+                            </div>
+
+                            <div class="form-group my-3">
+                                <input type="password" class="form-control" name="password" placeholder="Contraseña"
+                                    th:value="${password}">
+                            </div>
+                            <div class="form-group my-3">
+                                <input type="password" class="form-control" name="password2"
+                                    placeholder="Repetir Contraseña" th:value="${password2}">
+                            </div>
+
+                            <button type="submit" class="btn btn-warning mt-3 w-100">Registrarme</button>
+
+                            <!-- Boton para vovler al index -->
+                            <div class="form-group">
+                                <a th:href="@{/}" class="btn my-2 ">Volver</a>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!--     ------------------------------------->
+
+            <div class="row no-gutters d-lg-none  align-items-center">
+                <div class="container-fluid form-container">
+
+                    <form class="formulario p-5" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
+
+                        <div class="form-group my-2">
                             <h3 class="card-title">Registrate!</h3>
                         </div>
-                        <div class="form-group my-3">
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" th:value="${nombre}">
+                        <div class="form-group my-2">
+                            <input type="text" class="form-control" name="nombre" placeholder="NOMBRE"
+                                th:value="${nombre}">
                         </div>
-                
-                        <div class="form-group my-3">
-                            <input type="email" class="form-control" name="email" placeholder="Email" th:value="${email}">
-                        </div>
-                
-                        <div class="form-group my-3">
-                            <input type="phone" class="form-control" name="phone" placeholder="Telefono" th:value="${phone}">
-                        </div>
-                        
 
-                        <!-- ------------------------------------- -->
+                        <div class="form-group my-2">
+                            <input type="email" class="form-control" name="email" placeholder="EMAIL"
+                                th:value="${email}">
+                        </div>
+
+                        <div class="form-group my-2">
+                            <input type="phone" class="form-control" name="phone" placeholder="PHONE"
+                                th:value="${phone}">
+                        </div>
 
                         <div class="form-group my-3">
                             <select name="localidad" class="form-control">
                                 <option disabled selected>Localidad</option>
-                                <option th:each="localidad : ${localidades}"
-                                        th:value="${localidad}"
-                                        th:text="${localidad}"></option>
+                                <option th:each="localidad : ${localidades}" th:value="${localidad}"
+                                    th:text="${localidad}"></option>
                             </select>
                         </div>
 
-                        <!-- ------------------------------------ -->
-                
                         <div class="form-group my-3">
-                            <input type="file" class="form-control" name="archivo">
+                            <input type="file" class="form-control" name="archivo" th:value="${password}">
                         </div>
-                
-                        <div class="form-group my-3">
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña" th:value="${password}">
+
+                        <div class="form-group my-2">
+                            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA"
+                                th:value="${password}">
                         </div>
-                        <div class="form-group my-3">
-                            <input type="password" class="form-control" name="password2" placeholder="Repetir Contraseña"
-                              th:value="${password2}">
+                        <div class="form-group my-2">
+                            <input type="password" class="form-control" name="password2"
+                                placeholder="REPETIR CONTRASEÑA" th:value="${password2}">
                         </div>
-                
-                        <button type="submit" class="btn btn-warning mt-3 w-100">Registrarme</button>
-                        
-                        <div class="form-group">
-                            <a th:href="@{/}" class="btn my-2 ">Volver</a>
+
+                        <button type="submit" class="form-group btn btn-primario my-3 w-100">Registrarme</button>
+
+                        <div class="my-3">
+                            <a th:href="@{/}" class="btn">Volver</a>
                         </div>
+
                     </form>
-                
+
                 </div>
-                
             </div>
         </div>
-
-<!--     ------------------------------------->
-
-        <div class="row no-gutters d-lg-none  align-items-center">
-            <div class="container-fluid form-container">
-
-                <form class="formulario p-5" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
-            
-                    <div class="form-group my-2">
-                        <h3 class="card-title">Registrate!</h3>
-                    </div>
-                    <div class="form-group my-2">
-                        <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${nombre}">
-                    </div>
-            
-                    <div class="form-group my-2">
-                        <input type="email" class="form-control" name="email" placeholder="EMAIL" th:value="${email}">
-                    </div>
-            
-                    <div class="form-group my-2">
-                        <input type="phone" class="form-control" name="phone" placeholder="PHONE" th:value="${phone}">
-                    </div>
-
-                    <div class="form-group my-3">
-                        <select name="localidad" class="form-control">
-                            <option disabled selected>Localidad</option>
-                            <option th:each="localidad : ${localidades}"
-                                    th:value="${localidad}"
-                                    th:text="${localidad}"></option>
-                        </select>
-                    </div>
-            
-                    <div class="form-group my-3">
-                        <input type="file" class="form-control" name="archivo" >
-                    </div>
-            
-                    <div class="form-group my-2">
-                        <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA"
-                               th:value="${password}">
-                    </div>
-                    <div class="form-group my-2">
-                        <input type="password" class="form-control" name="password2" placeholder="REPETIR CONTRASEÑA" th:value="${password2}">
-                    </div>
-            
-                    <button type="submit" class="form-group btn btn-primario my-3 w-100">Registrarme</button>
-                    
-                    <div class="my-3">
-                        <a th:href="@{/}" class="btn">Volver</a>
-                    </div>
-                    
-                </form>
-            
-            </div>
-        </div>
-    </div>
-</main>
-
-
-
-
+    </main>
 
     <!-- Contenedor para cargar el contenido de footer.html -->
     <!-- <div th:replace="/fragments/footer :: footer"></div> -->
-    <div th:replace="/fragments/footer.html"></div>
+    <div th:replace="~{/fragments/footer.html}"></div>
 
 </body>
 

@@ -18,17 +18,13 @@ public class Provedor {
     private int calificacionPromedio;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="usuario_id")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name ="servicios_has_provedores",
-        joinColumns = @JoinColumn(name = "provedor_id"),
-        inverseJoinColumns = @JoinColumn(name = "servicio_id")
-    )
+    @JoinTable(name = "servicios_has_provedores", joinColumns = @JoinColumn(name = "provedor_id"), inverseJoinColumns = @JoinColumn(name = "servicio_id"))
     private List<Servicio> servicio;
 
-    @OneToOne(mappedBy = "provedor")
-    private Trabajo trabajo;
+    @OneToMany(mappedBy = "provedor", fetch = FetchType.LAZY)
+    private List<Trabajo> trabajo;
 }
