@@ -27,6 +27,9 @@ public class TrabajoServicio {
    @Autowired
    private ProvedorRepositorio provedorRepositorio;
 
+   @Autowired
+   private ProvedorServicio provedorServicio;
+
    @Transactional
    public void crearTrabajo(String descripcion, Long idUsuario, Long idProvedor)
          throws MyException {
@@ -134,9 +137,17 @@ public class TrabajoServicio {
       Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
       if (respuesta.isPresent()) {
          Trabajo trabajo = respuesta.get();
-         trabajo.setCalificacion(calificacion);
-
-         trabajoRepositorio.save(trabajo);
+         Long provedorId = trabajo.getProvedor().getId();
+         Optional<Provedor> respuestaProvedor = provedorRepositorio.findById(provedorId);
+         if (respuestaProvedor.isPresent()) {
+            trabajoRepositorio.findAllByProvedor(respuestaProvedor);
+            if (respuesta.isPresent()) {
+               Provedor provedor = respuestaProvedor.get();
+               trabajo.setCalificacion(calificacion);
+               trabajoRepositorio.save(trabajo);
+               provedorServicio.calcularProm(provedorId, trabajo);
+            }
+         }
       }
    }
 
