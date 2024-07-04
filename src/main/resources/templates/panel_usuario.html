@@ -140,7 +140,8 @@
 
                     <!-- ----Boton para cambio de Rol USER / PROV---- -->
                     <a th:href="@{/usuario/modificarRol/{id}(id=${session.usuariosession.id})}"
-                        class="btn btn-outline-primary mt-5 w-75 rounded-5 justify-content-center" data-bs-toggle="tooltip" title="Cambiar de rol"
+                        class="btn btn-outline-primary mt-5 w-75 rounded-5 justify-content-center"
+                        data-bs-toggle="tooltip" title="Cambiar de rol"
                         th:text="'Cambiar a ' + (${session.usuariosession.rol.name} == 'USER' ? 'Proveedor' : 'Usuario')">
                         <i class="bi bi-arrow-repeat fs-4"></i>
                     </a>
@@ -184,15 +185,12 @@
 
             </div>
 
-<<<<<<< HEAD
-        </div>
-=======
+
             <!-- ---Contenedor de Info-Trabajos--- -->
             <div class="container contenedor contenedor-trabajos col mb-4 mx-3 p-4 shadow bg-white rounded-4">
                 <h3 class="bg-dark text-light rounded-5 rounded-end-0 border-0 text-center mb-4">Mis trabajos</h3>
 
                 <div class="accordion" id="accordionExample">
->>>>>>> main
 
                     <div class="accordion-item">
                         <h2 class="accordion-header">
