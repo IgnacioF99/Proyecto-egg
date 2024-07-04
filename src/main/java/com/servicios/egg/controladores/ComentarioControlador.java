@@ -3,6 +3,7 @@ package com.servicios.egg.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,15 +34,20 @@ public class ComentarioControlador {
 
         return "";
     }
-    @PostMapping("/eliminar/{id}")
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
-        comentarioServicio.eliminarComentario(id);
+        comentarioServicio.censurarComentario(id);
         return "redirect:/comentario/lista";
-    } 
-    
-  /*   @GetMapping("/comentario/eliminar")
-    public String eliminar(@RequestParam("id") Long id) {
-        comentarioServicio.eliminarComentario(id);
-        return "redirect:/comentario/lista"; // Redirige de nuevo a la lista de comentarios
-    }  */
+    }
+
+    /*
+     * @GetMapping("/comentario/eliminar")
+     * public String eliminar(@RequestParam("id") Long id) {
+     * comentarioServicio.eliminarComentario(id);
+     * return "redirect:/comentario/lista"; // Redirige de nuevo a la lista de
+     * comentarios
+     * }
+     */
 }

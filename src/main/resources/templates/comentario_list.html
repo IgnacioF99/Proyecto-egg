@@ -26,16 +26,16 @@
             <tbody th:each="comentario : ${comentarios}">
                 <tr>
                     <th scope="row" th:text="${comentario.id}"></th>
-                    <td th:text="${comentario.comentario}"></td>
+                    <td th:if="${comentario.alta == true}" th:text="${comentario.comentario}"></td>
+                    <td th:if="${comentario.alta != true}">Este comentario ha sido eliminado por violacion de politicas</td>
                     <td th:text="${comentario.trabajo.id}"></td>
                     <td th:text="${comentario.trabajo.usuario.nombre}"></td>
                     <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
-                    <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
-                    <td th:text="${comentario.trabajo.provedor.usuario.nombre}"></td>
                     <td>
-                        <form th:action="@{/comentario/eliminar/{id}(id=${comentario.id})}" method="post">
+                        <a th:href="@{/comentario/eliminar/__${comentario.id}__}" class="btn btn-danger">Eliminar</a>
+                        <!-- <form th:action="@{/comentario/eliminar/__${comentario.id}__}" method="post">
                             <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
+                        </form> -->
                     </td>
                 </tr>
             </tbody>
