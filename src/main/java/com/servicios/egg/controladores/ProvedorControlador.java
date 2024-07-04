@@ -85,6 +85,27 @@ public class ProvedorControlador {
         return "provedor_form.html";
     }
 
+    @GetMapping("/crearTrabajo/{id}")
+    public String crearTrabajo(@PathVariable Long id, ModelMap modelo) {
+        Provedor provedor = provedorServicio.getOne(id);
+        modelo.put("provedor", provedor);
+        return "trabajo_form_prov.html";
+    }
+
+    @PostMapping("/crearTrabajo/{idProvedor}")
+    public String crearTrabajo(@RequestParam Long idUsuario, @PathVariable Long idProvedor, String descripcion,
+            ModelMap modelo) {
+
+        try {
+            trabajoServicio.crearTrabajo(descripcion, idUsuario, idProvedor);
+            modelo.put("exito", "Su solicitud ha sido creada exitosamente!");
+            return "redirect:/provedor/dashboard";
+        } catch (MyException ex) {
+            modelo.put("error", ex.getMessage());
+            return "trabajo_form.html";
+        }
+    }
+
     @PostMapping("crear/{id}")
     public String crearProvedor(@PathVariable Long id, @RequestParam List<Long> servicios,
             ModelMap modelo) {
@@ -122,7 +143,7 @@ public class ProvedorControlador {
     public String listar(ModelMap modelo) {
         List<Provedor> provedorList = provedorServicio.listarProvedores();
         modelo.addAttribute("provedores", provedorList);
-        return "provedor_list.html";
+        return "provedor_list_prov.html";
     }
 
 }

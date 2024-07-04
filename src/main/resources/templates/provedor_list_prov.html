@@ -24,7 +24,7 @@
                         <ul th:if="${provedor.servicio.size() > 0}" th:each="servicio : ${provedor.servicio}">
                             <li class="card-text" th:text="${servicio.nombre}"></li>
                         </ul>
-                        <a th:href="@{/usuario/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
+                        <a th:href="@{/provedor/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
                         <!-- <p class="card-text" th:text="${provedor.calificacion}">calificacion promedio</p> -->
                         <!-- <p class="card-text" th:text="${usuario.servicio}"></p> --> <!-- falta esto por mejorar--> 
                     </div>
