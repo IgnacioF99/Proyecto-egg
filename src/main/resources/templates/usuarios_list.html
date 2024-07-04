@@ -37,11 +37,14 @@
             <tbody th:each="usuario : ${usuarios}">
                 <tr>
                     <th scope="row" th:text="${usuario.id}" class="text-center bg-secondary-subtle"></th>
-                    <td
-                            th:class="'text-center align-middle ' + (${usuario.alta == false} ? 'bg-danger-subtle' : '')">
-                        <a> <img th:if="${usuario.imagen != null}" class="logo rounded-circle"
-                                th:src="@{/imagen/perfil/__${usuario.id}__}"> </a>
+
+                    <td th:class="'text-center align-middle ' + (${usuario.alta == false} ? 'bg-danger-subtle' : '')">
+                        <a th:if="${usuario.imagen != null}" th:href="@{/imagen/perfil/__${usuario.id}__}">
+                            <img class="logo rounded-circle" th:src="@{/imagen/perfil/__${usuario.id}__}">
+                        </a>
+                        <img th:unless="${usuario.imagen != null}" class="logo rounded-circle" th:src="@{/img/avatar.png}">
                     </td>
+
                     <td th:class="'align-middle ' + (${usuario.alta == false} ? 'bg-danger-subtle' : '')" th:text="${usuario.nombre}"></td>
                     <td th:class="'align-middle ' + (${usuario.alta == false} ? 'bg-danger-subtle' : '')" class="align-middle" th:text="${usuario.email}"></td>
                     <td th:class="'align-middle ' + (${usuario.alta == false} ? 'bg-danger-subtle' : '')" class="align-middle" th:text="${usuario.phone}"></td>

@@ -47,8 +47,10 @@ public class ProvedorControlador {
     @PreAuthorize("hasAnyRole('ROLE_PROV','ROLE_USER')")
     @GetMapping("/dashboard")
     public String mostrarPanelProvedor(ModelMap modelo) {
+        List<Servicio> servicioList = servicioServicio.listarServicio();
         List<Trabajo> trabajoList = trabajoServicio.listarTrabajos();
         List<Comentario> comentarioList = comentarioServicio.listarComentario();
+        modelo.addAttribute("servicios", servicioList);
         modelo.addAttribute("trabajos", trabajoList);
         modelo.addAttribute("comentarios", comentarioList);
         return "panel_provedor.html";
@@ -106,11 +108,14 @@ public class ProvedorControlador {
         }
     }
 
+    // @PostMapping("/modificarServicios/{id}")
+    // public String modificarServicio(@RequestParam Long )
+
     @PostMapping("crear/{id}")
     public String crearProvedor(@PathVariable Long id, @RequestParam List<Long> servicios,
             ModelMap modelo) {
         try {
-            List<Servicio> serviciosList = servicioServicio.listarServicios(servicios); // Solucionar este peo
+            List<Servicio> serviciosList = servicioServicio.listarServicios(servicios);
             usuarioServicio.cambiarRol(id);
             provedorServicio.crearProvedor(id, serviciosList);
             modelo.put("exito", "Se ha registrado como proveedor correctamente");
