@@ -40,7 +40,7 @@
                         </ul>
                         
                         <label class="label-imput fst-italic fw-lighter my-0 text-secondary " for="calificacion_promedio">Calificacion Promedio:</label>
-                        <p class="card-text"><span th:text="${provedor.calificacion_promedio}"></span></p> 
+                        <p class="card-text"><span class="bi bi-star-fill" th:text="${#numbers.formatDecimal(provedor.calificacionPromedio, 1, 1)}"></span></p> 
                         
                         <a th:href="@{/usuario/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
                     </div>

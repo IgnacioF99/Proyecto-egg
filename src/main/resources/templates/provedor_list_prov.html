@@ -21,7 +21,7 @@
                 <div class="card h-100 bg-primary-subtle rounded-3 " style="min-width: 250px;"> <!-- Removed d-flex and align-items-center from here -->
                     <div class="d-flex justify-content-start align-items-center ">
                         <img th:if="${provedor.usuario.imagen != null} AND ${provedor.usuario.id != session.usuariosession.id}"
-                             th:src="@{/imagen/provedor/${provedor.usuario.id}}"
+                             th:src="@{/imagen/provedor/__${provedor.usuario.id}__}"
                              class="card-img-top w-25 rounded-circle border shadow m-2 "
                              alt="Proveedor">
                              <h5 class="card-title"><span th:text="${provedor.usuario.nombre}"></span></h5>
@@ -38,8 +38,10 @@
                         <ul th:if="${provedor.servicio.size() > 0}" th:each="servicio : ${provedor.servicio}">
                             <li class="card-text" th:text="${servicio.nombre}"></li>
                         </ul>
+                        <label class="label-imput fst-italic fw-lighter my-0 text-secondary " for="calificacion_promedio">Calificacion Promedio:</label>
+                        <p class="card-text"><span th:text="${provedor.calificacionPromedio}"></span></p> 
                         
-                        <a th:href="@{/provedor/crearTrabajo/${provedor.id}}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
+                        <a th:href="@{/provedor/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
                     </div>
                 </div>
             </div>
