@@ -1,6 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <html lang="es">
+
+<head>
+    <div th:replace="~{/fragments/head.html}"></div>
+    <title>Listado de Proveedores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{/fragments/navbar.html}"></div>
+    </header>
+
+    <div class="container-fluid contenedor-servicios">
+        <h1 class="fs-3">Nuestros Proveedores</h1>
+        <div class="row justify-content-center contenedor-cards">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="provedor : ${provedores}">
+                <div class="card h-100 bg-primary-subtle rounded-3 " style="min-width: 250px;"> <!-- Removed d-flex and align-items-center from here -->
+                    <div class="d-flex justify-content-start align-items-center ">
+                        <img th:if="${provedor.usuario.imagen != null} AND ${provedor.usuario.id != session.usuariosession.id}"
+                             th:src="@{/imagen/provedor/__${provedor.usuario.id}__}"
+                             class="card-img-top w-25 rounded-circle border shadow m-2 "
+                             alt="Proveedor">
+                             <h5 class="card-title"><span th:text="${provedor.usuario.nombre}"></span></h5>
+                    </div>
+                    <div th:if="${provedor.usuario.id != session.usuariosession.id}" class="card-body bg-light m-2 rounded-3">
+                        
+                        <label class="label-imput fst-italic fw-lighter my-0 text-secondary " for="email">Correo electrónico:</label>
+                        <p class="card-text"><span th:text="${provedor.usuario.email}"></span></p>
+                        
+                        <label class="label-imput fst-italic fw-lighter my-0 text-secondary " for="phone">Teléfono:</label>
+                        <p class="card-text"><span th:text="${provedor.usuario.phone}"></span></p> 
+                        
+                        <label class="label-imput fst-italic fw-lighter my-0 text-secondary " for="servicios">Servicios:</label>
+                        <ul th:if="${provedor.servicio.size() > 0}" th:each="servicio : ${provedor.servicio}">
+                            <li class="card-text" th:text="${servicio.nombre}"></li>
+                        </ul>
+                        <label class="label-imput fst-italic fw-lighter my-0 text-secondary " for="calificacion_promedio">Calificacion Promedio:</label>
+                        <p class="card-text"><span th:text="${provedor.calificacionPromedio}"></span></p> 
+                        
+                        <a th:href="@{/provedor/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div th:replace="~{/fragments/footer.html}"></div>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es">
 <head>
     <div th:replace="~{/fragments/head.html}"></div>
     <title>Listado de Proveedores</title>
@@ -15,7 +73,7 @@
         <h1>Listado de Proveedores</h1>
         <div class="row">
             <div class="col-md-4">
-                <div class="card" style="width: 15rem;" th:each="provedor : ${provedores}"> <!-- aca debo traerme solo a los usuarios con el rol proveedor -->
+                <div class="card" style="width: 15rem;" th:each="provedor : ${provedores}">  aca debo traerme solo a los usuarios con el rol proveedor 
                     <img th:if="${provedor.usuario.imagen != null} AND ${provedor.usuario.id != session.usuariosession.id}" th:src="@{/imagen/provedor/__${provedor.usuario.id}__}" class="card-img-top" alt="Proveedor 1">
                     <div th:if="${provedor.usuario.id != session.usuariosession.id}" class="card-body">
                         <h5 class="card-title">Nombre: <span th:text="${provedor.usuario.nombre}"></span></h5>
@@ -25,8 +83,8 @@
                             <li class="card-text" th:text="${servicio.nombre}"></li>
                         </ul>
                         <a th:href="@{/provedor/crearTrabajo/__${provedor.id}__}" class="btn btn-primary btn-sm">Solicitar Servicio</a>
-                        <!-- <p class="card-text" th:text="${provedor.calificacion}">calificacion promedio</p> -->
-                        <!-- <p class="card-text" th:text="${usuario.servicio}"></p> --> <!-- falta esto por mejorar--> 
+                        <p class="card-text" th:text="${provedor.calificacion}">calificacion promedio</p> 
+                        <p class="card-text" th:text="${usuario.servicio}"></p> --> <!-- falta esto por mejorar 
                     </div>
                 </div>
             </div>
@@ -35,4 +93,4 @@
 
     <div th:replace="~{/fragments/footer.html}"></div>
 </body>
-</html>
+</html> -->
