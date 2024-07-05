@@ -94,6 +94,17 @@ public class TrabajoServicio {
    }
 
    @Transactional
+   public void cancelarTrabajo(Long id) {
+      Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
+
+      if (respuestaTrabajo.isPresent()) {
+         Trabajo trabajo = respuestaTrabajo.get();
+         trabajo.setEstado(Estado.CANCELADO);
+         trabajoRepositorio.save(trabajo);
+      }
+   }
+
+   @Transactional
    public void finalizarTrabajo(Long id) {
       Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
 
@@ -142,7 +153,6 @@ public class TrabajoServicio {
          if (respuestaProvedor.isPresent()) {
             trabajoRepositorio.findAllByProvedor(respuestaProvedor);
             if (respuesta.isPresent()) {
-               Provedor provedor = respuestaProvedor.get();
                trabajo.setCalificacion(calificacion);
                trabajoRepositorio.save(trabajo);
                provedorServicio.calcularProm(provedorId, trabajo);

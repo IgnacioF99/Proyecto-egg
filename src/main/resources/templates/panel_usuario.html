@@ -247,7 +247,7 @@
                                             <th scope="row" th:text="${trabajo.presupuesto}"></th>
                                             <td>                
                                                 <a th:href="@{/usuario/aceptarTrabajo/__${trabajo.id}__}" data-bs-toggle="tooltip" title="Aceptar trabajo" class="btn btn-primario btn-sm">Aceptar</a>
-                                                <!-- <a th:href="@{/provedor/verTrabajo/__${trabajo.id}__}">Cancelar</a> -->
+                                                <a th:href="@{/usuario/cancelarTrabajo/__${trabajo.id}__}" data-bs-toggle="tooltip" title="Cancelar trabajo" class="btn btn-primario btn-sm">Cancelar</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -371,6 +371,33 @@
                                                     <i class="bi bi-star-fill star"></i>
                                                 </div>
                                             </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            CANCELADOS
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <section class="seccion tabla">
+                                <table class="table table-hover shadow p-3 rounded">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th sec:authorize="hasRole('USER')" scope="col">Proveedor</th>
+                                            <th scope="col">Descripcion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="trabajo :${trabajos}">
+                                        <tr th:if="${#strings.equals(trabajo.estado, 'CANCELADO')} AND ${trabajo.usuario.id == session.usuariosession.id}">
+                                            <th sec:authorize="hasRole('USER')" scope="row" th:text="${trabajo.provedor.usuario.nombre}"></th>
+                                            <th th:text="${trabajo.descripcion}"></th>
                                         </tr>
                                     </tbody>
                                 </table>

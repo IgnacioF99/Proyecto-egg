@@ -178,4 +178,10 @@ public class UsuarioControlador {
         }
     }
 
+    @GetMapping("/cancelarTrabajo/{id}")
+    public String cancelarTrabajo(@PathVariable Long id) {
+        trabajoServicio.cancelarTrabajo(id);
+        return "redirect:/usuario/dashboard";
+    }
+
 }

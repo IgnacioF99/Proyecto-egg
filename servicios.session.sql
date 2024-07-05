@@ -23,7 +23,3 @@ alter table comentario drop foreign key FKsnw2c50yyvxqymdphrng9ee2g;
 delete from servicio where descripcion = 'prueba';
 
 drop table comentario;
-
-INSERT INTO provedor (alta, calificacion_promedio, numero_de_trabajos, usuario_id) values (true, 4.3,2,4);
-
-INSERT INTO provedor (alta, calificacion_promedio, numero_de_trabajos, usuario_id) values (true, 4.3,2,4);
