@@ -157,13 +157,19 @@ public class ProvedorControlador {
         return "redirect:/provedor/dashboard";
     }
 
-    @GetMapping("/comentar/{id}") //
+    @GetMapping("/cancelarTrabajo/{id}")
+    public String cancelarTrabajo(@PathVariable Long id) {
+        trabajoServicio.cancelarTrabajo(id);
+        return "redirect:/provedor/dashboard";
+    }
+
+    @GetMapping("/comentar/{id}")
     public String calificar(@PathVariable Long id, ModelMap modelo) {
         modelo.addAttribute("trabajo", trabajoServicio.getOne(id));
         return "comentario_form_prov.html";
     }
 
-    @PostMapping("/comentar/{id}") // id del trabajo, pensar como setear eso
+    @PostMapping("/comentar/{id}")
     public String calificar(@PathVariable Long id, @RequestParam String comentario,
             int calificacion, ModelMap modelo) {
         try {
